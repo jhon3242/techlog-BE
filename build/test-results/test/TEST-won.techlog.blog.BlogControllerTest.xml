@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="won.techlog.blog.BlogControllerTest" tests="2" skipped="0" failures="1" errors="0" timestamp="2025-04-22T01:38:30.369Z" hostname="MacBook-Air-2.local" time="0.705">
+<testsuite name="won.techlog.blog.BlogControllerTest" tests="2" skipped="0" failures="1" errors="0" timestamp="2025-04-22T01:42:44.364Z" hostname="MacBook-Air-2.local" time="0.719">
   <properties/>
-  <testcase name="우아한형제들 블로그 글을 파싱한다()" classname="won.techlog.blog.BlogControllerTest" time="0.689">
-    <failure message="java.lang.RuntimeException: com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException: Instantiation of [simple type, class won.techlog.poster.api.response.PosterResponse] value failed for JSON property title due to missing (therefore NULL) value for creator parameter title which is a non-nullable type&#10; at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 104] (through reference chain: won.techlog.poster.api.response.PosterResponse[&quot;title&quot;])" type="java.lang.RuntimeException">java.lang.RuntimeException: com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException: Instantiation of [simple type, class won.techlog.poster.api.response.PosterResponse] value failed for JSON property title due to missing (therefore NULL) value for creator parameter title which is a non-nullable type
- at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 104] (through reference chain: won.techlog.poster.api.response.PosterResponse[&quot;title&quot;])
+  <testcase name="우아한형제들 블로그 글을 파싱한다()" classname="won.techlog.blog.BlogControllerTest" time="0.703">
+    <failure message="java.lang.RuntimeException: com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException: Instantiation of [simple type, class won.techlog.poster.api.response.PosterResponse] value failed for JSON property title due to missing (therefore NULL) value for creator parameter title which is a non-nullable type&#10; at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 99] (through reference chain: won.techlog.poster.api.response.PosterResponse[&quot;title&quot;])" type="java.lang.RuntimeException">java.lang.RuntimeException: com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException: Instantiation of [simple type, class won.techlog.poster.api.response.PosterResponse] value failed for JSON property title due to missing (therefore NULL) value for creator parameter title which is a non-nullable type
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 99] (through reference chain: won.techlog.poster.api.response.PosterResponse[&quot;title&quot;])
 	at io.restassured.internal.path.json.mapping.JsonPathJackson2ObjectDeserializer.deserialize(JsonPathJackson2ObjectDeserializer.java:30)
 	at io.restassured.path.json.mapping.JsonPathObjectDeserializer$deserialize.call(Unknown Source)
 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
@@ -25,12 +25,12 @@
 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)
 	at io.restassured.internal.RestAssuredResponseOptionsGroovyImpl.as(RestAssuredResponseOptionsGroovyImpl.groovy:229)
 	at io.restassured.internal.RestAssuredResponseOptionsImpl.as(RestAssuredResponseOptionsImpl.java:169)
-	at won.techlog.blog.BlogControllerTest.우아한형제들 블로그 글을 파싱한다(BlogControllerTest.kt:33)
+	at won.techlog.blog.BlogControllerTest.우아한형제들 블로그 글을 파싱한다(BlogControllerTest.kt:37)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
 Caused by: com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException: Instantiation of [simple type, class won.techlog.poster.api.response.PosterResponse] value failed for JSON property title due to missing (therefore NULL) value for creator parameter title which is a non-nullable type
- at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 104] (through reference chain: won.techlog.poster.api.response.PosterResponse[&quot;title&quot;])
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 99] (through reference chain: won.techlog.poster.api.response.PosterResponse[&quot;title&quot;])
 	at app//com.fasterxml.jackson.module.kotlin.KotlinValueInstantiator.createFromObjectWith(KotlinValueInstantiator.kt:97)
 	at app//com.fasterxml.jackson.databind.deser.impl.PropertyBasedCreator.build(PropertyBasedCreator.java:214)
 	at app//com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeUsingPropertyBased(BeanDeserializer.java:541)
@@ -44,9 +44,9 @@ Caused by: com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException: 
 	... 24 more
 </failure>
   </testcase>
-  <testcase name="우아한형제들 블로그 글을 찾는다()" classname="won.techlog.blog.BlogControllerTest" time="0.015"/>
-  <system-out><![CDATA[08:38:28.774 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [won.techlog.blog.BlogControllerTest]: BlogControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-08:38:28.817 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration won.techlog.TechlogApplication for test class won.techlog.blog.BlogControllerTest
+  <testcase name="우아한형제들 블로그 글을 찾는다()" classname="won.techlog.blog.BlogControllerTest" time="0.016"/>
+  <system-out><![CDATA[08:42:42.819 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [won.techlog.blog.BlogControllerTest]: BlogControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+08:42:42.863 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration won.techlog.TechlogApplication for test class won.techlog.blog.BlogControllerTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -57,23 +57,23 @@ Caused by: com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException: 
 
  :: Spring Boot ::                (v3.4.4)
 
-2025-04-22T08:38:28.969+07:00  INFO 35790 --- [techlog] [    Test worker] won.techlog.blog.BlogControllerTest      : Starting BlogControllerTest using Java 17.0.10 with PID 35790 (started by choewonjun in /Users/choewonjun/Documents/coding/project/techlog-BE)
-2025-04-22T08:38:28.970+07:00  INFO 35790 --- [techlog] [    Test worker] won.techlog.blog.BlogControllerTest      : No active profile set, falling back to 1 default profile: "default"
-2025-04-22T08:38:29.251+07:00  INFO 35790 --- [techlog] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-04-22T08:38:29.271+07:00  INFO 35790 --- [techlog] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 1 JPA repository interface.
-2025-04-22T08:38:29.420+07:00  INFO 35790 --- [techlog] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
-2025-04-22T08:38:29.426+07:00  INFO 35790 --- [techlog] [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-04-22T08:38:29.426+07:00  INFO 35790 --- [techlog] [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
-2025-04-22T08:38:29.450+07:00  INFO 35790 --- [techlog] [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2025-04-22T08:38:29.450+07:00  INFO 35790 --- [techlog] [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 405 ms
-2025-04-22T08:38:29.502+07:00  INFO 35790 --- [techlog] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-04-22T08:38:29.566+07:00  INFO 35790 --- [techlog] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:676d1b08-f0d9-438d-9b12-e3aab76df8fa user=SA
-2025-04-22T08:38:29.567+07:00  INFO 35790 --- [techlog] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-04-22T08:38:29.589+07:00  INFO 35790 --- [techlog] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-04-22T08:38:29.616+07:00  INFO 35790 --- [techlog] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.11.Final
-2025-04-22T08:38:29.630+07:00  INFO 35790 --- [techlog] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-04-22T08:38:29.731+07:00  INFO 35790 --- [techlog] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-04-22T08:38:29.764+07:00  INFO 35790 --- [techlog] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2025-04-22T08:42:42.996+07:00  INFO 38660 --- [techlog] [    Test worker] won.techlog.blog.BlogControllerTest      : Starting BlogControllerTest using Java 17.0.10 with PID 38660 (started by choewonjun in /Users/choewonjun/Documents/coding/project/techlog-BE)
+2025-04-22T08:42:42.996+07:00  INFO 38660 --- [techlog] [    Test worker] won.techlog.blog.BlogControllerTest      : No active profile set, falling back to 1 default profile: "default"
+2025-04-22T08:42:43.266+07:00  INFO 38660 --- [techlog] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-22T08:42:43.288+07:00  INFO 38660 --- [techlog] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 1 JPA repository interface.
+2025-04-22T08:42:43.442+07:00  INFO 38660 --- [techlog] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2025-04-22T08:42:43.447+07:00  INFO 38660 --- [techlog] [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-22T08:42:43.447+07:00  INFO 38660 --- [techlog] [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-04-22T08:42:43.470+07:00  INFO 38660 --- [techlog] [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-04-22T08:42:43.470+07:00  INFO 38660 --- [techlog] [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 402 ms
+2025-04-22T08:42:43.519+07:00  INFO 38660 --- [techlog] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-04-22T08:42:43.588+07:00  INFO 38660 --- [techlog] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:deb8d88f-69d8-4516-8e85-315e61d13220 user=SA
+2025-04-22T08:42:43.588+07:00  INFO 38660 --- [techlog] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-04-22T08:42:43.609+07:00  INFO 38660 --- [techlog] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-22T08:42:43.635+07:00  INFO 38660 --- [techlog] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-04-22T08:42:43.648+07:00  INFO 38660 --- [techlog] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-04-22T08:42:43.748+07:00  INFO 38660 --- [techlog] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-22T08:42:43.779+07:00  INFO 38660 --- [techlog] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
@@ -81,69 +81,65 @@ Caused by: com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException: 
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-04-22T08:38:30.024+07:00  INFO 35790 --- [techlog] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-04-22T08:38:30.037+07:00  INFO 35790 --- [techlog] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-04-22T08:38:30.152+07:00  WARN 35790 --- [techlog] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-04-22T08:38:30.362+07:00  INFO 35790 --- [techlog] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 57485 (http) with context path '/'
-2025-04-22T08:38:30.367+07:00  INFO 35790 --- [techlog] [    Test worker] won.techlog.blog.BlogControllerTest      : Started BlogControllerTest in 1.5 seconds (process running for 1.943)
-Request method:	GET
-Request URI:	http://localhost:57485/api/blog/poster?url=https%3A%2F%2Ftechblog.woowahan.com%2F21604%2F
+2025-04-22T08:42:44.046+07:00  INFO 38660 --- [techlog] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-22T08:42:44.058+07:00  INFO 38660 --- [techlog] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-22T08:42:44.166+07:00  WARN 38660 --- [techlog] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-22T08:42:44.355+07:00  INFO 38660 --- [techlog] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 57573 (http) with context path '/'
+2025-04-22T08:42:44.362+07:00  INFO 38660 --- [techlog] [    Test worker] won.techlog.blog.BlogControllerTest      : Started BlogControllerTest in 1.454 seconds (process running for 1.856)
+Request method:	POST
+Request URI:	http://localhost:57573/api/blog
 Proxy:			<none>
 Request params:	url=https://techblog.woowahan.com/21604/
 Query params:	<none>
 Form params:	<none>
 Path params:	<none>
 Headers:		Accept=*/*
+				Content-Type=application/json
 Cookies:		<none>
 Multiparts:		<none>
 Body:			<none>
-2025-04-22T08:38:30.977+07:00  INFO 35790 --- [techlog] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-04-22T08:38:30.977+07:00  INFO 35790 --- [techlog] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2025-04-22T08:38:30.977+07:00  INFO 35790 --- [techlog] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
-HTTP/1.1 404 
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
+2025-04-22T08:42:44.976+07:00  INFO 38660 --- [techlog] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-22T08:42:44.976+07:00  INFO 38660 --- [techlog] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-22T08:42:44.977+07:00  INFO 38660 --- [techlog] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-04-22T08:42:45.016+07:00  WARN 38660 --- [techlog] [o-auto-1-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unrecognized token 'url': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')]
+HTTP/1.1 400 
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Tue, 22 Apr 2025 01:38:31 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
+Date: Tue, 22 Apr 2025 01:42:45 GMT
+Connection: close
 
 {
-    "timestamp": "2025-04-22T01:38:30.994+00:00",
-    "status": 404,
-    "error": "Not Found",
-    "path": "/api/blog/poster"
+    "timestamp": "2025-04-22T01:42:45.020+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "path": "/api/blog"
 }
-Request method:	GET
-Request URI:	http://localhost:57485/api/blog/posters?url=https%3A%2F%2Ftechblog.woowahan.com%2F%3Fpaged%3D1
+Request method:	POST
+Request URI:	http://localhost:57573/api/blogs
 Proxy:			<none>
 Request params:	url=https://techblog.woowahan.com/?paged=1
 Query params:	<none>
 Form params:	<none>
 Path params:	<none>
 Headers:		Accept=*/*
+				Content-Type=application/json
 Cookies:		<none>
 Multiparts:		<none>
 Body:			<none>
-HTTP/1.1 404 
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
+2025-04-22T08:42:45.078+07:00  WARN 38660 --- [techlog] [o-auto-1-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unrecognized token 'url': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')]
+HTTP/1.1 400 
 Content-Type: application/json
 Transfer-Encoding: chunked
-Date: Tue, 22 Apr 2025 01:38:31 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
+Date: Tue, 22 Apr 2025 01:42:45 GMT
+Connection: close
 
 {
-    "timestamp": "2025-04-22T01:38:31.071+00:00",
-    "status": 404,
-    "error": "Not Found",
-    "path": "/api/blog/posters"
+    "timestamp": "2025-04-22T01:42:45.079+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "path": "/api/blogs"
 }
-io.restassured.internal.RestAssuredResponseImpl@7f0952cf
+io.restassured.internal.RestAssuredResponseImpl@259fb8f5
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
