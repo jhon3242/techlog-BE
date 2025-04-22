@@ -41,6 +41,9 @@ dependencies {
 
 	// MySQL
 	runtimeOnly("com.mysql:mysql-connector-j")
+
+	// logging
+	implementation ("io.github.oshai:kotlin-logging-jvm:7.0.3")
 }
 
 kotlin {
