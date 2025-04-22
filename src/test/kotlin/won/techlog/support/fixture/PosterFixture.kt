@@ -10,8 +10,12 @@ object PosterFixture {
         thumbnailUrl: String = "test thumbnailUrl",
         content: String = "test content",
         url: String = "test url",
+        views: Long = 0L,
+        recommendations: Long = 0L,
     ) = Poster(
         blogMetaData = BlogMetaDataFixture.create(title, thumbnailUrl, content, url),
-        blogType = BlogType.WOOWABRO
+        blogType = BlogType.WOOWABRO,
+        views = views,
+        recommendations = recommendations
     )
 }

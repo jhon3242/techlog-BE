@@ -18,4 +18,6 @@ class Poster(
     val blogMetaData: BlogMetaData,
     @Enumerated(EnumType.STRING)
     val blogType: BlogType,
+    var recommendations: Long = 0L,
+    var views: Long = 0L
 )

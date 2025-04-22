@@ -5,6 +5,11 @@ import io.restassured.RestAssured
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpHeaders.CONTENT_TYPE
+import org.springframework.http.MediaType
+import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
+import won.techlog.poster.api.request.PosterCreateRequest
+import won.techlog.poster.api.request.PostersCreateRequest
 import won.techlog.poster.api.response.PosterResponse
 import won.techlog.support.BaseControllerTest
 import won.techlog.support.fixture.PosterFixture
@@ -15,6 +20,58 @@ class PosterControllerTest: BaseControllerTest() {
 
     @Autowired
     lateinit var objectMapper: ObjectMapper
+
+    @Test
+    fun `포스터를 추가한다`() {
+        // given
+        val poster = PosterFixture.create()
+        val request = PosterCreateRequest(
+            title = poster.blogMetaData.title,
+            thumbnail = poster.blogMetaData.thumbnailUrl,
+            url = poster.blogMetaData.url,
+            content = poster.blogMetaData.content,
+            blogType = poster.blogType.name,
+        )
+
+        // when
+        // then
+        RestAssured.given().log().all()
+            .body(request)
+            .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+            .post("/api/poster")
+            .then().log().all()
+            .statusCode(201)
+    }
+
+    @Test
+    fun `포스터 리스트를 추가한다`() {
+        // given
+        val poster = PosterFixture.create()
+        val posterA = PosterCreateRequest(
+            title = poster.blogMetaData.title + "A",
+            thumbnail = poster.blogMetaData.thumbnailUrl,
+            url = poster.blogMetaData.url,
+            content = poster.blogMetaData.content,
+            blogType = poster.blogType.name,
+        )
+        val posterB = PosterCreateRequest(
+            title = poster.blogMetaData.title + "B",
+            thumbnail = poster.blogMetaData.thumbnailUrl,
+            url = poster.blogMetaData.url,
+            content = poster.blogMetaData.content,
+            blogType = poster.blogType.name,
+        )
+        val request = PostersCreateRequest(listOf(posterA, posterB))
+
+        // when
+        // then
+        RestAssured.given().log().all()
+            .body(request)
+            .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+            .post("/api/posters")
+            .then().log().all()
+            .statusCode(201)
+    }
 
     @Test
     fun `특정 포스터를 조회한다`() {
@@ -74,4 +131,43 @@ class PosterControllerTest: BaseControllerTest() {
             .then().log().all()
             .statusCode(200)
     }
+
+    @Test
+    fun `포스터를 추천한다`() {
+        // given
+        val poster = PosterFixture.create()
+        val savePoster = posterDao.savePoster(poster)
+
+        // when
+        RestAssured.given().log().all()
+            .pathParam("id", savePoster.id)
+            .`when`().put("$BASE_URL/{id}/recommend")
+            .then().log().all()
+            .statusCode(200)
+
+        // then
+        val curPoster = posterDao.getPoster(savePoster.id)
+        Assertions.assertThat(curPoster.recommendations).isGreaterThan(0)
+    }
+
+    @Test
+    fun `포스터를 조회한다`() {
+        // given
+        val poster = PosterFixture.create()
+        val savePoster = posterDao.savePoster(poster)
+
+        // when
+        RestAssured.given().log().all()
+            .pathParam("id", savePoster.id)
+            .`when`().put("$BASE_URL/{id}/view")
+            .then().log().all()
+            .statusCode(200)
+
+        // then
+        val curPoster = posterDao.getPoster(savePoster.id)
+        Assertions.assertThat(curPoster.views).isGreaterThan(0)
+    }
+
+
+
 }

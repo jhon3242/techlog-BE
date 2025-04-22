@@ -7,13 +7,17 @@ class PosterResponse(
     val thumbnail: String?,
     val content: String,
     val url: String,
-    val blogType: String
+    val blogType: String,
+    val recommendations: Long,
+    val views: Long
 ) {
     constructor(poster: Poster): this(
         title = poster.blogMetaData.title,
         thumbnail = poster.blogMetaData.thumbnailUrl,
         content = poster.blogMetaData.content,
         url = poster.blogMetaData.url,
-        blogType = poster.blogType.name
+        blogType = poster.blogType.name,
+        recommendations = poster.recommendations,
+        views = poster.views
         )
 }
