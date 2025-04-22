@@ -24,8 +24,8 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
         val duration = System.currentTimeMillis() - MDC.get(REQUEST_TIME).toLong()
         val status =
             when (response.status / 100) {
-                2, 3 -> "SUCCESS"
-                else -> "FAIL"
+                2, 3 -> "SUCCESS ✅"
+                else -> "FAIL ❌"
             }
 
         // 요청 헤더
