@@ -11,6 +11,9 @@ class PosterService(
     fun createPoster(poster: Poster): Poster
         = posterDao.savePoster(poster)
 
+    fun createPosters(posters: List<Poster>): List<Poster>
+    = posters.map { createPoster(it) }
+
     fun getPoster(id: Long): Poster
         = posterDao.getPoster(id)
 

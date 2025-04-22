@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import won.techlog.poster.api.request.PosterCreateRequest
+import won.techlog.poster.api.request.PostersCreateRequest
 import won.techlog.poster.api.response.PosterResponse
+import won.techlog.poster.api.response.PostersResponse
 import won.techlog.poster.domain.PosterService
 
 @RestController
@@ -18,7 +20,14 @@ class PosterController(
 ) {
     @PostMapping("/poster")
     fun createPoster(@RequestBody request: PosterCreateRequest): PosterResponse {
-        return PosterResponse(posterService.createPoster(request.toPoster()))
+        val poster = posterService.createPoster(request.toPoster())
+        return PosterResponse(poster)
+    }
+
+    @PostMapping("/posters")
+    fun createPosters(@RequestBody requests: PostersCreateRequest): PostersResponse {
+        val posters = posterService.createPosters(requests.toPosters())
+        return PostersResponse(posters.map { PosterResponse(it) })
     }
 
     @GetMapping("/posters")

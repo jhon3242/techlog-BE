@@ -10,7 +10,8 @@ class PosterDao(
     private val posterRepository: PosterRepository,
 ) {
     fun savePoster(poster: Poster): Poster {
-        return posterRepository.save(poster)
+        return posterRepository.findByBlogMetaData_Url(poster.blogMetaData.url)
+            ?: posterRepository.save(poster)
     }
 
     fun getPoster(id: Long): Poster
