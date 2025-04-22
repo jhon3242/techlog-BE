@@ -28,7 +28,7 @@ class WoowabroBlogParser: BlogParser {
                 .ifBlank { doc.title() }
 
         // 썸네일: 본문 내 첫 번째 이미지
-        val thumbnail = doc.select("img[decoding]").first().absUrl("src")
+        val thumbnail = doc.select("img[decoding]").first()?.absUrl("src")
             ?: doc.select("meta[property=og:image]").attr("content")
                 .ifBlank { null }
 
