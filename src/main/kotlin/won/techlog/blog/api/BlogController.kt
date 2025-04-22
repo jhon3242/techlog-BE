@@ -18,7 +18,6 @@ class BlogController(
         = blogService.parseBlogs(blogRequest.url)
             .map { BlogResponse(it) }
 
-
     @PostMapping("/blog")
     fun parseBlog(@RequestBody blogRequest: BlogRequest): BlogResponse
         = BlogResponse(blogService.parseBlog(blogRequest.url))

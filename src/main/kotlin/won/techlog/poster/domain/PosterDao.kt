@@ -9,8 +9,7 @@ import kotlin.jvm.optionals.getOrElse
 class PosterDao(
     private val posterRepository: PosterRepository,
 ) {
-    fun savePoster(blogMetaData: BlogMetaData): Poster {
-        val poster = Poster(blogMetaData = blogMetaData)
+    fun savePoster(poster: Poster): Poster {
         return posterRepository.save(poster)
     }
 

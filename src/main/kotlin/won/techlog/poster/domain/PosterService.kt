@@ -8,8 +8,8 @@ import won.techlog.blog.domain.BlogParserManager
 class PosterService(
     private val posterDao: PosterDao
 ) {
-    fun createPoster(blogMetaData: BlogMetaData): Poster
-        = posterDao.savePoster(blogMetaData)
+    fun createPoster(poster: Poster): Poster
+        = posterDao.savePoster(poster)
 
     fun getPoster(id: Long): Poster
         = posterDao.getPoster(id)

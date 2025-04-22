@@ -21,12 +21,9 @@ class BlogControllerTest: BaseControllerTest() {
             .body(request)
             .`when`().post("/api/blogs")
             .then().log().all()
+            .statusCode(200)
             .extract()
 
-        // when
-        println(result)
-
-        // then
     }
 
     @Test

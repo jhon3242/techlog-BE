@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import won.techlog.poster.api.response.PosterResponse
 import won.techlog.support.BaseControllerTest
-import won.techlog.support.fixture.BlogMetaDataFixture
+import won.techlog.support.fixture.PosterFixture
 
 private const val BASE_URL = "/api/posters"
 
@@ -19,8 +19,8 @@ class PosterControllerTest: BaseControllerTest() {
     @Test
     fun `특정 포스터를 조회한다`() {
         // given
-        val blogMetaData = BlogMetaDataFixture.create()
-        val savedPoster = posterDao.savePoster(blogMetaData)
+        val poster = PosterFixture.create()
+        val savedPoster = posterDao.savePoster(poster)
 
         // when
         val posterResponse = RestAssured.given().log().all()
@@ -42,10 +42,11 @@ class PosterControllerTest: BaseControllerTest() {
     @Test
     fun `모든 포스터를 조회한다`() {
         // given
-        val blogMetaDataA = BlogMetaDataFixture.create(title = "test A")
-        val blogMetaDataB = BlogMetaDataFixture.create(title = "test B")
-        posterDao.savePoster(blogMetaDataA)
-        posterDao.savePoster(blogMetaDataB)
+
+        val posterA = PosterFixture.create(title = "test A")
+        val posterB = PosterFixture.create(title = "test B")
+        posterDao.savePoster(posterA)
+        posterDao.savePoster(posterB)
 
         // when
         val result = RestAssured.given().log().all()
@@ -63,12 +64,12 @@ class PosterControllerTest: BaseControllerTest() {
     @Test
     fun `포스터를 삭제한다`() {
         // given
-        val blogMetaData = BlogMetaDataFixture.create()
-        posterDao.savePoster(blogMetaData)
+        val poster = PosterFixture.create()
+        val savePoster = posterDao.savePoster(poster)
 
         // when & then
         RestAssured.given().log().all()
-            .pathParam("id", 1)
+            .pathParam("id", savePoster.id)
             .`when`().delete("$BASE_URL/{id}")
             .then().log().all()
             .statusCode(200)
