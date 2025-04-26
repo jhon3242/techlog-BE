@@ -1,5 +1,6 @@
 package won.techlog.poster.domain
 
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import won.techlog.poster.exception.NotFoundException
@@ -23,6 +24,12 @@ class PosterDao(
     @Transactional(readOnly = true)
     fun getAllPosters(): List<Poster>
     = posterRepository.findAll()
+
+    @Transactional(readOnly = true)
+    fun getPosters(page: Int, size: Int): List<Poster> {
+        val pageable = PageRequest.of(page, size)
+        return posterRepository.findAll(pageable).content
+    }
 
     @Transactional
     fun deletePoster(id: Long) = posterRepository.deleteById(id)

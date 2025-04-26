@@ -15,8 +15,8 @@ class PosterService(
     fun getPoster(id: Long): Poster
         = posterDao.getPoster(id)
 
-    fun getPosters(): List<Poster>
-        = posterDao.getAllPosters()
+    fun getPosters(page: Int, size: Int): List<Poster>
+        = posterDao.getPosters(page, size)
 
     fun deletePoster(id: Long)
         = posterDao.deletePoster(id)
