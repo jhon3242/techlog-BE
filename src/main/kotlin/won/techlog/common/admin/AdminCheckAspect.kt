@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
 
-private const val ADMIN_HEADER = "X-Admin-Token"
+private const val ADMIN_HEADER = "X-Admin-Header"
 
 @Aspect
 @Component

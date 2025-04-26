@@ -42,6 +42,7 @@ class PosterControllerTest: BaseControllerTest() {
         RestAssured.given().log().all()
             .body(request)
             .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+            .header(ADMIN_HEADER, adminHeaderKey)
             .post("/api/poster")
             .then().log().all()
             .statusCode(201)
@@ -134,6 +135,7 @@ class PosterControllerTest: BaseControllerTest() {
         // when & then
         RestAssured.given().log().all()
             .pathParam("id", savePoster.id)
+            .header(ADMIN_HEADER, adminHeaderKey)
             .`when`().delete("$BASE_URL/{id}")
             .then().log().all()
             .statusCode(200)
