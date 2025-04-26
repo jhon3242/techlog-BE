@@ -55,3 +55,42 @@ kotlin {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+
+tasks.named<ProcessResources>("processResources") {
+	dependsOn("initSetting")
+}
+
+tasks.register("initSetting") {
+	group = "custom tasks"
+	description = "Execute both copyHooks and copySecret tasks."
+
+	dependsOn("copyHooks", "copySecret")
+}
+
+tasks.register<Copy>("copySecret") {
+	from("./techlog-env")
+	include("env-common.yml")
+	into("src/main/resources")
+}
+
+tasks.register("copyHooks") {
+	group = "git hooks"
+	description = "Copy pre-commit and pre-push git hooks from .githooks to .git/hooks folder."
+
+	doLast {
+		// pre-commit hook 복사
+		copy {
+			from("$rootDir/.githooks/pre-commit")
+			into("$rootDir/.git/hooks")
+		}
+		// pre-push hook 복사
+		copy {
+			from("$rootDir/.githooks/pre-push")
+			into("$rootDir/.git/hooks")
+		}
+		// pre-push hook에 실행 권한 부여
+		file("$rootDir/.git/hooks/pre-push").setExecutable(true)
+		println("Git pre-commit 및 pre-push hook이 성공적으로 등록되었습니다.")
+	}
+}
