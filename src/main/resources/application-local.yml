@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: application-common.yml
   datasource:
     url: jdbc:mysql://localhost:33060/techlog?useSSL=false&allowPublicKeyRetrieval=true
     username: user

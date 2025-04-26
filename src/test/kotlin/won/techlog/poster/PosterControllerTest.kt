@@ -5,8 +5,8 @@ import io.restassured.RestAssured
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders.CONTENT_TYPE
-import org.springframework.http.MediaType
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import won.techlog.poster.api.request.PosterCreateRequest
 import won.techlog.poster.api.request.PostersCreateRequest
@@ -15,11 +15,15 @@ import won.techlog.support.BaseControllerTest
 import won.techlog.support.fixture.PosterFixture
 
 private const val BASE_URL = "/api/posters"
+private const val ADMIN_HEADER = "X-Admin-Header"
 
 class PosterControllerTest: BaseControllerTest() {
 
     @Autowired
     lateinit var objectMapper: ObjectMapper
+    @Value("\${admin.header}")
+    lateinit var adminHeaderKey: String
+
 
     @Test
     fun `포스터를 추가한다`() {
@@ -38,6 +42,7 @@ class PosterControllerTest: BaseControllerTest() {
         RestAssured.given().log().all()
             .body(request)
             .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+            .header(ADMIN_HEADER, adminHeaderKey)
             .post("/api/poster")
             .then().log().all()
             .statusCode(201)
@@ -68,6 +73,7 @@ class PosterControllerTest: BaseControllerTest() {
         RestAssured.given().log().all()
             .body(request)
             .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+            .header(ADMIN_HEADER, adminHeaderKey)
             .post("/api/posters")
             .then().log().all()
             .statusCode(201)
@@ -129,6 +135,7 @@ class PosterControllerTest: BaseControllerTest() {
         // when & then
         RestAssured.given().log().all()
             .pathParam("id", savePoster.id)
+            .header(ADMIN_HEADER, adminHeaderKey)
             .`when`().delete("$BASE_URL/{id}")
             .then().log().all()
             .statusCode(200)

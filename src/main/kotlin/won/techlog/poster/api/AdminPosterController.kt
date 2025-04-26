@@ -2,13 +2,10 @@ package won.techlog.poster.api
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import won.techlog.common.admin.AdminCheck
@@ -18,32 +15,27 @@ import won.techlog.poster.api.response.PosterResponse
 import won.techlog.poster.api.response.PostersResponse
 import won.techlog.poster.domain.PosterService
 
+@AdminCheck
 @RestController
 @RequestMapping("/api")
-class PosterController(
+class AdminPosterController(
     private val posterService: PosterService
 ) {
-    @GetMapping("/posters")
-    fun getPosters(
-        @RequestParam page: Int,
-        @RequestParam size: Int
-    ) : List<PosterResponse>
-    = posterService.getPosters(page, size)
-        .map { PosterResponse(it) }
-
-    @GetMapping("/posters/{id}")
-    fun getPoster(@PathVariable id: Long) : PosterResponse
-    = PosterResponse(posterService.getPoster(id))
-
-
-
-    @PutMapping("/posters/{id}/recommend")
-    fun recommend(@PathVariable id: Long) {
-        posterService.recommend(id)
+    @PostMapping("/poster")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createPoster(@RequestBody request: PosterCreateRequest): PosterResponse {
+        val poster = posterService.createPoster(request.toPoster())
+        return PosterResponse(poster)
     }
 
-    @PutMapping("/posters/{id}/view")
-    fun increaseView(@PathVariable id: Long) {
-        posterService.increaseView(id)
+    @PostMapping("/posters")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createPosters(@RequestBody requests: PostersCreateRequest): PostersResponse {
+        val posters = posterService.createPosters(requests.toPosters())
+        return PostersResponse(posters.map { PosterResponse(it) })
     }
+
+    @DeleteMapping("posters/{id}")
+    fun deletePoster(@PathVariable id: Long)
+            = posterService.deletePoster(id)
 }
