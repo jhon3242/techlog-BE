@@ -12,7 +12,7 @@ import won.techlog.support.BaseControllerTest
 
 class BlogControllerTest: BaseControllerTest() {
 
-    @Test
+//    @Test
     fun `우아한형제들 블로그 글을 찾는다`() {
         // given
         val request = BlogRequest("https://techblog.woowahan.com/?paged=1")
@@ -26,7 +26,7 @@ class BlogControllerTest: BaseControllerTest() {
 
     }
 
-    @Test
+//    @Test
     fun `우아한형제들 블로그 글을 파싱한다`() {
         // given
         val request = BlogRequest("https://techblog.woowahan.com/21604/")

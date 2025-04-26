@@ -23,22 +23,6 @@ import won.techlog.poster.domain.PosterService
 class PosterController(
     private val posterService: PosterService
 ) {
-    @AdminCheck
-    @PostMapping("/poster")
-    @ResponseStatus(HttpStatus.CREATED)
-    fun createPoster(@RequestBody request: PosterCreateRequest): PosterResponse {
-        val poster = posterService.createPoster(request.toPoster())
-        return PosterResponse(poster)
-    }
-
-    @AdminCheck
-    @PostMapping("/posters")
-    @ResponseStatus(HttpStatus.CREATED)
-    fun createPosters(@RequestBody requests: PostersCreateRequest): PostersResponse {
-        val posters = posterService.createPosters(requests.toPosters())
-        return PostersResponse(posters.map { PosterResponse(it) })
-    }
-
     @GetMapping("/posters")
     fun getPosters(
         @RequestParam page: Int,
@@ -51,10 +35,7 @@ class PosterController(
     fun getPoster(@PathVariable id: Long) : PosterResponse
     = PosterResponse(posterService.getPoster(id))
 
-    @AdminCheck
-    @DeleteMapping("posters/{id}")
-    fun deletePoster(@PathVariable id: Long)
-    = posterService.deletePoster(id)
+
 
     @PutMapping("/posters/{id}/recommend")
     fun recommend(@PathVariable id: Long) {
