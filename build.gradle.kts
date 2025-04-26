@@ -69,7 +69,7 @@ tasks.register("initSetting") {
 }
 
 tasks.register<Copy>("copySecret") {
-	from("./techlog-env")
+	from("./techlog-env/back")
 	include("env-common.yml")
 	into("src/main/resources")
 }
