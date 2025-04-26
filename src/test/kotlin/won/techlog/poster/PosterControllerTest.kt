@@ -107,6 +107,8 @@ class PosterControllerTest: BaseControllerTest() {
 
         // when
         val result = RestAssured.given().log().all()
+            .queryParam("page", 0)
+            .queryParam("size", 10)
             .`when`().get(BASE_URL)
             .then().log().all()
             .statusCode(200)
