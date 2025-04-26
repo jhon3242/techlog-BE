@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import won.techlog.common.admin.AdminCheck
 import won.techlog.poster.api.request.PosterCreateRequest
 import won.techlog.poster.api.request.PostersCreateRequest
 import won.techlog.poster.api.response.PosterResponse
@@ -22,6 +23,7 @@ import won.techlog.poster.domain.PosterService
 class PosterController(
     private val posterService: PosterService
 ) {
+    @AdminCheck
     @PostMapping("/poster")
     @ResponseStatus(HttpStatus.CREATED)
     fun createPoster(@RequestBody request: PosterCreateRequest): PosterResponse {
@@ -29,6 +31,7 @@ class PosterController(
         return PosterResponse(poster)
     }
 
+    @AdminCheck
     @PostMapping("/posters")
     @ResponseStatus(HttpStatus.CREATED)
     fun createPosters(@RequestBody requests: PostersCreateRequest): PostersResponse {
@@ -48,6 +51,7 @@ class PosterController(
     fun getPoster(@PathVariable id: Long) : PosterResponse
     = PosterResponse(posterService.getPoster(id))
 
+    @AdminCheck
     @DeleteMapping("posters/{id}")
     fun deletePoster(@PathVariable id: Long)
     = posterService.deletePoster(id)
