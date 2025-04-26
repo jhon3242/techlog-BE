@@ -3,6 +3,7 @@ package won.techlog.poster.api.response
 import won.techlog.poster.domain.Poster
 
 class PosterResponse(
+    val id: Long,
     val title: String,
     val thumbnail: String?,
     val content: String,
@@ -12,6 +13,7 @@ class PosterResponse(
     val views: Long
 ) {
     constructor(poster: Poster): this(
+        id = poster.id,
         title = poster.blogMetaData.title,
         thumbnail = poster.blogMetaData.thumbnailUrl,
         content = poster.blogMetaData.content,
