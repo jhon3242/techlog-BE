@@ -9,7 +9,8 @@ data class PosterCreateRequest(
     val thumbnail: String?,
     val content: String,
     val url: String,
-    val blogType: String
+    val blogType: String,
+    val tags: List<String>,
 ) {
     fun toPoster(): Poster =
         Poster(

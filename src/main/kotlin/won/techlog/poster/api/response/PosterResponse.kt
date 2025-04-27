@@ -1,6 +1,7 @@
 package won.techlog.poster.api.response
 
 import won.techlog.poster.domain.Poster
+import won.techlog.tag.domain.Tag
 
 class PosterResponse(
     val id: Long,
@@ -10,9 +11,10 @@ class PosterResponse(
     val url: String,
     val blogType: String,
     val recommendations: Long,
-    val views: Long
+    val views: Long,
+    val tags: List<String>
 ) {
-    constructor(poster: Poster) : this(
+    constructor(poster: Poster, tags: List<Tag>) : this(
         id = poster.id,
         title = poster.blogMetaData.title,
         thumbnail = poster.blogMetaData.thumbnailUrl,
@@ -20,6 +22,7 @@ class PosterResponse(
         url = poster.blogMetaData.url,
         blogType = poster.blogType.name,
         recommendations = poster.recommendations,
-        views = poster.views
+        views = poster.views,
+        tags = tags.map { it.name }
     )
 }

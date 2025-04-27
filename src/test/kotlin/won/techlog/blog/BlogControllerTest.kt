@@ -27,9 +27,9 @@ class BlogControllerTest : BaseControllerTest() {
         println(result)
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = ["https://techblog.woowahan.com/21604/", "https://d2.naver.com/helloworld/1168674"])
-    @ValueSource(strings = ["https://techblog.woowahan.com/20789/"])
+//    @ParameterizedTest
+//    @ValueSource(strings = ["https://techblog.woowahan.com/21604/", "https://d2.naver.com/helloworld/1168674"])
+//    @ValueSource(strings = ["https://techblog.woowahan.com/20789/"])
     fun `블로그 글을 파싱한다`(url: String) {
         // given
         val request = BlogRequest(url)

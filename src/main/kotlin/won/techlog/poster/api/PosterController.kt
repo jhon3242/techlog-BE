@@ -20,12 +20,12 @@ class PosterController(
         @RequestParam size: Int
     ): List<PosterResponse> =
         posterService.getPosters(page, size)
-            .map { PosterResponse(it) }
+
 
     @GetMapping("/posters/{id}")
     fun getPoster(
         @PathVariable id: Long
-    ): PosterResponse = PosterResponse(posterService.getPoster(id))
+    ): PosterResponse = posterService.getPoster(id)
 
     @PutMapping("/posters/{id}/recommend")
     fun recommend(

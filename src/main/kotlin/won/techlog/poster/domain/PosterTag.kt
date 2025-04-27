@@ -12,7 +12,7 @@ import won.techlog.tag.domain.Tag
 class PosterTag(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long = 0L,
     @ManyToOne(fetch = FetchType.LAZY)
     val poster: Poster,
     @ManyToOne(fetch = FetchType.LAZY)

@@ -13,6 +13,7 @@ import won.techlog.poster.api.request.PostersCreateRequest
 import won.techlog.poster.api.response.PosterResponse
 import won.techlog.support.BaseControllerTest
 import won.techlog.support.fixture.PosterFixture
+import won.techlog.support.fixture.TagsFixture
 
 private const val BASE_URL = "/api/posters"
 private const val ADMIN_HEADER = "X-Admin-Header"
@@ -28,13 +29,16 @@ class PosterControllerTest : BaseControllerTest() {
     fun `포스터를 추가한다`() {
         // given
         val poster = PosterFixture.create()
+        val tagNames = TagsFixture.create()
+        tagNames.forEach{ tagDao.save(it) }
         val request =
             PosterCreateRequest(
                 title = poster.blogMetaData.title,
                 thumbnail = poster.blogMetaData.thumbnailUrl,
                 url = poster.blogMetaData.url,
                 content = poster.blogMetaData.content,
-                blogType = poster.blogType.name
+                blogType = poster.blogType.name,
+                tags = tagNames
             )
 
         // when
@@ -52,13 +56,16 @@ class PosterControllerTest : BaseControllerTest() {
     fun `포스터 리스트를 추가한다`() {
         // given
         val poster = PosterFixture.create()
+        val tagNames = TagsFixture.create()
+        tagNames.forEach{ tagDao.save(it) }
         val posterA =
             PosterCreateRequest(
                 title = poster.blogMetaData.title + "A",
                 thumbnail = poster.blogMetaData.thumbnailUrl,
                 url = poster.blogMetaData.url,
                 content = poster.blogMetaData.content,
-                blogType = poster.blogType.name
+                blogType = poster.blogType.name,
+                tags = tagNames
             )
         val posterB =
             PosterCreateRequest(
@@ -66,7 +73,8 @@ class PosterControllerTest : BaseControllerTest() {
                 thumbnail = poster.blogMetaData.thumbnailUrl,
                 url = poster.blogMetaData.url,
                 content = poster.blogMetaData.content,
-                blogType = poster.blogType.name
+                blogType = poster.blogType.name,
+                tags = tagNames
             )
         val request = PostersCreateRequest(listOf(posterA, posterB))
 

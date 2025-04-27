@@ -18,10 +18,16 @@ class TagDao(
             ?: tagRepository.save(Tag(name = name))
 
     @Transactional(readOnly = true)
-    fun findAll(): List<Tag> = tagRepository.findAll()
-
-    @Transactional(readOnly = true)
     fun getByName(name: String): Tag =
         tagRepository.findByName(name)
             ?: throw IllegalArgumentException("일치하는 태그가 없습니다.")
+
+    @Transactional(readOnly = true)
+    fun findAll(): List<Tag> = tagRepository.findAll()
+
+    @Transactional(readOnly = true)
+    fun findAllByNames(tagNames: List<String>): List<Tag> {
+        return tagNames.map { getByName(it) }
+            .toList()
+    }
 }
