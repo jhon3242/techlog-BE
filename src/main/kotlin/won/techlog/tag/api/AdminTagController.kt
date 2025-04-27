@@ -20,5 +20,7 @@ class AdminTagController(
     fun findAllTags(): List<Tag> = tagService.findAll()
 
     @PostMapping("/tag")
-    fun save(@RequestBody request: TagRequest): Tag = tagService.save(request.name)
+    fun save(
+        @RequestBody request: TagRequest
+    ): Tag = tagService.save(request.name)
 }
