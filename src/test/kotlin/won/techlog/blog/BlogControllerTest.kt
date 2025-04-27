@@ -2,20 +2,22 @@ package won.techlog.blog
 
 import io.restassured.RestAssured
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogRequest
 import won.techlog.blog.api.response.BlogResponse
-import won.techlog.poster.api.response.PosterResponse
 import won.techlog.support.BaseControllerTest
 
 class BlogControllerTest: BaseControllerTest() {
 
-//    @Test
-    fun `우아한형제들 블로그 글을 찾는다`() {
+    @ParameterizedTest
+//    @ValueSource(strings = ["https://techblog.woowahan.com/?paged=1", "https://d2.naver.com/helloworld?page=0"])
+    @ValueSource(strings = ["https://d2.naver.com/helloworld?page=0"])
+    fun `블로그 글을 찾는다`(url: String) {
         // given
-        val request = BlogRequest("https://techblog.woowahan.com/?paged=1")
+        val request = BlogRequest(url)
         val result = RestAssured.given().log().all()
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .body(request)
@@ -23,13 +25,15 @@ class BlogControllerTest: BaseControllerTest() {
             .then().log().all()
             .statusCode(200)
             .extract()
-
+        println(result)
     }
 
-//    @Test
-    fun `우아한형제들 블로그 글을 파싱한다`() {
+    @ParameterizedTest
+    @ValueSource(strings = ["https://techblog.woowahan.com/21604/", "https://d2.naver.com/helloworld/1168674"])
+//    @ValueSource(strings = ["https://d2.naver.com/helloworld/1168674"])
+    fun `블로그 글을 파싱한다`(url: String) {
         // given
-        val request = BlogRequest("https://techblog.woowahan.com/21604/")
+        val request = BlogRequest(url)
         val response = RestAssured.given().log().all()
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .body(request)

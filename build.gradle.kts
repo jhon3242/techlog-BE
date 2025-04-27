@@ -30,6 +30,9 @@ dependencies {
 	// Jsoup
 	implementation("org.jsoup:jsoup:1.17.2")
 
+	// Playwright
+	implementation("com.microsoft.playwright:playwright:1.44.0")
+
 	// RestAssured
 	testImplementation("io.rest-assured:rest-assured:5.5.0")
 

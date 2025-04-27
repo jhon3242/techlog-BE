@@ -6,7 +6,8 @@ enum class BlogType(
     val baseUrl: String,
     val beanName: String
 ) {
-    WOOWABRO("https://techblog.woowahan.com/", "woowabroBlogParser")
+    WOOWABRO("https://techblog.woowahan.com/", "woowabroBlogParser"),
+    NAVER("https://d2.naver.com/helloworld", "naverBlogParser")
     ;
 
     companion object {
