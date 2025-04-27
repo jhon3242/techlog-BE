@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import won.techlog.common.admin.AdminCheck
 import won.techlog.tag.api.request.TagRequest
-import won.techlog.tag.domain.Tag
+import won.techlog.tag.api.response.TagResponse
 import won.techlog.tag.domain.TagService
 
 @AdminCheck
@@ -17,10 +17,12 @@ class AdminTagController(
     private val tagService: TagService
 ) {
     @GetMapping("/tags")
-    fun findAllTags(): List<Tag> = tagService.findAll()
+    fun findAllTags(): List<TagResponse> =
+        tagService.findAll()
+            .map { TagResponse(it) }
 
     @PostMapping("/tag")
     fun save(
         @RequestBody request: TagRequest
-    ): Tag = tagService.save(request.name)
+    ): TagResponse = TagResponse(tagService.save(request.name))
 }
