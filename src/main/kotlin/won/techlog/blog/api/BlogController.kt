@@ -11,14 +11,17 @@ import won.techlog.blog.domain.BlogService
 @RestController
 @RequestMapping("/api")
 class BlogController(
-    private val blogService: BlogService,
+    private val blogService: BlogService
 ) {
     @PostMapping("/blogs")
-    fun parseBlogs(@RequestBody blogRequest: BlogRequest): List<BlogResponse>
-        = blogService.parseBlogs(blogRequest.url)
+    fun parseBlogs(
+        @RequestBody blogRequest: BlogRequest
+    ): List<BlogResponse> =
+        blogService.parseBlogs(blogRequest.url)
             .map { BlogResponse(it) }
 
     @PostMapping("/blog")
-    fun parseBlog(@RequestBody blogRequest: BlogRequest): BlogResponse
-        = BlogResponse(blogService.parseBlog(blogRequest.url))
+    fun parseBlog(
+        @RequestBody blogRequest: BlogRequest
+    ): BlogResponse = BlogResponse(blogService.parseBlog(blogRequest.url))
 }

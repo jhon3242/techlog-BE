@@ -23,19 +23,24 @@ class AdminPosterController(
 ) {
     @PostMapping("/poster")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createPoster(@RequestBody request: PosterCreateRequest): PosterResponse {
+    fun createPoster(
+        @RequestBody request: PosterCreateRequest
+    ): PosterResponse {
         val poster = posterService.createPoster(request.toPoster())
         return PosterResponse(poster)
     }
 
     @PostMapping("/posters")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createPosters(@RequestBody requests: PostersCreateRequest): PostersResponse {
+    fun createPosters(
+        @RequestBody requests: PostersCreateRequest
+    ): PostersResponse {
         val posters = posterService.createPosters(requests.toPosters())
         return PostersResponse(posters.map { PosterResponse(it) })
     }
 
     @DeleteMapping("posters/{id}")
-    fun deletePoster(@PathVariable id: Long)
-            = posterService.deletePoster(id)
+    fun deletePoster(
+        @PathVariable id: Long
+    ) = posterService.deletePoster(id)
 }

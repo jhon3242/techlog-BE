@@ -11,7 +11,6 @@ abstract class BaseLoggingInterceptor : HandlerInterceptor {
         const val REQUEST_ID = "requestId"
         const val REQUEST_TIME = "requestTime"
         const val IGNORE_URI = "/health"
-
     }
 
     override fun preHandle(

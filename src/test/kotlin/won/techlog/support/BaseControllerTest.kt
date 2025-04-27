@@ -10,10 +10,9 @@ import won.techlog.poster.domain.PosterDao
 
 @ExtendWith(DatabaseCleanerExtension::class)
 @SpringBootTest(
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 abstract class BaseControllerTest {
-
     @Autowired
     lateinit var posterDao: PosterDao
 

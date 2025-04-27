@@ -11,8 +11,8 @@ enum class BlogType(
     ;
 
     companion object {
-        fun getByUrl(url: String): BlogType
-            = entries.find { url.startsWith(it.baseUrl) }
+        fun getByUrl(url: String): BlogType =
+            entries.find { url.startsWith(it.baseUrl) }
                 ?: throw NotFoundException()
     }
 }

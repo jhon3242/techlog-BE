@@ -12,7 +12,7 @@ class PosterResponse(
     val recommendations: Long,
     val views: Long
 ) {
-    constructor(poster: Poster): this(
+    constructor(poster: Poster) : this(
         id = poster.id,
         title = poster.blogMetaData.title,
         thumbnail = poster.blogMetaData.thumbnailUrl,
@@ -21,5 +21,5 @@ class PosterResponse(
         blogType = poster.blogType.name,
         recommendations = poster.recommendations,
         views = poster.views
-        )
+    )
 }

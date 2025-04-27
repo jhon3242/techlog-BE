@@ -17,25 +17,25 @@ import won.techlog.support.fixture.PosterFixture
 private const val BASE_URL = "/api/posters"
 private const val ADMIN_HEADER = "X-Admin-Header"
 
-class PosterControllerTest: BaseControllerTest() {
-
+class PosterControllerTest : BaseControllerTest() {
     @Autowired
     lateinit var objectMapper: ObjectMapper
+
     @Value("\${admin.header}")
     lateinit var adminHeaderKey: String
-
 
     @Test
     fun `포스터를 추가한다`() {
         // given
         val poster = PosterFixture.create()
-        val request = PosterCreateRequest(
-            title = poster.blogMetaData.title,
-            thumbnail = poster.blogMetaData.thumbnailUrl,
-            url = poster.blogMetaData.url,
-            content = poster.blogMetaData.content,
-            blogType = poster.blogType.name,
-        )
+        val request =
+            PosterCreateRequest(
+                title = poster.blogMetaData.title,
+                thumbnail = poster.blogMetaData.thumbnailUrl,
+                url = poster.blogMetaData.url,
+                content = poster.blogMetaData.content,
+                blogType = poster.blogType.name
+            )
 
         // when
         // then
@@ -52,20 +52,22 @@ class PosterControllerTest: BaseControllerTest() {
     fun `포스터 리스트를 추가한다`() {
         // given
         val poster = PosterFixture.create()
-        val posterA = PosterCreateRequest(
-            title = poster.blogMetaData.title + "A",
-            thumbnail = poster.blogMetaData.thumbnailUrl,
-            url = poster.blogMetaData.url,
-            content = poster.blogMetaData.content,
-            blogType = poster.blogType.name,
-        )
-        val posterB = PosterCreateRequest(
-            title = poster.blogMetaData.title + "B",
-            thumbnail = poster.blogMetaData.thumbnailUrl,
-            url = poster.blogMetaData.url,
-            content = poster.blogMetaData.content,
-            blogType = poster.blogType.name,
-        )
+        val posterA =
+            PosterCreateRequest(
+                title = poster.blogMetaData.title + "A",
+                thumbnail = poster.blogMetaData.thumbnailUrl,
+                url = poster.blogMetaData.url,
+                content = poster.blogMetaData.content,
+                blogType = poster.blogType.name
+            )
+        val posterB =
+            PosterCreateRequest(
+                title = poster.blogMetaData.title + "B",
+                thumbnail = poster.blogMetaData.thumbnailUrl,
+                url = poster.blogMetaData.url,
+                content = poster.blogMetaData.content,
+                blogType = poster.blogType.name
+            )
         val request = PostersCreateRequest(listOf(posterA, posterB))
 
         // when
@@ -86,19 +88,20 @@ class PosterControllerTest: BaseControllerTest() {
         val savedPoster = posterDao.savePoster(poster)
 
         // when
-        val posterResponse = RestAssured.given().log().all()
-            .pathParam("id", 1)
-            .`when`().get("$BASE_URL/{id}")
-            .then().log().all()
-            .statusCode(200)
-            .extract().`as`(PosterResponse::class.java)
+        val posterResponse =
+            RestAssured.given().log().all()
+                .pathParam("id", 1)
+                .`when`().get("$BASE_URL/{id}")
+                .then().log().all()
+                .statusCode(200)
+                .extract().`as`(PosterResponse::class.java)
 
         // then
         org.junit.jupiter.api.Assertions.assertAll(
             { Assertions.assertThat(posterResponse.url).isEqualTo(savedPoster.blogMetaData.url) },
             { Assertions.assertThat(posterResponse.title).isEqualTo(savedPoster.blogMetaData.title) },
             { Assertions.assertThat(posterResponse.content).isEqualTo(savedPoster.blogMetaData.content) },
-            { Assertions.assertThat(posterResponse.thumbnail).isEqualTo(savedPoster.blogMetaData.thumbnailUrl) },
+            { Assertions.assertThat(posterResponse.thumbnail).isEqualTo(savedPoster.blogMetaData.thumbnailUrl) }
         )
     }
 
@@ -112,18 +115,18 @@ class PosterControllerTest: BaseControllerTest() {
         posterDao.savePoster(posterB)
 
         // when
-        val result = RestAssured.given().log().all()
-            .queryParam("page", 0)
-            .queryParam("size", 10)
-            .`when`().get(BASE_URL)
-            .then().log().all()
-            .statusCode(200)
-            .extract()
-            .response()
-            .body
+        val result =
+            RestAssured.given().log().all()
+                .queryParam("page", 0)
+                .queryParam("size", 10)
+                .`when`().get(BASE_URL)
+                .then().log().all()
+                .statusCode(200)
+                .extract()
+                .response()
+                .body
 
         // TODO 리스트를 List<Object>로 매핑
-
     }
 
     @Test
@@ -176,7 +179,4 @@ class PosterControllerTest: BaseControllerTest() {
         val curPoster = posterDao.getPoster(savePoster.id)
         Assertions.assertThat(curPoster.views).isGreaterThan(0)
     }
-
-
-
 }

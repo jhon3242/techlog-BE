@@ -19,7 +19,9 @@ class AdminCheckAspect(
     @Before("@annotation(AdminCheck)")
     fun adminCheck(joinPoint: JoinPoint) {
         val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
-        val headerValue = request.getHeader(ADMIN_HEADER) ?: throw IllegalArgumentException("Missing admin token header")
+        val headerValue =
+            request.getHeader(ADMIN_HEADER)
+                ?: throw IllegalArgumentException("Missing admin token header")
 
         if (headerValue != adminHeaderKey) {
             throw IllegalArgumentException("Invalid admin token")

@@ -8,7 +8,7 @@ import kotlin.jvm.optionals.getOrElse
 
 @Component
 class PosterDao(
-    private val posterRepository: PosterRepository,
+    private val posterRepository: PosterRepository
 ) {
     @Transactional
     fun savePoster(poster: Poster): Poster {
@@ -17,16 +17,18 @@ class PosterDao(
     }
 
     @Transactional(readOnly = true)
-    fun getPoster(id: Long): Poster
-    = posterRepository.findById(id)
-        .getOrElse { throw NotFoundException() }
+    fun getPoster(id: Long): Poster =
+        posterRepository.findById(id)
+            .getOrElse { throw NotFoundException() }
 
     @Transactional(readOnly = true)
-    fun getAllPosters(): List<Poster>
-    = posterRepository.findAll()
+    fun getAllPosters(): List<Poster> = posterRepository.findAll()
 
     @Transactional(readOnly = true)
-    fun getPosters(page: Int, size: Int): List<Poster> {
+    fun getPosters(
+        page: Int,
+        size: Int
+    ): List<Poster> {
         val pageable = PageRequest.of(page, size)
         return posterRepository.findAll(pageable).content
     }

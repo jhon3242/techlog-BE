@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContext
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.transaction.support.TransactionTemplate
 
-class DatabaseCleanerExtension: BeforeEachCallback {
+class DatabaseCleanerExtension : BeforeEachCallback {
     override fun beforeEach(extensionContext: ExtensionContext?) {
         val context = extensionContext?.let { SpringExtension.getApplicationContext(extensionContext) }
         context?.let { cleanup(it) }

@@ -5,6 +5,5 @@ import won.techlog.poster.domain.Poster
 data class PostersCreateRequest(
     val posters: List<PosterCreateRequest>
 ) {
-    fun toPosters(): List<Poster>
-    = posters.map { it.toPoster() }
+    fun toPosters(): List<Poster> = posters.map { it.toPoster() }
 }

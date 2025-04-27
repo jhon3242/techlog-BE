@@ -9,7 +9,7 @@ data class BlogResponse(
     val url: String,
     val blogType: String
 ) {
-    constructor(blog: Blog): this(
+    constructor(blog: Blog) : this(
         title = blog.metaData.title,
         thumbnail = blog.metaData.thumbnailUrl,
         content = blog.metaData.content,

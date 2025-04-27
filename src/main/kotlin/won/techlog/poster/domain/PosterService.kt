@@ -6,20 +6,18 @@ import org.springframework.stereotype.Service
 class PosterService(
     private val posterDao: PosterDao
 ) {
-    fun createPoster(poster: Poster): Poster
-        = posterDao.savePoster(poster)
+    fun createPoster(poster: Poster): Poster = posterDao.savePoster(poster)
 
-    fun createPosters(posters: List<Poster>): List<Poster>
-        = posters.map { createPoster(it) }
+    fun createPosters(posters: List<Poster>): List<Poster> = posters.map { createPoster(it) }
 
-    fun getPoster(id: Long): Poster
-        = posterDao.getPoster(id)
+    fun getPoster(id: Long): Poster = posterDao.getPoster(id)
 
-    fun getPosters(page: Int, size: Int): List<Poster>
-        = posterDao.getPosters(page, size)
+    fun getPosters(
+        page: Int,
+        size: Int
+    ): List<Poster> = posterDao.getPosters(page, size)
 
-    fun deletePoster(id: Long)
-        = posterDao.deletePoster(id)
+    fun deletePoster(id: Long) = posterDao.deletePoster(id)
 
     fun recommend(id: Long) {
         posterDao.recommend(id)

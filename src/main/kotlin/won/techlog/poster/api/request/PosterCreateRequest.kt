@@ -11,15 +11,18 @@ data class PosterCreateRequest(
     val url: String,
     val blogType: String
 ) {
-    fun toPoster(): Poster = Poster(
-        blogMetaData = BlogMetaData(
-            title = title,
-            thumbnailUrl = thumbnail,
-            content = content,
-            url = url,
-        ),
-        blogType = BlogType.valueOf(
-            blogType
+    fun toPoster(): Poster =
+        Poster(
+            blogMetaData =
+                BlogMetaData(
+                    title = title,
+                    thumbnailUrl = thumbnail,
+                    content = content,
+                    url = url
+                ),
+            blogType =
+                BlogType.valueOf(
+                    blogType
+                )
         )
-    )
 }

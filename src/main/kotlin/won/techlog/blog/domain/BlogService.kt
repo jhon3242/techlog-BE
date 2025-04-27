@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service
 class BlogService(
     private val blogParserManager: BlogParserManager
 ) {
-    fun parseBlog(url: String): Blog
-    = blogParserManager.parseBlog(url)
+    fun parseBlog(url: String): Blog = blogParserManager.parseBlog(url)
 
-    fun parseBlogs(url: String): List<Blog>
-    = blogParserManager.parseBlogs(url)
+    fun parseBlogs(url: String): List<Blog> = blogParserManager.parseBlogs(url)
 }
