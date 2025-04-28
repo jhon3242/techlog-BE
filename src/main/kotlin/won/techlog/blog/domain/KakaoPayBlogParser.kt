@@ -31,7 +31,8 @@ class KakaoPayBlogParser : BlogParser {
             doc.select("img").first()
                 .attribute("src")
                 .value
-                ?: null
+                .let { "https://tech.kakaopay.com$it" }
+                .ifEmpty { null }
 
         val content =
             doc.selectFirst("div.content")
