@@ -52,6 +52,12 @@ class PosterDao(
     }
 
     @Transactional
+    fun cancelRecommend(id: Long) {
+        val poster = getPoster(id)
+        poster.recommendations--
+    }
+
+    @Transactional
     fun increaseView(id: Long) {
         val poster = getPoster(id)
         poster.views++

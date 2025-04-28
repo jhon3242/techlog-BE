@@ -52,6 +52,10 @@ class PosterService(
         posterDao.recommend(id)
     }
 
+    fun cancelRecommend(id: Long) {
+        posterDao.cancelRecommend(id)
+    }
+
     fun increaseView(id: Long) {
         posterDao.increaseView(id)
     }
