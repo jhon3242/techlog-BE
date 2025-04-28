@@ -13,7 +13,7 @@ version = "0.0.1-SNAPSHOT"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
@@ -25,34 +25,21 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    // Jsoup
     implementation("org.jsoup:jsoup:1.17.2")
-
-    // Playwright
     implementation("com.microsoft.playwright:playwright:1.44.0")
-
-    // RestAssured
-    testImplementation("io.rest-assured:rest-assured:5.5.0")
-
-    // H2
-    runtimeOnly("com.h2database:h2")
-
-    // JPA
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
 
-    // MySQL
+    runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
 
-    // logging
-    implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
-
-    // QueryDSL
-    implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("io.rest-assured:rest-assured:5.5.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 kotlin {
@@ -63,10 +50,7 @@ kotlin {
 
 sourceSets {
     main {
-        java.srcDirs(
-            "src/main/kotlin",
-            "build/generated/sources/annotationProcessor/java/main"
-        )
+        java.srcDirs("src/main/kotlin")
     }
 }
 
@@ -113,6 +97,12 @@ kapt {
     correctErrorTypes = true
 }
 
-tasks.named("runKtlintCheckOverMainSourceSet") {
-    dependsOn(tasks.named("kaptKotlin"))
+tasks.named("compileKotlin") {
+    dependsOn("kaptKotlin")
+}
+
+ktlint {
+    filter {
+        exclude { it.file.path.contains("build/generated") }
+    }
 }
