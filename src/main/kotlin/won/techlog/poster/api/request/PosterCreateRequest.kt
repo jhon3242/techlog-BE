@@ -10,7 +10,7 @@ data class PosterCreateRequest(
     val content: String,
     val url: String,
     val blogType: String,
-    val tags: List<String>
+    val tags: List<String> = mutableListOf()
 ) {
     fun toPoster(): Poster =
         Poster(
