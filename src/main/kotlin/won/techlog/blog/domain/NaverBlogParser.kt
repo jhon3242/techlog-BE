@@ -31,7 +31,7 @@ class NaverBlogParser : BlogParser {
     }
 
     override fun parseBlog(url: String): BlogMetaData {
-        var result: BlogMetaData? = null
+        var result: BlogMetaData?
         Playwright.create().use { playwright ->
             // 브라우저 실행 (headless 모드)
             val browser =
