@@ -7,23 +7,28 @@ import org.springframework.transaction.annotation.Transactional
 class TagDao(
     private val tagRepository: TagRepository
 ) {
+    @Transactional(readOnly = true)
+    fun findByName(name: String): Tag? = tagRepository.findByNameAndIsDeletedIsFalse(name)
+
     @Transactional
     fun save(tag: Tag): Tag =
-        tagRepository.findByName(tag.name)
+        findByName(tag.name)
             ?: tagRepository.save(tag)
 
     @Transactional
     fun save(name: String): Tag =
-        tagRepository.findByName(name)
+        findByName(name)
             ?: tagRepository.save(Tag(name = name))
 
     @Transactional(readOnly = true)
     fun getByName(name: String): Tag =
-        tagRepository.findByName(name)
+        findByName(name)
             ?: throw IllegalArgumentException("일치하는 태그가 없습니다.")
 
     @Transactional(readOnly = true)
-    fun findAll(): List<Tag> = tagRepository.findAll()
+    fun findAll(): List<Tag> =
+        tagRepository.findAll()
+            .filter { !it.isDeleted }
 
     @Transactional(readOnly = true)
     fun findAllByNames(tagNames: List<String>): List<Tag> {
@@ -33,9 +38,6 @@ class TagDao(
 
     @Transactional
     fun delete(name: String) {
-        val tag = tagRepository.findByName(name)
-        if (tag != null) {
-            tagRepository.delete(tag)
-        }
+        findByName(name)?.let { it.isDeleted = true }
     }
 }

@@ -11,5 +11,6 @@ class Tag(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
     @Column(nullable = false, unique = true)
-    val name: String
+    val name: String,
+    var isDeleted: Boolean = false
 )
