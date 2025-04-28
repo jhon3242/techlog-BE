@@ -32,7 +32,7 @@ class PosterRepositoryImpl(
     private fun buildKeywordCondition(keyword: String?): BooleanExpression? {
         if (keyword.isNullOrBlank()) return null
 
-        val keywords = keyword.trim().split("\\s+".toRegex()) // 띄어쓰기 기준으로 자르기
+        val keywords = keyword.trim().split("\\s+".toRegex())
         var condition: BooleanExpression? = null
 
         for (word in keywords) {

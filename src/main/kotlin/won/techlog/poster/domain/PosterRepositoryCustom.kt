@@ -2,8 +2,8 @@ package won.techlog.poster.domain
 
 interface PosterRepositoryCustom {
     fun searchPosters(
-        keyword: String?,
-        tagNames: List<String>?,
-        blogType: String?
+        keyword: String? = null,
+        tagNames: List<String>? = null,
+        blogType: String? = null
     ): List<Poster>
 }
