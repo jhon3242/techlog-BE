@@ -7,14 +7,17 @@ import won.techlog.tag.domain.Tag
 class PosterTagDao(
     private val posterTagRepository: PosterTagRepository
 ) {
-    fun save(posterTag: PosterTag): PosterTag
-    = posterTagRepository.save(posterTag)
+    fun save(posterTag: PosterTag): PosterTag = posterTagRepository.save(posterTag)
 
-    fun save(poster: Poster, tags: List<Tag>): List<PosterTag>
-    = tags.map { save(poster, it) }
+    fun save(
+        poster: Poster,
+        tags: List<Tag>
+    ): List<PosterTag> = tags.map { save(poster, it) }
 
-    fun save(poster: Poster, tag: Tag): PosterTag
-    = posterTagRepository.save(PosterTag(poster = poster, tag = tag))
+    fun save(
+        poster: Poster,
+        tag: Tag
+    ): PosterTag = posterTagRepository.save(PosterTag(poster = poster, tag = tag))
 
     fun findTags(poster: Poster): List<Tag> =
         posterTagRepository.findByPoster(poster)

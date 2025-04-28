@@ -30,7 +30,7 @@ class PosterControllerTest : BaseControllerTest() {
         // given
         val poster = PosterFixture.create()
         val tagNames = TagsFixture.create()
-        tagNames.forEach{ tagDao.save(it) }
+        tagNames.forEach { tagDao.save(it) }
         val request =
             PosterCreateRequest(
                 title = poster.blogMetaData.title,
@@ -57,7 +57,7 @@ class PosterControllerTest : BaseControllerTest() {
         // given
         val poster = PosterFixture.create()
         val tagNames = TagsFixture.create()
-        tagNames.forEach{ tagDao.save(it) }
+        tagNames.forEach { tagDao.save(it) }
         val posterA =
             PosterCreateRequest(
                 title = poster.blogMetaData.title + "A",

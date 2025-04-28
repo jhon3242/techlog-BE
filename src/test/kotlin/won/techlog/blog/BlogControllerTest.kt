@@ -2,8 +2,6 @@ package won.techlog.blog
 
 import io.restassured.RestAssured
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogRequest

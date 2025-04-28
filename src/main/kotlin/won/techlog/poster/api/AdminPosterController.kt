@@ -34,8 +34,9 @@ class AdminPosterController(
     fun createPosters(
         @RequestBody request: PostersCreateRequest
     ): PostersResponse {
-        val posterResponse = request.posters
-            .map { createPoster(it) }
+        val posterResponse =
+            request.posters
+                .map { createPoster(it) }
         return PostersResponse(posterResponse)
     }
 
