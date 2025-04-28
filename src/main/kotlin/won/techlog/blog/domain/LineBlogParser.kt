@@ -8,7 +8,7 @@ import org.jsoup.nodes.Document
 import org.springframework.stereotype.Component
 
 @Component
-class LineBlogParser: BlogParser{
+class LineBlogParser : BlogParser {
     override fun parseBlogs(url: String): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
         Playwright.create().use { playwright ->

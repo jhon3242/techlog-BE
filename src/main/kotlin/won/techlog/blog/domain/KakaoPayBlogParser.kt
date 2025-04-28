@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document
 import org.springframework.stereotype.Component
 
 @Component
-class KakaoPayBlogParser: BlogParser {
+class KakaoPayBlogParser : BlogParser {
     override fun parseBlogs(url: String): List<BlogMetaData> {
         val doc: Document =
             Jsoup.connect(url)

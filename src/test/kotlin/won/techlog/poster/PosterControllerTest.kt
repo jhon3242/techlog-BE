@@ -152,23 +152,27 @@ class PosterControllerTest : BaseControllerTest() {
         posterTagDao.save(savedPoster, savedTags)
 
         // when
-        val responseBody = RestAssured.given().log().all()
-            .queryParam("keyword", "Kotlin")
-            .queryParam("tags", tagNames.joinToString(","))
-            .queryParam("blogType", savedPoster.blogType.name)
-            .`when`().get("/api/search")
-            .then().log().all()
-            .statusCode(200)
-            .extract()
-            .body()
+        val responseBody =
+            RestAssured.given().log().all()
+                .queryParam("keyword", "Kotlin")
+                .queryParam("tags", tagNames.joinToString(","))
+                .queryParam("blogType", savedPoster.blogType.name)
+                .`when`().get("/api/search")
+                .then().log().all()
+                .statusCode(200)
+                .extract()
+                .body()
 
-        val listType = objectMapper.typeFactory.constructCollectionType(
-            List::class.java,
-            PosterResponse::class.java
-        )
-        val posterResponses: List<PosterResponse> = objectMapper.readValue(
-            responseBody.asInputStream(), listType
-        )
+        val listType =
+            objectMapper.typeFactory.constructCollectionType(
+                List::class.java,
+                PosterResponse::class.java
+            )
+        val posterResponses: List<PosterResponse> =
+            objectMapper.readValue(
+                responseBody.asInputStream(),
+                listType
+            )
 
         // then
         Assertions.assertThat(posterResponses)

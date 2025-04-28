@@ -10,7 +10,6 @@ import won.techlog.blog.api.response.BlogResponse
 import won.techlog.support.BaseControllerTest
 
 class LineBlogParserTest : BaseControllerTest() {
-
     @Test
     fun `블로그 글 리스트를 파싱한다`() {
         // given
