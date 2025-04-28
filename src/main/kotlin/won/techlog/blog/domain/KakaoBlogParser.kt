@@ -19,10 +19,11 @@ class KakaoBlogParser : BlogParser {
             page.waitForLoadState(LoadState.DOMCONTENTLOADED)
             page.locator("ul.list_post li").first().waitFor()
 
-            val postUrls = page.locator("a.link_post")
-                .all()
-                .mapNotNull { it.getAttribute("href") }
-                .map { "https://tech.kakao.com$it" }
+            val postUrls =
+                page.locator("a.link_post")
+                    .all()
+                    .mapNotNull { it.getAttribute("href") }
+                    .map { "https://tech.kakao.com$it" }
 
             for (postUrl in postUrls) {
                 val newPage = browser.newPage()
@@ -66,9 +67,10 @@ class KakaoBlogParser : BlogParser {
         val html = page.content()
         val doc = Jsoup.parse(html)
         val title = doc.selectFirst("h1.tit_post")?.text()?.trim() ?: "제목 없음"
-        val fullContent = doc.selectFirst("div.preview")?.text()?.trim()
-            ?: doc.selectFirst("div.inner_content")?.text()?.trim()
-            ?: "본문 없음"
+        val fullContent =
+            doc.selectFirst("div.preview")?.text()?.trim()
+                ?: doc.selectFirst("div.inner_content")?.text()?.trim()
+                ?: "본문 없음"
         val content = if (fullContent.length > 300) fullContent.substring(0, 300) else fullContent
         val thumbnail = doc.selectFirst("meta[property=og:image]")?.attr("content")?.takeIf { it.isNotBlank() }
 
