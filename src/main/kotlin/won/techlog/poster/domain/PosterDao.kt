@@ -33,6 +33,15 @@ class PosterDao(
         return posterRepository.findAll(pageable).content
     }
 
+    @Transactional(readOnly = true)
+    fun searchPosters(
+        keyword: String?,
+        tagNames: List<String>?,
+        blogType: String?
+    ): List<Poster> {
+        return posterRepository.searchPosters(keyword, tagNames, blogType)
+    }
+
     @Transactional
     fun deletePoster(id: Long) = posterRepository.deleteById(id)
 

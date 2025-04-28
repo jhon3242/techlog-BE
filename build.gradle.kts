@@ -5,6 +5,7 @@ plugins {
     id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.jlleitschuh.gradle.ktlint") version "12.1.2"
+    id("org.jetbrains.kotlin.kapt") version "1.9.25"
 }
 
 group = "won"
@@ -48,11 +49,24 @@ dependencies {
 
     // logging
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+
+    // QueryDSL
+    implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
 }
 
 kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDirs(
+            "src/main/kotlin",
+            "build/generated/sources/annotationProcessor/java/main"
+        )
     }
 }
 
@@ -82,18 +96,23 @@ tasks.register("copyHooks") {
     description = "Copy pre-commit and pre-push git hooks from .githooks to .git/hooks folder."
 
     doLast {
-        // pre-commit hook 복사
         copy {
             from("$rootDir/.githooks/pre-commit")
             into("$rootDir/.git/hooks")
         }
-        // pre-push hook 복사
         copy {
             from("$rootDir/.githooks/pre-push")
             into("$rootDir/.git/hooks")
         }
-        // pre-push hook에 실행 권한 부여
         file("$rootDir/.git/hooks/pre-push").setExecutable(true)
         println("Git pre-commit 및 pre-push hook이 성공적으로 등록되었습니다.")
     }
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+tasks.named("runKtlintCheckOverMainSourceSet") {
+    dependsOn(tasks.named("kaptKotlin"))
 }

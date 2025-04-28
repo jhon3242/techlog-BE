@@ -1,13 +1,13 @@
 package won.techlog.blog.domain
 
+import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
-import jakarta.persistence.Lob
 
 @Embeddable
 data class BlogMetaData(
     val title: String,
     val thumbnailUrl: String?,
-    @Lob
+    @Column(columnDefinition = "TEXT")
     val content: String,
     val url: String
 )

@@ -1,11 +1,13 @@
 package won.techlog.poster.api
 
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import won.techlog.poster.api.request.PosterSearchRequest
 import won.techlog.poster.api.response.PosterResponse
 import won.techlog.poster.domain.PosterService
 
@@ -18,14 +20,19 @@ class PosterController(
     fun getPosters(
         @RequestParam page: Int,
         @RequestParam size: Int
-    ): List<PosterResponse> =
-        posterService.getPosters(page, size)
-
+    ): List<PosterResponse> = posterService.getPosters(page, size)
 
     @GetMapping("/posters/{id}")
     fun getPoster(
         @PathVariable id: Long
     ): PosterResponse = posterService.getPoster(id)
+
+    @GetMapping("/search")
+    fun searchPosters(
+        @ModelAttribute request: PosterSearchRequest
+    ): List<PosterResponse> {
+        return posterService.searchPosters(request)
+    }
 
     @PutMapping("/posters/{id}/recommend")
     fun recommend(
