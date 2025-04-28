@@ -8,6 +8,8 @@ enum class BlogType(
 ) {
     WOOWABRO("https://techblog.woowahan.com/", "woowabroBlogParser"),
     NAVER("https://d2.naver.com/helloworld", "naverBlogParser"),
+    LINE("https://techblog.lycorp.co.jp/ko", "lineBlogParser"),
+    KAKAO_PAY("https://tech.kakaopay.com/", "kakaoPayBlogParser"),
     KAKAO("https://tech.kakao.com/", "kakaoBlogParser")
     ;
 
