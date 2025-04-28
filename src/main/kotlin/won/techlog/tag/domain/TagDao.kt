@@ -30,4 +30,12 @@ class TagDao(
         return tagNames.map { getByName(it) }
             .toList()
     }
+
+    @Transactional
+    fun delete(name: String) {
+        val tag = tagRepository.findByName(name)
+        if (tag != null) {
+            tagRepository.delete(tag)
+        }
+    }
 }

@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service
 class TagService(
     private val tagDao: TagDao
 ) {
-    fun save(name: String): Tag {
-        return tagDao.save(name)
-    }
+    fun save(name: String): Tag = tagDao.save(name)
 
     fun findAll(): List<Tag> = tagDao.findAll()
+
+    fun delete(name: String) = tagDao.delete(name)
 }

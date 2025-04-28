@@ -1,5 +1,6 @@
 package won.techlog.tag.api
 
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -25,4 +26,9 @@ class AdminTagController(
     fun save(
         @RequestBody request: TagRequest
     ): TagResponse = TagResponse(tagService.save(request.name))
+
+    @DeleteMapping("/tag")
+    fun delete(
+        @RequestBody request: TagRequest
+    ) = tagService.delete(request.name)
 }
