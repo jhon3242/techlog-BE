@@ -17,7 +17,7 @@ class NaverBlogParser : BlogParser {
                 )
             val page = browser.newPage()
             page.navigate(url)
-            page.waitForLoadState(LoadState.NETWORKIDLE)
+            page.waitForLoadState(LoadState.DOMCONTENTLOADED)
 
             val list =
                 page.locator("a.post_txt_wrap")
