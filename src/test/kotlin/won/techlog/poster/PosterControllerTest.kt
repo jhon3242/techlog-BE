@@ -11,6 +11,7 @@ import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import won.techlog.poster.api.request.PosterCreateRequest
 import won.techlog.poster.api.request.PostersCreateRequest
 import won.techlog.poster.api.response.PosterResponse
+import won.techlog.poster.domain.PosterTagDao
 import won.techlog.support.BaseControllerTest
 import won.techlog.support.fixture.PosterFixture
 import won.techlog.support.fixture.TagsFixture
@@ -19,6 +20,9 @@ private const val BASE_URL = "/api/posters"
 private const val ADMIN_HEADER = "X-Admin-Header"
 
 class PosterControllerTest : BaseControllerTest() {
+    @Autowired
+    private lateinit var posterTagDao: PosterTagDao
+
     @Autowired
     lateinit var objectMapper: ObjectMapper
 
@@ -135,6 +139,41 @@ class PosterControllerTest : BaseControllerTest() {
                 .body
 
         // TODO 리스트를 List<Object>로 매핑
+    }
+
+    @Test
+    fun `포스터를 검색한다`() {
+        // given
+        val poster = PosterFixture.create(title = "Kotlin Study")
+        val tagNames = TagsFixture.create()
+        tagNames.forEach { tagDao.save(it) }
+        val savedPoster = posterDao.savePoster(poster)
+        val savedTags = tagDao.findAllByNames(tagNames)
+        posterTagDao.save(savedPoster, savedTags)
+
+        // when
+        val responseBody = RestAssured.given().log().all()
+            .queryParam("keyword", "Kotlin")
+            .queryParam("tags", tagNames.joinToString(","))
+            .queryParam("blogType", savedPoster.blogType.name)
+            .`when`().get("/api/search")
+            .then().log().all()
+            .statusCode(200)
+            .extract()
+            .body()
+
+        val listType = objectMapper.typeFactory.constructCollectionType(
+            List::class.java,
+            PosterResponse::class.java
+        )
+        val posterResponses: List<PosterResponse> = objectMapper.readValue(
+            responseBody.asInputStream(), listType
+        )
+
+        // then
+        Assertions.assertThat(posterResponses)
+            .extracting<String> { it.title }
+            .contains("Kotlin Study")
     }
 
     @Test
