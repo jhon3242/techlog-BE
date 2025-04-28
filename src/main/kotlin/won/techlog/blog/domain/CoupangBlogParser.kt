@@ -7,7 +7,20 @@ import org.springframework.stereotype.Component
 @Component
 class CoupangBlogParser : BlogParser {
     override fun parseBlogs(url: String): List<BlogMetaData> {
-        TODO("Not yet implemented")
+        val doc: Document =
+            Jsoup.connect(url)
+                .userAgent("Mozilla/5.0") // 일부 사이트는 User-Agent 체크함
+                .get()
+
+        return doc.select("div.row").flatMap { row ->
+            row.select("div.col")
+                .map { col ->
+                    col.select("a")
+                        .attr("href")
+                }
+                .distinct()
+                .map { parseBlog(it) }
+        }.toList()
     }
 
     override fun parseBlog(url: String): BlogMetaData {
