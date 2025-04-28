@@ -17,7 +17,7 @@ class NaverBlogParser : BlogParser {
                 )
             val page = browser.newPage()
             page.navigate(url)
-            page.waitForLoadState(LoadState.DOMCONTENTLOADED)
+            page.waitForLoadState(LoadState.NETWORKIDLE)
 
             val list =
                 page.locator("a.post_txt_wrap")
@@ -31,7 +31,7 @@ class NaverBlogParser : BlogParser {
     }
 
     override fun parseBlog(url: String): BlogMetaData {
-        var result: BlogMetaData?
+        var result: BlogMetaData? = null
         Playwright.create().use { playwright ->
             // 브라우저 실행 (headless 모드)
             val browser =
