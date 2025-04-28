@@ -10,6 +10,7 @@ enum class BlogType(
     NAVER("https://d2.naver.com/helloworld", "naverBlogParser"),
     LINE("https://techblog.lycorp.co.jp/ko", "lineBlogParser"),
     KAKAO_PAY("https://tech.kakaopay.com/", "kakaoPayBlogParser"),
+    KAKAO("https://tech.kakao.com/", "kakaoBlogParser"),
     COUPANG("https://medium.com/coupang-engineering/", "coupangBlogParser")
     ;
 
