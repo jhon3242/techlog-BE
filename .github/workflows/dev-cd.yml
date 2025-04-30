@@ -52,7 +52,7 @@ jobs:
           timeout: 120s
           source: |
             "./deployment/dev/"
-            ./techlog-env/back/mysql.env
+#            ./techlog-env/back/mysql.env
           target: /home/techlog
 
       - name: Run
