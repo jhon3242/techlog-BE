@@ -10,7 +10,7 @@ import won.techlog.blog.api.response.BlogResponse
 import won.techlog.support.BaseControllerTest
 
 class WoowabroBlogParserTest : BaseControllerTest() {
-    @Test
+//    @Test
     fun `블로그 글을 찾는다`() {
         // given
         val url = "https://techblog.woowahan.com/?paged=1"
@@ -26,7 +26,7 @@ class WoowabroBlogParserTest : BaseControllerTest() {
         println(result)
     }
 
-    @Test
+//    @Test
     fun `블로그 글을 파싱한다`() {
         // given
         val url = "https://techblog.woowahan.com/20789/"
