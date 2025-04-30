@@ -39,9 +39,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
-          token: ${{ secrets.SUBMODULE_TOKEN }}
       - name: Copy file via ssh password
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -51,8 +48,7 @@ jobs:
           port: 22
 
           timeout: 120s
-          source: ./techlog-env/mysql.env
-#            ./deployment/dev/
+          source: ./deployment/dev/
           target: /home/techlog
 
       - name: Run
