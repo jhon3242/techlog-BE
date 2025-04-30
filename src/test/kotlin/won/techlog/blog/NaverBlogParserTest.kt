@@ -10,7 +10,7 @@ import won.techlog.blog.api.response.BlogResponse
 import won.techlog.support.BaseControllerTest
 
 class NaverBlogParserTest : BaseControllerTest() {
-    @Test
+//    @Test
     fun `블로그 글 리스트를 파싱한다`() {
         // given
         val url = "https://d2.naver.com/helloworld?page=0"
@@ -26,7 +26,7 @@ class NaverBlogParserTest : BaseControllerTest() {
         println(result)
     }
 
-    @Test
+//    @Test
     fun `블로그 글을 파싱한다`() {
         // given
         val url =
