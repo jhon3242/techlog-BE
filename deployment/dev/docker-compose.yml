@@ -7,7 +7,7 @@ services:
       - app-tier
     depends_on:
       - mysql
-    image: atchadockerhub/atcha_dev:latest
+    image: techlogv1dockerhub/techlog_dev:latest
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     restart: always
@@ -18,23 +18,20 @@ services:
       retries: 3
       start_period: 30s
 
-  redis:
-    container_name: atcha-redis
-    networks:
-      - app-tier
-    image: redis:latest
-    ports:
-      - "6379:6379"
+#  redis:
+#    container_name: techlog-redis
+#    networks:
+#      - app-tier
+#    image: redis:latest
+#    ports:
+#      - "6379:6379"
 
   mysql:
     image: mysql:8.0
-    container_name: atcha-mysql
+    container_name: techlog-mysql
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${SPRING_DATABASE_NAME}
-      MYSQL_USER: ${SPRING_DATABASE_USERNAME}
-      MYSQL_PASSWORD: ${SPRING_DATABASE_PASSWORD}
+    env_file:
+      - ./mysql.env
     ports:
       - "3306:3306"
     volumes:
@@ -44,8 +41,8 @@ services:
 
   nginx:
     depends_on:
-      - atcha-green
-      - atcha-blue
+      - techlog-green
+      - techlog-blue
     image: nginx:1.15-alpine
     container_name: nginx
     networks:
