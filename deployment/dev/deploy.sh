@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-IS_BLUE=$(docker compose ps | grep atcha-blue)
+IS_BLUE=$(docker compose ps | grep techlog-blue)
 DEFAULT_CONF="data/nginx/nginx.conf"
 MAX_RETRIES=60
 
@@ -64,13 +64,13 @@ if [ -z "$IS_BLUE" ]; then
   echo "### GREEN => BLUE ###"
 
   echo "1. BLUE 이미지 받기"
-  docker compose pull atcha-blue
+  docker compose pull techlog-blue
 
   echo "2. BLUE 컨테이너 실행"
-  docker compose up -d atcha-blue --scale atcha-blue=1
+  docker compose up -d techlog-blue --scale techlog-blue=1
 
   echo "3. BLUE 컨테이너 헬스 체크"
-  if ! check_service "atcha-blue"; then
+  if ! check_service "techlog-blue"; then
     echo "BLUE health check failed."
     exit 1
   fi
@@ -81,20 +81,20 @@ if [ -z "$IS_BLUE" ]; then
   restart_nginx
 
   echo "5. GREEN 컨테이너 중지 및 삭제"
-  docker compose stop atcha-green
-  docker compose rm -f atcha-green
+  docker compose stop techlog-green
+  docker compose rm -f techlog-green
 
 else
   echo "### BLUE => GREEN ###"
 
   echo "1. GREEN 이미지 받기"
-  docker compose pull atcha-green
+  docker compose pull techlog-green
 
   echo "2. GREEN 컨테이너 실행"
-  docker compose up -d atcha-green --scale atcha-green=1
+  docker compose up -d techlog-green --scale techlog-green=1
 
   echo "3. GREEN 컨테이너 헬스 체크"
-  if ! check_service "atcha-green"; then
+  if ! check_service "techlog-green"; then
     echo "GREEN health check failed."
     exit 1
   fi
@@ -105,6 +105,6 @@ else
   restart_nginx
 
   echo "5. BLUE 컨테이너 중지 및 삭제"
-  docker compose stop atcha-blue
-  docker compose rm -f atcha-blue
+  docker compose stop techlog-blue
+  docker compose rm -f techlog-blue
 fi

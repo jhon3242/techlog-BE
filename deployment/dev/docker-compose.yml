@@ -2,7 +2,7 @@ networks:
   app-tier:
     driver: bridge
 services:
-  techlog:
+  techlog-blue:
     networks:
       - app-tier
     depends_on:
@@ -18,6 +18,21 @@ services:
       retries: 3
       start_period: 30s
 
+  techlog-green:
+    networks:
+      - app-tier
+    depends_on:
+      - mysql
+    image: techlogv1dockerhub/techlog_dev:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    restart: always
+    healthcheck:
+      test: "curl -f http://localhost:8080/health || exit 1"
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 #  redis:
 #    container_name: techlog-redis
 #    networks:
