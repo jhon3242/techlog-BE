@@ -3,6 +3,7 @@ networks:
     driver: bridge
 services:
   techlog-blue:
+    container_name: techlog-blue
     networks:
       - app-tier
     depends_on:
