@@ -4,7 +4,7 @@ spring:
 
   datasource:
     url: jdbc:mysql://${secret.database.host}:${secret.database.port}/${secret.database.name}?useSSL=false&allowPublicKeyRetrieval=true
-    username: ${secret.database.name}
+    username: ${secret.database.user}
     password: ${secret.database.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
