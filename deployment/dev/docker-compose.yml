@@ -45,7 +45,7 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: techlog-mysql
+    container_name: mysql
     restart: always
     env_file:
       - ./mysql.env
