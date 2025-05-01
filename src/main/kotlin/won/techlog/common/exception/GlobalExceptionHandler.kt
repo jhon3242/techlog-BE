@@ -12,7 +12,6 @@ import won.techlog.common.exception.response.ErrorResponse
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
-
     private val logger = KotlinLogging.logger {}
 
     @ExceptionHandler(BadRequestException::class)
@@ -23,14 +22,18 @@ class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
-    fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException?): ResponseEntity<ErrorResponse> {
+    fun handleHttpRequestMethodNotSupportedException(
+        e: HttpRequestMethodNotSupportedException?
+    ): ResponseEntity<ErrorResponse> {
         return ResponseEntity
             .status(HttpStatus.METHOD_NOT_ALLOWED)
             .body(ErrorResponse("Invalid request method"))
     }
 
     @ExceptionHandler(MissingServletRequestParameterException::class)
-    fun handleMissingServletRequestParameterException(e: MissingServletRequestParameterException?): ResponseEntity<ErrorResponse> {
+    fun handleMissingServletRequestParameterException(
+        e: MissingServletRequestParameterException?
+    ): ResponseEntity<ErrorResponse> {
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse("Invalid request"))
