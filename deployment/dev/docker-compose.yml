@@ -35,13 +35,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
-#  redis:
-#    container_name: techlog-redis
-#    networks:
-#      - app-tier
-#    image: redis:latest
-#    ports:
-#      - "6379:6379"
 
   mysql:
     image: mysql:8.0
