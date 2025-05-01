@@ -71,8 +71,9 @@ tasks.register("initSetting") {
 
 tasks.register<Copy>("copySecret") {
     from("./techlog-env/back")
-    include("env-common.yml")
+    include("*.yml")
     into("src/main/resources")
+    println("Secret files이 성공적으로 복사되었습니다.")
 }
 
 tasks.register("copyHooks") {
