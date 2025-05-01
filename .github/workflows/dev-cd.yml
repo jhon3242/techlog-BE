@@ -33,32 +33,32 @@ jobs:
       - name: Push Docker Image
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/techlog_dev:latest
 
-  deploy:
-    needs: build
-    name: Deploy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Copy file via ssh password
+      - name: Copy deployment files
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.DEV_HOST_IP }}
           username: ${{ secrets.DEV_USERNAME }}
           key: ${{ secrets.DEV_HOST_KEY }}
           port: 22
-
           timeout: 120s
-          source: ./deployment/dev/
+          source: "deployment/dev/,techlog-env/back/mysql.env"
           target: /home/techlog
 
-      - name: Run
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DEV_HOST_IP }}
-          username: ${{ secrets.DEV_USERNAME }}
-          key: ${{ secrets.DEV_HOST_KEY }}
-          port: 22
-          script: |
-            mv /home/techlog/deployment/dev/* /home/techlog
-            rm -rf /home/techlog/deployment
-            bash ./deploy.sh
+#  deploy:
+#    needs: build
+#    name: Deploy
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Copy file via ssh password
+#        uses: appleboy/scp-action@v0.1.4
+#        with:
+#          host: ${{ secrets.DEV_HOST_IP }}
+#          username: ${{ secrets.DEV_USERNAME }}
+#          key: ${{ secrets.DEV_HOST_KEY }}
+#          port: 22
+#
+#          timeout: 120s
+#          source: ./deployment/dev/
+#          target: /home/techlog
