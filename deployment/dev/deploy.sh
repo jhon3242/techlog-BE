@@ -72,6 +72,8 @@ if [ -z "$IS_BLUE" ]; then
   echo "3. BLUE 컨테이너 헬스 체크"
   if ! check_service "techlog-blue"; then
     echo "BLUE health check failed."
+    docker compose stop techlog-blue
+    docker compose rm -f techlog-blue
     exit 1
   fi
 
@@ -99,6 +101,8 @@ else
   echo "3. GREEN 컨테이너 헬스 체크"
   if ! check_service "techlog-green"; then
     echo "GREEN health check failed."
+    docker compose stop techlog-green
+    docker compose rm -f techlog-green
     exit 1
   fi
 
