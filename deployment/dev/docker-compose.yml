@@ -20,6 +20,7 @@ services:
       start_period: 30s
 
   techlog-green:
+    container_name: techlog-green
     networks:
       - app-tier
     depends_on:
