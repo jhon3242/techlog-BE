@@ -51,6 +51,7 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
             ▶ Duration: ${duration}ms
             ▶ Headers: $headers
             ▶ Body: $requestBody
+            ▶ Exception: ${ex?.message}
             """.trimIndent()
         }
     }
