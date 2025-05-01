@@ -10,4 +10,3 @@ class HealthCheckController {
         return "I'm OK"
     }
 }
-
