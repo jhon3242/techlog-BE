@@ -59,8 +59,8 @@ jobs:
           port: 22
 
           script: |
-            mv /home/techlog/deployment/dev/* /home/techlog
+            mv /home/techlog/deployment/dev/ /home/techlog
             mv /home/techlog/techlog-env/back/mysql.env /home/techlog
-            rm -rf /home/techlog/deployment
-            rm -rf /home/techlog/techlog-env
+#            rm -rf /home/techlog/deployment
+#            rm -rf /home/techlog/techlog-env
             bash ./deploy.sh
