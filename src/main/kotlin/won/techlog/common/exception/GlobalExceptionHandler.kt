@@ -16,6 +16,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(BadRequestException::class)
     fun handleBadRequestException(e: BadRequestException?): ResponseEntity<ErrorResponse> {
+        logger.error { e }
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse("Invalid request"))
@@ -25,6 +26,7 @@ class GlobalExceptionHandler {
     fun handleHttpRequestMethodNotSupportedException(
         e: HttpRequestMethodNotSupportedException?
     ): ResponseEntity<ErrorResponse> {
+        logger.error { e }
         return ResponseEntity
             .status(HttpStatus.METHOD_NOT_ALLOWED)
             .body(ErrorResponse("Invalid request method"))
@@ -34,6 +36,7 @@ class GlobalExceptionHandler {
     fun handleMissingServletRequestParameterException(
         e: MissingServletRequestParameterException?
     ): ResponseEntity<ErrorResponse> {
+        logger.error { e }
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse("Invalid request"))
@@ -41,6 +44,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(NoResourceFoundException::class)
     fun handleNoResourceFoundException(e: NoResourceFoundException?): ResponseEntity<ErrorResponse> {
+        logger.error { e }
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
             .body(ErrorResponse("Resource not found"))
