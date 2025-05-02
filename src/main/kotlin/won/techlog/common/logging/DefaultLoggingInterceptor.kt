@@ -46,7 +46,7 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
         logger.info {
             """
             📦 RESPONSE $status [$requestId]
-            ▶ URI: ${request.method} ${request.requestURI}
+            ▶ URI: ${request.method} ${request.requestURI}${getParameters(request)}
             ▶ Status: [${response.status}]
             ▶ Duration: ${duration}ms
             ▶ Headers: $headers
@@ -54,5 +54,15 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
             ▶ Exception: ${ex?.message}
             """.trimIndent()
         }
+    }
+
+    private fun getParameters(request: HttpServletRequest): String {
+        val parameters = request.parameterNames
+            .toList()
+        if (parameters.isEmpty()) {
+            return ""
+        }
+        return "?" + parameters
+            .joinToString("&") { "${it}=${request.getParameter(it)}" }
     }
 }
