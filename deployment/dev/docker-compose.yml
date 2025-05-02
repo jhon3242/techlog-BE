@@ -48,7 +48,7 @@ services:
       - ./mysql:/var/lib/mysql
     networks:
       - app-tier
-
+#tttttttt
   nginx:
     depends_on:
       - techlog-green
