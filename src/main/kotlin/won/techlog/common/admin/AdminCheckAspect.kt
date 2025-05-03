@@ -16,7 +16,7 @@ class AdminCheckAspect(
     @Value("\${admin.header}")
     private val adminHeaderKey: String
 ) {
-    @Before("@annotation(AdminCheck)")
+    @Before("@within(AdminCheck)")
     fun adminCheck(joinPoint: JoinPoint) {
         val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
         val headerValue =
