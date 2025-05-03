@@ -42,7 +42,6 @@ jobs:
           timeout: 120s
           source: "deployment/dev/,techlog-env/back/mysql.env"
           target: /home/techlog
-
   deploy:
     needs: build
     name: Deploy
