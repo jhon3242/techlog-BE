@@ -7,4 +7,3 @@ spring:
         show-sql: true
         format_sql: true
         default_batch_fetch_size: 100
-        dialect: org.hibernate.dialect.MySQLDialect
