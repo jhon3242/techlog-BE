@@ -57,12 +57,14 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
     }
 
     private fun getParameters(request: HttpServletRequest): String {
-        val parameters = request.parameterNames
-            .toList()
+        val parameters =
+            request.parameterNames
+                .toList()
         if (parameters.isEmpty()) {
             return ""
         }
-        return "?" + parameters
-            .joinToString("&") { "${it}=${request.getParameter(it)}" }
+        return "?" +
+            parameters
+                .joinToString("&") { "$it=${request.getParameter(it)}" }
     }
 }
