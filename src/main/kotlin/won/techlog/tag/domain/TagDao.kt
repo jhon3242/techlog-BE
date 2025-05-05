@@ -12,8 +12,9 @@ class TagDao(
 
     @Transactional
     fun save(name: String): Tag {
-        val tag = tagRepository.findByName(name)
-            ?: tagRepository.save(Tag(name = name))
+        val tag =
+            tagRepository.findByName(name)
+                ?: tagRepository.save(Tag(name = name))
         if (tag.isDeleted) tag.isDeleted = false
         return tag
     }
