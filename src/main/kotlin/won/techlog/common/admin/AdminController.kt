@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/admin")
 class AdminController {
 
+
+
     @GetMapping
     fun adminCheck(): String {
         return "OK"
