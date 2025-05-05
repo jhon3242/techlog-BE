@@ -2,7 +2,7 @@ name: DEV CD
 
 on:
   workflow_dispatch:
-  pull_request:
+  push:
     branches: [ dev ]
 
 jobs:
@@ -15,7 +15,6 @@ jobs:
         with:
           submodules: true
           token: ${{ secrets.SUBMODULE_TOKEN }}
-
       - name: Debug - List submodule folder contents
         run: |
           ls -Rla ./techlog-env
@@ -33,27 +32,22 @@ jobs:
       - name: Push Docker Image
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/techlog_dev:latest
 
-  deploy:
-    needs: build
-    name: Deploy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Copy file via ssh password
+      - name: Copy deployment files
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.DEV_HOST_IP }}
           username: ${{ secrets.DEV_USERNAME }}
           key: ${{ secrets.DEV_HOST_KEY }}
           port: 22
-
           timeout: 120s
-          source: |
-            "./deployment/dev/"
-            ./techlog-env/back/mysql.env
+          source: "deployment/dev/,techlog-env/back/mysql.env"
           target: /home/techlog
-
-      - name: Run
+  deploy:
+    needs: build
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run deployment script
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DEV_HOST_IP }}
@@ -61,6 +55,9 @@ jobs:
           key: ${{ secrets.DEV_HOST_KEY }}
           port: 22
           script: |
-            mv /home/techlog/deployment/dev/* /home/techlog
-            rm -rf /home/techlog/deployment
+            rm -rf ~/data
+            mv ~/deployment/dev/* ~/
+            mv ~/techlog-env/back/mysql.env ~/
+            rm -rf ~/deployment
+            rm -rf ~/techlog-env
             bash ./deploy.sh

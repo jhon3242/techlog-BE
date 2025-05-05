@@ -6,16 +6,16 @@
 # Video Pre-Push Git Hook for ktlint Formatting With Plugin: https://www.youtube.com/watch?v=eysVDO2_X0s
 # Ktlint Plugin: org.jlleitschuh.gradle:ktlint-gradle
 
-echo "Checking code formatting"
+echo "Ktlint 코드 포맷팅을 확인하는 중입니다"
 
-./gradlew ktlintFormat --daemon
+./gradlew ktlintFormat
 
 status=$?
 
 if [ "$status" == 0 ] ; then
-	echo "No formatting issues were found"
+	echo "포맷팅 문제가 없습니다"
 	exit 0
 else
-	echo>&2 "* There are code formatting issues that must be addressed"
+	echo>&2 "* 코드 포맷팅 문제가 있습니다. 수정 후 커밋해주세요"
 	exit 1
 fi

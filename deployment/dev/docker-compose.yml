@@ -2,12 +2,13 @@ networks:
   app-tier:
     driver: bridge
 services:
-  techlog:
+  techlog-blue:
+    container_name: techlog-blue
     networks:
       - app-tier
     depends_on:
       - mysql
-    image: techlogv1dockerhub/techlog_dev:latest
+    image: techlogv1/techlog_dev:latest
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     restart: always
@@ -18,17 +19,26 @@ services:
       retries: 3
       start_period: 30s
 
-#  redis:
-#    container_name: techlog-redis
-#    networks:
-#      - app-tier
-#    image: redis:latest
-#    ports:
-#      - "6379:6379"
+  techlog-green:
+    container_name: techlog-green
+    networks:
+      - app-tier
+    depends_on:
+      - mysql
+    image: techlogv1/techlog_dev:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    restart: always
+    healthcheck:
+      test: "curl -f http://localhost:8080/health || exit 1"
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   mysql:
     image: mysql:8.0
-    container_name: techlog-mysql
+    container_name: mysql
     restart: always
     env_file:
       - ./mysql.env
@@ -38,7 +48,7 @@ services:
       - ./mysql:/var/lib/mysql
     networks:
       - app-tier
-
+#tttttttt
   nginx:
     depends_on:
       - techlog-green

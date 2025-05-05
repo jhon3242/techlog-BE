@@ -17,7 +17,7 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
         handler: Any,
         ex: Exception?
     ) {
-        if (request.requestURI.contains(IGNORE_URI)) {
+        if (isIgnore(request)) {
             return
         }
         val requestId = MDC.get(REQUEST_ID) ?: "N/A"
@@ -46,12 +46,29 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
         logger.info {
             """
             📦 RESPONSE $status [$requestId]
-            ▶ URI: ${request.method} ${request.requestURI}
+            ▶ URI: ${request.method} ${request.requestURI}${getParameters(request)}
             ▶ Status: [${response.status}]
             ▶ Duration: ${duration}ms
             ▶ Headers: $headers
             ▶ Body: $requestBody
+            ▶ Exception: ${ex?.message}
             """.trimIndent()
         }
+    }
+
+    private fun isIgnore(request: HttpServletRequest): Boolean {
+        return request.requestURI.contains(IGNORE_URI) || request.method == "OPTIONS"
+    }
+
+    private fun getParameters(request: HttpServletRequest): String {
+        val parameters =
+            request.parameterNames
+                .toList()
+        if (parameters.isEmpty()) {
+            return ""
+        }
+        return "?" +
+            parameters
+                .joinToString("&") { "$it=${request.getParameter(it)}" }
     }
 }

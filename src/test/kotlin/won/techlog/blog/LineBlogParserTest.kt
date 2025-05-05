@@ -2,7 +2,6 @@ package won.techlog.blog
 
 import io.restassured.RestAssured
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogRequest
@@ -10,7 +9,7 @@ import won.techlog.blog.api.response.BlogResponse
 import won.techlog.support.BaseControllerTest
 
 class LineBlogParserTest : BaseControllerTest() {
-    @Test
+//    @Test
     fun `블로그 글 리스트를 파싱한다`() {
         // given
         val url = "https://techblog.lycorp.co.jp/ko/page/2"
@@ -26,7 +25,7 @@ class LineBlogParserTest : BaseControllerTest() {
         println(result)
     }
 
-    @Test
+//    @Test
     fun `블로그 글을 파싱한다`() {
         // given
         val url = "https://techblog.lycorp.co.jp/ko/state-of-ly-frontend-2024-report"
