@@ -1,44 +1,82 @@
 package won.techlog.blog.domain
 
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
+import com.microsoft.playwright.BrowserType
+import com.microsoft.playwright.Page
+import com.microsoft.playwright.Playwright
+import com.microsoft.playwright.options.LoadState
 import org.springframework.stereotype.Component
 
 @Component
 class KakaoPayBlogParser : BlogParser {
     override fun parseBlogs(url: String): List<BlogMetaData> {
-        val doc: Document =
-            Jsoup.connect(url)
-                .userAgent("Mozilla/5.0") // 일부 사이트는 User-Agent 체크함
-                .get()
+        val result = mutableListOf<BlogMetaData>()
+        Playwright.create().use { playwright ->
+            val browser =
+                playwright.chromium().launch(
+                    BrowserType.LaunchOptions().setHeadless(true)
+                )
+            val page = browser.newPage()
+            page.navigate(url)
+            page.waitForLoadState(LoadState.NETWORKIDLE)
 
-        return doc.select("li._postListItem_1cl5f_66")
-            .map { it.select("a").attr("href") }
-            .map { parseBlog("https://tech.kakaopay.com/$it") }
-            .toList()
+            val urls: List<String> =
+                page.locator("div._postList_1cl5f_34 ul > li > a")
+                    .evaluateAll("nodes => nodes.map(n => n.href)")
+                    as List<String>
+
+            val list =
+                urls.map { extractBlogMetaData(page, it) }
+                    .toList()
+            result.addAll(list)
+        }
+        return result
     }
 
     override fun parseBlog(url: String): BlogMetaData {
-        val doc: Document =
-            Jsoup.connect(url)
-                .userAgent("Mozilla/5.0") // 일부 사이트는 User-Agent 체크함
-                .get()
+        var result: BlogMetaData? = null
+        Playwright.create().use { playwright ->
+            val browser =
+                playwright.chromium().launch(
+                    BrowserType.LaunchOptions().setHeadless(true)
+                )
 
-        val title = doc.select("h1").first().text()
+            val page = browser.newPage()
 
-        // 썸네일: 본문 내 첫 번째 이미지
-        val thumbnail =
-            doc.select("img").first()
-                .attribute("src")
-                .value
-                .let { "https://tech.kakaopay.com$it" }
-                .ifEmpty { null }
+            result = extractBlogMetaData(page, url)
 
+            browser.close()
+        }
+
+        return result
+            ?: throw IllegalArgumentException("파싱 과정에서 에러가 발생했습니다.")
+    }
+
+    private fun extractBlogMetaData(
+        page: Page,
+        url: String
+    ): BlogMetaData {
+        // 페이지 이동
+        page.navigate(url)
+
+        // 페이지 로드 기다리기 (옵션)
+        page.waitForLoadState(LoadState.NETWORKIDLE)
+
+        val title =
+            page.locator("head meta[property='og:title']")
+                .getAttribute("content")
+                .split("|")
+                .first()
         val content =
-            doc.selectFirst("div.content")
-                .text()
+            page.locator("head meta[property='og:description']")
+                .getAttribute("content")
                 .take(300)
 
+        val thumbnail =
+            page.locator("article img")
+                .first()
+                .getAttribute("src")
+                .ifBlank { null }
+                .let { "https://tech.kakaopay.com$it" }
         return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }
 }
