@@ -87,7 +87,7 @@ if [ -z "$IS_BLUE" ]; then
   docker compose rm -f techlog-green
 
   echo "불필요한 이미지 정리"
-  docker image prune -af --filter "label=techlog" || true
+  docker image prune -f || true
 
 else
   echo "### BLUE => GREEN ###"
@@ -116,5 +116,5 @@ else
   docker compose rm -f techlog-blue
 
   echo "불필요한 이미지 정리"
-  docker image prune -af --filter "label=techlog" || true
+  docker image prune -f || true
 fi
