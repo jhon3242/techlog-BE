@@ -7,9 +7,10 @@ import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogRequest
 import won.techlog.blog.api.response.BlogResponse
 import won.techlog.support.BaseControllerTest
+import kotlin.test.Test
 
 class WoowabroBlogParserTest : BaseControllerTest() {
-//    @Test
+    @Test
     fun `블로그 글을 찾는다`() {
         // given
         val url = "https://techblog.woowahan.com/?paged=1"
@@ -25,10 +26,10 @@ class WoowabroBlogParserTest : BaseControllerTest() {
         println(result)
     }
 
-//    @Test
+    @Test
     fun `블로그 글을 파싱한다`() {
         // given
-        val url = "https://techblog.woowahan.com/20789/"
+        val url = "https://techblog.woowahan.com/21905/"
         val request = BlogRequest(url)
         val response =
             RestAssured.given().log().all()
