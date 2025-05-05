@@ -16,7 +16,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(BadRequestException::class)
     fun handleBadRequestException(e: BadRequestException?): ResponseEntity<ErrorResponse> {
-        logger.error { e }
+        logger.error { e?.message }
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse("Invalid request"))
@@ -26,7 +26,7 @@ class GlobalExceptionHandler {
     fun handleHttpRequestMethodNotSupportedException(
         e: HttpRequestMethodNotSupportedException?
     ): ResponseEntity<ErrorResponse> {
-        logger.error { e }
+        logger.error { e?.message }
         return ResponseEntity
             .status(HttpStatus.METHOD_NOT_ALLOWED)
             .body(ErrorResponse("Invalid request method"))
@@ -36,7 +36,7 @@ class GlobalExceptionHandler {
     fun handleMissingServletRequestParameterException(
         e: MissingServletRequestParameterException?
     ): ResponseEntity<ErrorResponse> {
-        logger.error { e }
+        logger.error { e?.message }
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse("Invalid request"))
@@ -44,7 +44,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(NoResourceFoundException::class)
     fun handleNoResourceFoundException(e: NoResourceFoundException?): ResponseEntity<ErrorResponse> {
-        logger.error { e }
+        logger.error { e?.message }
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
             .body(ErrorResponse("Resource not found"))
@@ -52,7 +52,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     fun handleException(e: Exception?): ResponseEntity<ErrorResponse> {
-        logger.error { e }
+        logger.error { e?.message }
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(ErrorResponse("Internal server error"))
