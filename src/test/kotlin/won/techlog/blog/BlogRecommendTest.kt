@@ -3,11 +3,17 @@ package won.techlog.blog
 import io.restassured.RestAssured
 import io.restassured.http.ContentType
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Value
 import won.techlog.blog.api.request.BlogRecommendationRequest
 import won.techlog.support.BaseControllerTest
 import won.techlog.support.fixture.BlogRecommendationFixture
 
+private const val ADMIN_HEADER = "X-Admin-Header"
+
 class BlogRecommendTest : BaseControllerTest() {
+    @Value("\${admin.header}")
+    lateinit var adminHeaderKey: String
+
     @Test
     fun `블로그를 추천한다`() {
         // given
@@ -30,6 +36,7 @@ class BlogRecommendTest : BaseControllerTest() {
 
         // when & then
         RestAssured.given().log().all()
+            .header(ADMIN_HEADER, adminHeaderKey)
             .`when`().get("/api/blogs/recommendations")
             .then().log().all()
             .statusCode(200)
@@ -43,6 +50,7 @@ class BlogRecommendTest : BaseControllerTest() {
 
         // when & then
         RestAssured.given().log().all()
+            .header(ADMIN_HEADER, adminHeaderKey)
             .pathParam("id", blogRecommendation.id)
             .`when`().delete("/api/blogs/recommendations/{id}")
             .then().log().all()
