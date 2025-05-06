@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import won.techlog.blog.api.request.BlogRecommendationRequest
+import won.techlog.blog.api.response.BlogRecommendationResponse
 import won.techlog.blog.domain.BlogService
 import won.techlog.common.admin.AdminCheck
 
@@ -22,15 +23,15 @@ class BlogRecommendController(
     @ResponseStatus(HttpStatus.CREATED)
     fun recommendBlog(
         @RequestBody blogRecommendationRequest: BlogRecommendationRequest
-    ) {
+    ): BlogRecommendationResponse =
         blogService.saveBlogRecommendation(blogRecommendationRequest.url)
-    }
+            .let { BlogRecommendationResponse(it) }
 
     @AdminCheck
     @GetMapping
-    fun getBlogRecommendations(): List<BlogRecommendationRequest> =
+    fun getBlogRecommendations(): List<BlogRecommendationResponse> =
         blogService.findAllBlogRecommendations()
-            .map { BlogRecommendationRequest(it.url) }
+            .map { BlogRecommendationResponse(it) }
 
     @AdminCheck
     @DeleteMapping("/{id}")

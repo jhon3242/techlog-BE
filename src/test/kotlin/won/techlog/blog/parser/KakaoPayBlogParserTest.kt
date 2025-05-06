@@ -1,4 +1,4 @@
-package won.techlog.blog
+package won.techlog.blog.parser
 
 import io.restassured.RestAssured
 import org.assertj.core.api.Assertions

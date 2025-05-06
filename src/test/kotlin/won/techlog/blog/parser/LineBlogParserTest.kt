@@ -1,4 +1,4 @@
-package won.techlog.blog
+package won.techlog.blog.parser
 
 import io.restassured.RestAssured
 import org.assertj.core.api.Assertions
@@ -8,11 +8,11 @@ import won.techlog.blog.api.request.BlogRequest
 import won.techlog.blog.api.response.BlogResponse
 import won.techlog.support.BaseControllerTest
 
-class NaverBlogParserTest : BaseControllerTest() {
+class LineBlogParserTest : BaseControllerTest() {
 //    @Test
     fun `블로그 글 리스트를 파싱한다`() {
         // given
-        val url = "https://d2.naver.com/helloworld?page=0"
+        val url = "https://techblog.lycorp.co.jp/ko/page/2"
         val request = BlogRequest(url)
         val result =
             RestAssured.given().log().all()
@@ -28,8 +28,7 @@ class NaverBlogParserTest : BaseControllerTest() {
 //    @Test
     fun `블로그 글을 파싱한다`() {
         // given
-        val url =
-            "https://d2.naver.com/helloworld/1168674"
+        val url = "https://techblog.lycorp.co.jp/ko/state-of-ly-frontend-2024-report"
         val request = BlogRequest(url)
         val response =
             RestAssured.given().log().all()
