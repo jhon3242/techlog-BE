@@ -1,6 +1,8 @@
-package won.techlog.blog.domain
+package won.techlog.blog.domain.parser
 
 import org.springframework.stereotype.Component
+import won.techlog.blog.domain.Blog
+import won.techlog.blog.domain.BlogType
 import won.techlog.poster.exception.NotFoundException
 
 @Component

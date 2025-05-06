@@ -1,13 +1,14 @@
-package won.techlog.blog.domain
+package won.techlog.blog.domain.parser
 
 import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Page
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.options.LoadState
 import org.springframework.stereotype.Component
+import won.techlog.blog.domain.BlogMetaData
 
 @Component
-class WoowabroBlogParser : BlogParser {
+class KakaoPayBlogParser : BlogParser {
     override fun parseBlogs(url: String): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
         Playwright.create().use { playwright ->
@@ -20,11 +21,9 @@ class WoowabroBlogParser : BlogParser {
             page.waitForLoadState(LoadState.NETWORKIDLE)
 
             val urls: List<String> =
-                page.locator(
-                    "body > div.content.vuejs > div.content-wrap > div.page-main > " +
-                        "div.post-main > div.post-list > div > a"
-                )
-                    .evaluateAll("nodes => nodes.map(n => n.href)") as List<String>
+                page.locator("div._postList_1cl5f_34 ul > li > a")
+                    .evaluateAll("nodes => nodes.map(n => n.href)")
+                    as List<String>
 
             val list =
                 urls.map { extractBlogMetaData(page, it) }
@@ -63,17 +62,22 @@ class WoowabroBlogParser : BlogParser {
         // 페이지 로드 기다리기 (옵션)
         page.waitForLoadState(LoadState.NETWORKIDLE)
 
-        val title = page.textContent("div.post-header").trim().split("\n").first()
+        val title =
+            page.locator("head meta[property='og:title']")
+                .getAttribute("content")
+                .split("|")
+                .first()
         val content =
-            page.textContent("div.post-content-body")
-                .trim()
+            page.locator("head meta[property='og:description']")
+                .getAttribute("content")
                 .take(300)
+
         val thumbnail =
-            page.locator("div.content-single .post-content-body img")
+            page.locator("article img")
                 .first()
                 .getAttribute("src")
                 .ifBlank { null }
-                .let { "https://techblog.woowahan.com$it" }
+                .let { "https://tech.kakaopay.com$it" }
         return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }
 }

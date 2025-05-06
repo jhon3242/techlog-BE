@@ -1,6 +1,9 @@
 package won.techlog.blog.domain
 
 import org.springframework.stereotype.Service
+import won.techlog.blog.domain.parser.BlogParserManager
+import won.techlog.blog.domain.recommendation.BlogRecommendation
+import won.techlog.blog.domain.recommendation.BlogRecommendationDao
 
 @Service
 class BlogService(

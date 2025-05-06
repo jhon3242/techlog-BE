@@ -1,4 +1,4 @@
-package won.techlog.blog.domain
+package won.techlog.blog.domain.recommendation
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

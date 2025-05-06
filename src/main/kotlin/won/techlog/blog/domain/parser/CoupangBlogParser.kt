@@ -1,8 +1,9 @@
-package won.techlog.blog.domain
+package won.techlog.blog.domain.parser
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.springframework.stereotype.Component
+import won.techlog.blog.domain.BlogMetaData
 
 @Component
 class CoupangBlogParser : BlogParser {

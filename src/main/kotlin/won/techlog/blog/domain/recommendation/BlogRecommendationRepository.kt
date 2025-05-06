@@ -1,4 +1,4 @@
-package won.techlog.blog.domain
+package won.techlog.blog.domain.recommendation
 
 import org.springframework.data.jpa.repository.JpaRepository
 
