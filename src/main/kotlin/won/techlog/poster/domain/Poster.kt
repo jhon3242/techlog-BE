@@ -1,5 +1,6 @@
 package won.techlog.poster.domain
 
+import jakarta.persistence.Column
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -17,6 +18,7 @@ class Poster(
     @Embedded
     val blogMetaData: BlogMetaData,
     @Enumerated(EnumType.STRING)
+    @Column(name = "blog_type", length = 20)
     val blogType: BlogType,
     var recommendations: Long = 0L,
     var views: Long = 0L

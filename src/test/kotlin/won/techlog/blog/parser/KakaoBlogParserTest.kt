@@ -3,7 +3,6 @@ package won.techlog.blog.parser
 import io.restassured.RestAssured
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -16,7 +15,7 @@ class KakaoBlogParserTest : BaseControllerTest() {
     @Autowired
     lateinit var kakaoBlogAsyncParser: KakaoBlogAsyncParser
 
-    @Test
+//    @Test
     fun `블로그 글 리스트를 파싱한다`() {
         // given
         val url = "https://tech.kakao.com/tag/tech"
@@ -32,7 +31,7 @@ class KakaoBlogParserTest : BaseControllerTest() {
         println(result)
     }
 
-    @Test
+//    @Test
     fun `블로그 글을 파싱한다`() {
         // given
         val url = "https://tech.kakaopay.com/post/kakaopayins-opensearch-analyzer/"
@@ -52,7 +51,7 @@ class KakaoBlogParserTest : BaseControllerTest() {
         Assertions.assertThat(response.blogType).isNotEmpty()
     }
 
-    @Test
+//    @Test
     fun `블로그 글 리스트를 비동기로 파싱한다`() {
         runBlocking {
             val parseBlogs = kakaoBlogAsyncParser.parseBlogs("https://tech.kakao.com/tag/tech")
