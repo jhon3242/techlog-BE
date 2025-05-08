@@ -49,9 +49,8 @@ class LineBlogParser : BlogParser {
 
         val content =
             doc.select("div.content")
-                .take(300)
-                .first()
                 .text()
+                .take(300)
 
         return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }

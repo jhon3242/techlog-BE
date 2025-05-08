@@ -7,6 +7,7 @@ import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogRequest
 import won.techlog.blog.api.response.BlogResponse
 import won.techlog.support.BaseControllerTest
+import kotlin.test.Test
 
 class LineBlogParserTest : BaseControllerTest() {
 //    @Test
@@ -25,10 +26,10 @@ class LineBlogParserTest : BaseControllerTest() {
         println(result)
     }
 
-//    @Test
+    @Test
     fun `블로그 글을 파싱한다`() {
         // given
-        val url = "https://techblog.lycorp.co.jp/ko/state-of-ly-frontend-2024-report"
+        val url = "https://techblog.lycorp.co.jp/ko/sli-and-slo-for-improving-reliability-1"
         val request = BlogRequest(url)
         val response =
             RestAssured.given().log().all()
