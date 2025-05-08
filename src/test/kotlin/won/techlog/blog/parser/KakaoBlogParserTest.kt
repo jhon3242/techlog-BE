@@ -9,17 +9,17 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogRequest
 import won.techlog.blog.api.response.BlogResponse
-import won.techlog.blog.domain.parser.NaverBlogAsyncParser
+import won.techlog.blog.domain.parser.KakaoBlogAsyncParser
 import won.techlog.support.BaseControllerTest
 
-class NaverBlogParserTest : BaseControllerTest() {
+class KakaoBlogParserTest : BaseControllerTest() {
     @Autowired
-    lateinit var naverBlogAsyncParser: NaverBlogAsyncParser
+    lateinit var kakaoBlogAsyncParser: KakaoBlogAsyncParser
 
     @Test
     fun `블로그 글 리스트를 파싱한다`() {
         // given
-        val url = "https://d2.naver.com/helloworld?page=0"
+        val url = "https://tech.kakao.com/tag/tech"
         val request = BlogRequest(url)
         val result =
             RestAssured.given().log().all()
@@ -32,11 +32,10 @@ class NaverBlogParserTest : BaseControllerTest() {
         println(result)
     }
 
-//    @Test
+    @Test
     fun `블로그 글을 파싱한다`() {
         // given
-        val url =
-            "https://d2.naver.com/helloworld/1168674"
+        val url = "https://tech.kakaopay.com/post/kakaopayins-opensearch-analyzer/"
         val request = BlogRequest(url)
         val response =
             RestAssured.given().log().all()
@@ -56,7 +55,7 @@ class NaverBlogParserTest : BaseControllerTest() {
     @Test
     fun `블로그 글 리스트를 비동기로 파싱한다`() {
         runBlocking {
-            val parseBlogs = naverBlogAsyncParser.parseBlogs("https://d2.naver.com/helloworld?page=0")
+            val parseBlogs = kakaoBlogAsyncParser.parseBlogs("https://tech.kakao.com/tag/tech")
             println(parseBlogs)
         }
     }

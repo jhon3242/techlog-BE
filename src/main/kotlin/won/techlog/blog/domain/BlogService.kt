@@ -14,6 +14,8 @@ class BlogService(
 
     fun parseBlogs(url: String): List<Blog> = blogParserManager.parseBlogs(url)
 
+    suspend fun parseBlogsAsync(url: String): List<Blog> = blogParserManager.parseBlogsAsync(url)
+
     fun saveBlogRecommendation(url: String) = blogRecommendationDao.save(url)
 
     fun findAllBlogRecommendations(): List<BlogRecommendation> = blogRecommendationDao.findAll()

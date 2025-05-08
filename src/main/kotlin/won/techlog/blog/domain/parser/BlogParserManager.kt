@@ -23,6 +23,13 @@ class BlogParserManager(
             .map { Blog(blogType, it) }
     }
 
+    suspend fun parseBlogsAsync(url: String): List<Blog> {
+        val blogType = BlogType.getByUrl(url)
+        val parser = findParser(blogType)
+        return parser.parseBlogs(url)
+            .map { Blog(blogType, it) }
+    }
+
     private fun findParser(blogType: BlogType): BlogParser {
         return parserMap.get(blogType.beanName)
             ?: throw NotFoundException()

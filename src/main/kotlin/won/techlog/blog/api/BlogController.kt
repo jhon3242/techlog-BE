@@ -24,4 +24,11 @@ class BlogController(
     fun parseBlog(
         @RequestBody blogRequest: BlogRequest
     ): BlogResponse = BlogResponse(blogService.parseBlog(blogRequest.url))
+
+    @PostMapping("/blogs/async")
+    suspend fun parseBlogsAsync(
+        @RequestBody blogRequest: BlogRequest
+    ): List<BlogResponse> =
+        blogService.parseBlogsAsync(blogRequest.url)
+            .map { BlogResponse(it) }
 }
