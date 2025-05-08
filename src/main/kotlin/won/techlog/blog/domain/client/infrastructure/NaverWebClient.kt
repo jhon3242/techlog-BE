@@ -4,6 +4,7 @@ import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import won.techlog.blog.domain.BlogMetaData
+import won.techlog.blog.domain.BlogType
 import won.techlog.blog.domain.client.FetchClient
 
 @Component
@@ -27,4 +28,6 @@ class NaverWebClient(
             )
         }
     }
+
+    override fun supportType(): BlogType = BlogType.NAVER
 }

@@ -1,9 +1,21 @@
 package won.techlog.blog.domain.client
 
 import org.springframework.stereotype.Service
-import org.springframework.web.reactive.function.client.WebClient
+import won.techlog.blog.domain.Blog
+import won.techlog.blog.domain.BlogType
 
 @Service
 class BlogApiManager(
-    private val clientMap: Map<String, WebClient>
-)
+    private val clients: List<FetchClient>
+) {
+    private val clientMap: Map<BlogType, FetchClient> = clients.associateBy { it.supportType()}
+
+    fun canHandle(url: String): Boolean {
+        val blogType = BlogType.getByUrl(url)
+        return clientMap.containsKey(blogType)
+    }
+
+    fun fetchBlogs(url: String): List<Blog> {
+        TODO()
+    }
+}
