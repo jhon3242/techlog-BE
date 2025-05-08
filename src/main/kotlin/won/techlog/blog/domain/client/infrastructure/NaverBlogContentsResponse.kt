@@ -3,12 +3,12 @@ package won.techlog.blog.domain.client.infrastructure
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class NaverWebClientResponse(
-    val content: List<NaverBlogContent>
+data class NaverBlogContentsResponse(
+    val content: List<NaverBlogContentResponse>
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class NaverBlogContent(
+data class NaverBlogContentResponse(
     val postTitle: String,
     val postImage: String,
     val postHtml: String,

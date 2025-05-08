@@ -4,6 +4,8 @@ import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
 
 interface FetchClient {
+    suspend fun fetchBlog(url: String): BlogMetaData
+
     suspend fun fetchBlogs(): List<BlogMetaData>
 
     fun supportType(): BlogType

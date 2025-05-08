@@ -13,4 +13,10 @@ class WebClientConfig {
         builder.baseUrl("https://d2.naver.com/api/v1/contents?size=20")
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build()
+
+    @Bean
+    fun kakaoBlogWebClient(builder: WebClient.Builder): WebClient =
+        builder.baseUrl("https://tech.kakao.com/api/v1")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .build()
 }

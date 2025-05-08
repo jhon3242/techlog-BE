@@ -12,11 +12,13 @@ class NaverClientTest : BaseControllerTest() {
     lateinit var naverWebClient: NaverWebClient
 
     @Test
-    fun `네이버 블로그 글을 가져온다`() {
+    fun `네이버 블로그 리스트를 가져온다`() {
         runBlocking {
             // given
             // when
             val result = naverWebClient.fetchBlogs()
+
+            println(result)
 
             // then
             Assertions.assertThat(result).isNotEmpty()

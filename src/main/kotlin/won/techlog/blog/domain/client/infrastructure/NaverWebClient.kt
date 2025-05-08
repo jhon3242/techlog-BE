@@ -11,12 +11,16 @@ import won.techlog.blog.domain.client.FetchClient
 class NaverWebClient(
     private val naverBlogWebClient: WebClient
 ) : FetchClient {
+    override suspend fun fetchBlog(url: String): BlogMetaData {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun fetchBlogs(): List<BlogMetaData> {
         val response =
             naverBlogWebClient
                 .get()
                 .retrieve()
-                .bodyToMono(NaverWebClientResponse::class.java)
+                .bodyToMono(NaverBlogContentsResponse::class.java)
                 .map { it.content }
                 .awaitSingle()
         return response.map {
