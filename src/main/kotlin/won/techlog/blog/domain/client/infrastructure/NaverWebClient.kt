@@ -10,10 +10,6 @@ import won.techlog.blog.domain.client.FetchClient
 class NaverWebClient(
     private val naverBlogWebClient: WebClient
 ) : FetchClient {
-    override suspend fun fetchData(): BlogMetaData {
-        TODO()
-    }
-
     override suspend fun fetchBlogs(): List<BlogMetaData> {
         val response =
             naverBlogWebClient
