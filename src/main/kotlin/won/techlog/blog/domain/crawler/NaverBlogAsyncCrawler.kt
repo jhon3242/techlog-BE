@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.parser
+package won.techlog.blog.domain.crawler
 
 import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Page
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 
 @Component
-class NaverBlogAsyncParser : BlogAsyncParser {
-    override suspend fun parseBlogs(url: String): List<BlogMetaData> =
+class NaverBlogAsyncCrawler : BlogAsyncCrawler {
+    override suspend fun crawlBlogs(url: String): List<BlogMetaData> =
         coroutineScope {
             Playwright.create().use { playwright ->
                 val browser =
@@ -42,7 +42,7 @@ class NaverBlogAsyncParser : BlogAsyncParser {
             }
         }
 
-    override suspend fun parseBlog(url: String): BlogMetaData {
+    override suspend fun crawlBlog(url: String): BlogMetaData {
         TODO("Not yet implemented")
     }
 

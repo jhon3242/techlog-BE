@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.parser
+package won.techlog.blog.domain.crawler
 
 import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Page
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 
 @Component
-class WoowabroBlogParser : BlogParser {
-    override fun parseBlogs(url: String): List<BlogMetaData> {
+class NaverBlogCrawler : BlogCrawler {
+    override fun crawlBlogs(url: String): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
         Playwright.create().use { playwright ->
             val browser =
@@ -20,22 +20,18 @@ class WoowabroBlogParser : BlogParser {
             page.navigate(url)
             page.waitForLoadState(LoadState.NETWORKIDLE)
 
-            val urls: List<String> =
-                page.locator(
-                    "body > div.content.vuejs > div.content-wrap > div.page-main > " +
-                        "div.post-main > div.post-list > div > a"
-                )
-                    .evaluateAll("nodes => nodes.map(n => n.href)") as List<String>
-
             val list =
-                urls.map { extractBlogMetaData(page, it) }
-                    .toList()
+                page.locator("a.post_txt_wrap")
+                    .all()
+                    .map { it.getAttribute("href") }
+                    .map { "https://d2.naver.com$it" }
+                    .map { url -> extractBlogMetaData(page, url) }
             result.addAll(list)
         }
         return result
     }
 
-    override fun parseBlog(url: String): BlogMetaData {
+    override fun crawlBlog(url: String): BlogMetaData {
         var result: BlogMetaData? = null
         Playwright.create().use { playwright ->
             val browser =
@@ -64,17 +60,14 @@ class WoowabroBlogParser : BlogParser {
         // 페이지 로드 기다리기 (옵션)
         page.waitForLoadState(LoadState.NETWORKIDLE)
 
-        val title = page.textContent("div.post-header").trim().split("\n").first()
-        val content =
-            page.textContent("div.post-content-body")
-                .trim()
-                .take(300)
+        val title = page.textContent("h1.posting_tit") ?: "제목 없음"
+        val content = page.textContent("div.con_view").take(300) ?: "본문 없음"
         val thumbnail =
-            page.locator("div.content-single .post-content-body img")
+            page.locator("div.con_view img")
                 .first()
                 .getAttribute("src")
                 .ifBlank { null }
-                .let { "https://techblog.woowahan.com$it" }
+                .let { "https://d2.naver.com$it" }
         return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }
 }

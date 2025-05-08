@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.parser
+package won.techlog.blog.domain.crawler
 
 import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Playwright
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 
 @Component
-class LineBlogParser : BlogParser {
-    override fun parseBlogs(url: String): List<BlogMetaData> {
+class LineBlogCrawler : BlogCrawler {
+    override fun crawlBlogs(url: String): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
         Playwright.create().use { playwright ->
             val browser =
@@ -26,13 +26,13 @@ class LineBlogParser : BlogParser {
                     .all()
                     .map { it.getAttribute("href") }
                     .map { "https://techblog.lycorp.co.jp$it" }
-                    .map { url -> parseBlog(url) }
+                    .map { url -> crawlBlog(url) }
             result.addAll(list)
         }
         return result
     }
 
-    override fun parseBlog(url: String): BlogMetaData {
+    override fun crawlBlog(url: String): BlogMetaData {
         val doc: Document =
             Jsoup.connect(url)
                 .userAgent("Mozilla/5.0") // 일부 사이트는 User-Agent 체크함

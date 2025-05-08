@@ -8,12 +8,12 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogRequest
 import won.techlog.blog.api.response.BlogResponse
-import won.techlog.blog.domain.parser.KakaoBlogAsyncParser
+import won.techlog.blog.domain.crawler.KakaoBlogAsyncCrawler
 import won.techlog.support.BaseControllerTest
 
 class KakaoBlogParserTest : BaseControllerTest() {
     @Autowired
-    lateinit var kakaoBlogAsyncParser: KakaoBlogAsyncParser
+    lateinit var kakaoBlogAsyncParser: KakaoBlogAsyncCrawler
 
 //    @Test
     fun `블로그 글 리스트를 파싱한다`() {
@@ -54,7 +54,7 @@ class KakaoBlogParserTest : BaseControllerTest() {
 //    @Test
     fun `블로그 글 리스트를 비동기로 파싱한다`() {
         runBlocking {
-            val parseBlogs = kakaoBlogAsyncParser.parseBlogs("https://tech.kakao.com/tag/tech")
+            val parseBlogs = kakaoBlogAsyncParser.crawlBlogs("https://tech.kakao.com/tag/tech")
             println(parseBlogs)
         }
     }

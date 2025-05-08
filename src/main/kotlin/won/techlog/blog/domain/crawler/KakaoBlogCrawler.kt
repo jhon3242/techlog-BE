@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.parser
+package won.techlog.blog.domain.crawler
 
 import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Page
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 
 @Component
-class KakaoBlogParser : BlogParser {
-    override fun parseBlogs(url: String): List<BlogMetaData> {
+class KakaoBlogCrawler : BlogCrawler {
+    override fun crawlBlogs(url: String): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
         Playwright.create().use { playwright ->
             val browser = playwright.chromium().launch(BrowserType.LaunchOptions().setHeadless(true))
@@ -37,7 +37,7 @@ class KakaoBlogParser : BlogParser {
         return result
     }
 
-    override fun parseBlog(url: String): BlogMetaData {
+    override fun crawlBlog(url: String): BlogMetaData {
         var result: BlogMetaData? = null
         Playwright.create().use { playwright ->
             val browser =

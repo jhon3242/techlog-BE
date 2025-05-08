@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.parser
+package won.techlog.blog.domain.crawler
 
 import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Page
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 
 @Component
-class KakaoBlogAsyncParser : BlogAsyncParser {
-    override suspend fun parseBlogs(url: String): List<BlogMetaData> {
+class KakaoBlogAsyncCrawler : BlogAsyncCrawler {
+    override suspend fun crawlBlogs(url: String): List<BlogMetaData> {
         return coroutineScope {
             val result = mutableListOf<BlogMetaData>()
             launch {
@@ -45,7 +45,7 @@ class KakaoBlogAsyncParser : BlogAsyncParser {
         }
     }
 
-    override suspend fun parseBlog(url: String): BlogMetaData {
+    override suspend fun crawlBlog(url: String): BlogMetaData {
         TODO("Not yet implemented")
     }
 

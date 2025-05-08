@@ -1,20 +1,20 @@
 package won.techlog.blog.domain
 
 import org.springframework.stereotype.Service
-import won.techlog.blog.domain.parser.BlogParserManager
+import won.techlog.blog.domain.crawler.BlogCrawlerManager
 import won.techlog.blog.domain.recommendation.BlogRecommendation
 import won.techlog.blog.domain.recommendation.BlogRecommendationDao
 
 @Service
 class BlogService(
-    private val blogParserManager: BlogParserManager,
+    private val blogCrawlerManager: BlogCrawlerManager,
     private val blogRecommendationDao: BlogRecommendationDao
 ) {
-    fun parseBlog(url: String): Blog = blogParserManager.parseBlog(url)
+    fun parseBlog(url: String): Blog = blogCrawlerManager.crawlBlog(url)
 
-    fun parseBlogs(url: String): List<Blog> = blogParserManager.parseBlogs(url)
+    fun parseBlogs(url: String): List<Blog> = blogCrawlerManager.crawlBlogs(url)
 
-    suspend fun parseBlogsAsync(url: String): List<Blog> = blogParserManager.parseBlogsAsync(url)
+    suspend fun parseBlogsAsync(url: String): List<Blog> = blogCrawlerManager.crawlBlogsAsync(url)
 
     fun saveBlogRecommendation(url: String) = blogRecommendationDao.save(url)
 
