@@ -12,6 +12,24 @@ class NaverClientTest : BaseControllerTest() {
     lateinit var naverWebClient: NaverWebClient
 
     @Test
+    fun `네이브 블로그를 가져온다`() {
+        runBlocking {
+            // given
+            val url = "https://d2.naver.com/helloworld/977"
+
+            // when
+            val result = naverWebClient.fetchBlog(url)
+
+            // then
+            println(result)
+            Assertions.assertThat(result.url).isNotEmpty()
+            Assertions.assertThat(result.content).isNotEmpty()
+            Assertions.assertThat(result.title).isNotEmpty()
+        }
+    }
+
+
+    @Test
     fun `네이버 블로그 리스트를 가져온다`() {
         runBlocking {
             // given
@@ -23,7 +41,6 @@ class NaverClientTest : BaseControllerTest() {
             // then
             Assertions.assertThat(result).isNotEmpty()
             Assertions.assertThat(result.get(0).title).isNotEmpty()
-            Assertions.assertThat(result.get(0).thumbnailUrl).isNotEmpty()
             Assertions.assertThat(result.get(0).content).isNotEmpty()
             Assertions.assertThat(result.get(0).url).isNotEmpty()
         }

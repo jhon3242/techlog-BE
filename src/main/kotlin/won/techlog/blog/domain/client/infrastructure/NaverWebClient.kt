@@ -17,7 +17,18 @@ class NaverWebClient(
     private val maxPage = 6
     private val size = 100
     override suspend fun fetchBlog(url: String): BlogMetaData {
-        TODO("Not yet implemented")
+        val idx = url.substringAfterLast("/")
+        val response = naverBlogWebClient.get()
+            .uri("/${idx}")
+            .retrieve()
+            .bodyToMono(NaverBlogContentResponse::class.java)
+            .awaitSingle()
+        return BlogMetaData(
+            title = response.postTitle,
+            thumbnailUrl = response.postImage?.let { "https://d2.naver.com${it}" },
+            content = response.postHtml,
+            url = response.url
+        )
     }
 
     override suspend fun fetchBlogs(): List<BlogMetaData> {
