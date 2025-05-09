@@ -16,16 +16,18 @@ class NaverWebClient(
 ) : FetchClient {
     private val maxPage = 6
     private val size = 100
+
     override suspend fun fetchBlog(url: String): BlogMetaData {
         val idx = url.substringAfterLast("/")
-        val response = naverBlogWebClient.get()
-            .uri("/${idx}")
-            .retrieve()
-            .bodyToMono(NaverBlogContentResponse::class.java)
-            .awaitSingle()
+        val response =
+            naverBlogWebClient.get()
+                .uri("/$idx")
+                .retrieve()
+                .bodyToMono(NaverBlogContentResponse::class.java)
+                .awaitSingle()
         return BlogMetaData(
             title = response.postTitle,
-            thumbnailUrl = response.postImage?.let { "https://d2.naver.com${it}" },
+            thumbnailUrl = response.postImage?.let { "https://d2.naver.com$it" },
             content = response.postHtml,
             url = "https://d2.naver.com${response.url}"
         )
@@ -35,21 +37,26 @@ class NaverWebClient(
         val result = mutableListOf<BlogMetaData>()
         withContext(Dispatchers.IO) {
             for (page in 0..maxPage) {
-                val response = async { naverBlogWebClient
-                    .get()
-                    .uri("?page=${page}&size=${size}")
-                    .retrieve()
-                    .bodyToMono(NaverBlogContentsResponse::class.java)
-                    .map { it.content }
-                    .awaitSingle() }
-                    .await()
-                    .filter { it.url.startsWith("/helloworld") }
-                    .map { BlogMetaData(
-                        title = it.postTitle,
-                        thumbnailUrl = it.postImage?.let { "https://d2.naver.com${it}" },
-                        content = it.postHtml,
-                        url = "https://d2.naver.com${it.url}"
-                    ) }
+                val response =
+                    async {
+                        naverBlogWebClient
+                            .get()
+                            .uri("?page=$page&size=$size")
+                            .retrieve()
+                            .bodyToMono(NaverBlogContentsResponse::class.java)
+                            .map { it.content }
+                            .awaitSingle()
+                    }
+                        .await()
+                        .filter { it.url.startsWith("/helloworld") }
+                        .map {
+                            BlogMetaData(
+                                title = it.postTitle,
+                                thumbnailUrl = it.postImage?.let { "https://d2.naver.com$it" },
+                                content = it.postHtml,
+                                url = "https://d2.naver.com${it.url}"
+                            )
+                        }
                 result.addAll(response)
             }
         }

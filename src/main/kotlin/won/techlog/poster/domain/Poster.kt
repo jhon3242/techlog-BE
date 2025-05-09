@@ -22,5 +22,5 @@ class Poster(
     val blogType: BlogType,
     var recommendations: Long = 0L,
     var views: Long = 0L,
-    var isDeleted: Boolean = false,
+    var isDeleted: Boolean = false
 )

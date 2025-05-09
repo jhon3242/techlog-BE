@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import won.techlog.blog.domain.client.infrastructure.KakaoWebClient
 import won.techlog.support.BaseServiceTest
 
-class KakaoClientTest: BaseServiceTest() {
+class KakaoClientTest : BaseServiceTest() {
     @Autowired
     lateinit var kakaoWebClient: KakaoWebClient
 
@@ -33,7 +33,7 @@ class KakaoClientTest: BaseServiceTest() {
     fun `모든 카카오 블로그 글을 가져온다`() {
         runBlocking {
             // given & when
-            val result = kakaoWebClient.fetchBlogs();
+            val result = kakaoWebClient.fetchBlogs()
 
             // then
             println(result)

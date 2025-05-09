@@ -7,8 +7,7 @@ import won.techlog.blog.domain.BlogType
 import won.techlog.blog.domain.client.BlogApiManager
 import won.techlog.support.BaseServiceTest
 
-class BlogApiManagerTest: BaseServiceTest() {
-
+class BlogApiManagerTest : BaseServiceTest() {
     @Autowired
     lateinit var blogApiManager: BlogApiManager
 
@@ -35,5 +34,4 @@ class BlogApiManagerTest: BaseServiceTest() {
         // then
         Assertions.assertThat(result).isTrue()
     }
-
 }

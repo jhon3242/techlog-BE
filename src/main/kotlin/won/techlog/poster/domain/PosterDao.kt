@@ -4,7 +4,6 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import won.techlog.poster.exception.NotFoundException
-import kotlin.jvm.optionals.getOrElse
 
 @Component
 class PosterDao(
@@ -21,9 +20,7 @@ class PosterDao(
     }
 
     @Transactional
-    fun savePosters(posters: List<Poster>): List<Poster>
-        = posters.map { savePoster(it) }
-
+    fun savePosters(posters: List<Poster>): List<Poster> = posters.map { savePoster(it) }
 
     @Transactional(readOnly = true)
     fun getPoster(id: Long): Poster =
