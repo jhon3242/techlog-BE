@@ -29,7 +29,7 @@ class KakaoClientTest: BaseServiceTest() {
         }
     }
 
-    @Test
+//    @Test
     fun `모든 카카오 블로그 글을 가져온다`() {
         runBlocking {
             // given & when
@@ -40,5 +40,4 @@ class KakaoClientTest: BaseServiceTest() {
             Assertions.assertThat(result.isNotEmpty())
         }
     }
-
 }

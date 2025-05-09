@@ -21,5 +21,6 @@ class Poster(
     @Column(name = "blog_type", length = 20)
     val blogType: BlogType,
     var recommendations: Long = 0L,
-    var views: Long = 0L
+    var views: Long = 0L,
+    var isDeleted: Boolean = false,
 )

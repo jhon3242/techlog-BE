@@ -4,7 +4,7 @@ import io.restassured.RestAssured
 import org.assertj.core.api.Assertions
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import won.techlog.blog.api.request.BlogRequest
+import won.techlog.blog.api.request.BlogParseRequest
 import won.techlog.blog.api.response.BlogResponse
 import won.techlog.support.BaseControllerTest
 
@@ -13,7 +13,7 @@ class LineBlogParserTest : BaseControllerTest() {
     fun `블로그 글 리스트를 파싱한다`() {
         // given
         val url = "https://techblog.lycorp.co.jp/ko/page/2"
-        val request = BlogRequest(url)
+        val request = BlogParseRequest(url)
         val result =
             RestAssured.given().log().all()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -29,7 +29,7 @@ class LineBlogParserTest : BaseControllerTest() {
     fun `블로그 글을 파싱한다`() {
         // given
         val url = "https://techblog.lycorp.co.jp/ko/sli-and-slo-for-improving-reliability-1"
-        val request = BlogRequest(url)
+        val request = BlogParseRequest(url)
         val response =
             RestAssured.given().log().all()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)

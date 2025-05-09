@@ -12,17 +12,26 @@ class PosterDao(
 ) {
     @Transactional
     fun savePoster(poster: Poster): Poster {
-        return posterRepository.findByBlogMetaData_Url(poster.blogMetaData.url)
-            ?: posterRepository.save(poster)
+        val alreadySavedBlog = posterRepository.findByBlogMetaData_Url(poster.blogMetaData.url)
+        if (alreadySavedBlog != null) {
+            alreadySavedBlog.isDeleted = false
+            return alreadySavedBlog
+        }
+        return posterRepository.save(poster)
     }
+
+    @Transactional
+    fun savePosters(posters: List<Poster>): List<Poster>
+        = posters.map { savePoster(it) }
+
 
     @Transactional(readOnly = true)
     fun getPoster(id: Long): Poster =
-        posterRepository.findById(id)
-            .getOrElse { throw NotFoundException() }
+        posterRepository.findByIdAndIsDeletedFalse(id)
+            ?: throw NotFoundException()
 
     @Transactional(readOnly = true)
-    fun getAllPosters(): List<Poster> = posterRepository.findAll()
+    fun getAllPosters(): List<Poster> = posterRepository.findAllByIsDeletedFalse()
 
     @Transactional(readOnly = true)
     fun getPosters(

@@ -16,16 +16,13 @@ class BlogService(
 
     fun parseBlogs(url: String): List<Blog> = blogCrawlerManager.crawlBlogs(url)
 
-    suspend fun parseBlogsAsync(url: String): List<Blog> {
-        if (blogApiManager.canHandle(url)) {
-            return blogApiManager.fetchBlogs(url)
-        }
-        return blogCrawlerManager.crawlBlogsAsync(url)
-    }
-
     fun saveBlogRecommendation(url: String) = blogRecommendationDao.save(url)
 
     fun findAllBlogRecommendations(): List<BlogRecommendation> = blogRecommendationDao.findAll()
 
     fun deleteBlogRecommendation(id: Long) = blogRecommendationDao.delete(id)
+
+    suspend fun fetchBlogs(blogType: String) {
+        blogApiManager.fetchBlogs(BlogType.valueOf(blogType))
+    }
 }

@@ -4,7 +4,7 @@ import io.restassured.RestAssured
 import org.assertj.core.api.Assertions
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import won.techlog.blog.api.request.BlogRequest
+import won.techlog.blog.api.request.BlogParseRequest
 import won.techlog.blog.api.response.BlogResponse
 import won.techlog.support.BaseControllerTest
 
@@ -13,7 +13,7 @@ class CoupangBlogParserTest : BaseControllerTest() {
     fun `블로그 글 리스트를 파싱한다`() {
         // given
         val url = "https://medium.com/coupang-engineering/kr/home"
-        val request = BlogRequest(url)
+        val request = BlogParseRequest(url)
         val result =
             RestAssured.given().log().all()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -33,7 +33,7 @@ class CoupangBlogParserTest : BaseControllerTest() {
                 "EC%8A%B5-%EB%AA%A8%EB%8D%B8%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%9C-%EB%" +
                 "AC%BC%EB%A5%98-%EC%9E%85%EA%B3%A0-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4-%EC%B5" +
                 "%9C%EC%A0%81%ED%99%94-fe4490e44514"
-        val request = BlogRequest(url)
+        val request = BlogParseRequest(url)
         val response =
             RestAssured.given().log().all()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)

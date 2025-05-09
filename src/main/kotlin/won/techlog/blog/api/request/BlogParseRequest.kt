@@ -1,5 +1,5 @@
 package won.techlog.blog.api.request
 
-data class BlogRequest(
+data class BlogParseRequest(
     val url: String
 )

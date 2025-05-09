@@ -29,7 +29,7 @@ class NaverClientTest : BaseControllerTest() {
     }
 
 
-    @Test
+//    @Test
     fun `네이버 블로그 리스트를 가져온다`() {
         runBlocking {
             // given

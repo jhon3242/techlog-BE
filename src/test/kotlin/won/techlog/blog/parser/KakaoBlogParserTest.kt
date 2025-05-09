@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import won.techlog.blog.api.request.BlogRequest
+import won.techlog.blog.api.request.BlogParseRequest
 import won.techlog.blog.api.response.BlogResponse
 import won.techlog.blog.domain.crawler.KakaoBlogAsyncCrawler
 import won.techlog.support.BaseControllerTest
@@ -19,7 +19,7 @@ class KakaoBlogParserTest : BaseControllerTest() {
     fun `블로그 글 리스트를 파싱한다`() {
         // given
         val url = "https://tech.kakao.com/tag/tech"
-        val request = BlogRequest(url)
+        val request = BlogParseRequest(url)
         val result =
             RestAssured.given().log().all()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -35,7 +35,7 @@ class KakaoBlogParserTest : BaseControllerTest() {
     fun `블로그 글을 파싱한다`() {
         // given
         val url = "https://tech.kakaopay.com/post/kakaopayins-opensearch-analyzer/"
-        val request = BlogRequest(url)
+        val request = BlogParseRequest(url)
         val response =
             RestAssured.given().log().all()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
