@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.parser
+package won.techlog.blog.domain.crawler
 
 import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Page
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 
 @Component
-class KakaoPayBlogParser : BlogParser {
-    override fun parseBlogs(url: String): List<BlogMetaData> {
+class NaverBlogCrawler : BlogCrawler {
+    override fun crawlBlogs(url: String): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
         Playwright.create().use { playwright ->
             val browser =
@@ -20,20 +20,18 @@ class KakaoPayBlogParser : BlogParser {
             page.navigate(url)
             page.waitForLoadState(LoadState.NETWORKIDLE)
 
-            val urls: List<String> =
-                page.locator("div._postList_1cl5f_34 ul > li > a")
-                    .evaluateAll("nodes => nodes.map(n => n.href)")
-                    as List<String>
-
             val list =
-                urls.map { extractBlogMetaData(page, it) }
-                    .toList()
+                page.locator("a.post_txt_wrap")
+                    .all()
+                    .map { it.getAttribute("href") }
+                    .map { "https://d2.naver.com$it" }
+                    .map { url -> extractBlogMetaData(page, url) }
             result.addAll(list)
         }
         return result
     }
 
-    override fun parseBlog(url: String): BlogMetaData {
+    override fun crawlBlog(url: String): BlogMetaData {
         var result: BlogMetaData? = null
         Playwright.create().use { playwright ->
             val browser =
@@ -62,22 +60,14 @@ class KakaoPayBlogParser : BlogParser {
         // 페이지 로드 기다리기 (옵션)
         page.waitForLoadState(LoadState.NETWORKIDLE)
 
-        val title =
-            page.locator("head meta[property='og:title']")
-                .getAttribute("content")
-                .split("|")
-                .first()
-        val content =
-            page.locator("head meta[property='og:description']")
-                .getAttribute("content")
-                .take(300)
-
+        val title = page.textContent("h1.posting_tit") ?: "제목 없음"
+        val content = page.textContent("div.con_view").take(300) ?: "본문 없음"
         val thumbnail =
-            page.locator("article img")
+            page.locator("div.con_view img")
                 .first()
                 .getAttribute("src")
                 .ifBlank { null }
-                .let { "https://tech.kakaopay.com$it" }
+                .let { "https://d2.naver.com$it" }
         return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }
 }

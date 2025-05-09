@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders.CONTENT_TYPE
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
+import won.techlog.blog.domain.BlogType
 import won.techlog.poster.api.request.PosterCreateRequest
 import won.techlog.poster.api.request.PostersCreateRequest
 import won.techlog.support.BaseControllerTest
@@ -47,7 +48,22 @@ class AdminControllerTest : BaseControllerTest() {
     @Test
     fun `포스터를 추가한다`() {
         // given
-        val poster = PosterFixture.create()
+        val poster =
+            PosterFixture.create(
+                title = "신뢰성 향상을 위한 SLI/SLO 도입 1편 - 소개와 필요성",
+                thumbnail =
+                    "https://vos.line-scdn.net/landpress-content-v2-vcfc68aynwenkh3bno0ixfx8/" +
+                        "5042567b7bc641a4aa857e6bdf79d769.png?updatedAt=1739853211000",
+                content =
+                    "시작하며 안녕하세요. SRE(site reliability engineering, 사이트 안정성 엔지니어링) 업무를 맡고 있는 " +
+                        "Enablement Engineering 팀 어다희, Service Reliability 팀 천기철입니다. " +
+                        "저희 두 팀은 Service Engineering " +
+                        "실에 속해 있으며, LINE 앱에서 제공하는 서비스의 품질 향상 및 가용성 확보를 위한 기술 활동을 수행합니다. " +
+                        "보다 구체적으로는 " +
+                        "메시징 서비스와 미디어 플랫폼 등 LINE 앱 서비스에 대한 SRE을 담당하고 있습니다. 이를 위해 서비스 출시 및 이벤트",
+                url = "https://techblog.lycorp.co.jp/ko/sli-and-slo-for-improving-reliability-1",
+                blogType = BlogType.LINE
+            )
         val tagNames = TagsFixture.create()
         tagNames.forEach { tagDao.save(it) }
         val request =
