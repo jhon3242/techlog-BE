@@ -15,11 +15,12 @@ class KakaoClientTest: BaseServiceTest() {
     fun `카카오 블로그를 가져온다`() {
         runBlocking {
             // given
-            val url = "https://tech.kakao.com/api/v1/posts/306"
+//            val url = "https://tech.kakao.com/api/v1/posts/369"
+            val url = "https://tech.kakao.com/api/v1/posts/630"
 
             // when
             val result = kakaoWebClient.fetchBlog(url)
-
+            println(result)
             // then
             Assertions.assertThat(result.url).isNotEmpty()
             Assertions.assertThat(result.title).isNotEmpty()
@@ -27,4 +28,17 @@ class KakaoClientTest: BaseServiceTest() {
             Assertions.assertThat(result.thumbnailUrl).isNotEmpty()
         }
     }
+
+    @Test
+    fun `모든 카카오 블로그 글을 가져온다`() {
+        runBlocking {
+            // given & when
+            val result = kakaoWebClient.fetchBlogs();
+
+            // then
+            println(result)
+            Assertions.assertThat(result.isNotEmpty())
+        }
+    }
+
 }

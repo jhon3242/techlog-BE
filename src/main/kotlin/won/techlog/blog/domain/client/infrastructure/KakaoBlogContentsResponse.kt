@@ -15,11 +15,11 @@ data class KakaoBlogContentResponse(
     val title: String,
     val releaseDate: String,
     val releaseDateTime: String,
-    val categories: List<Category>,
-    val author: Author,
-    val authors: List<Author>,
+    val categories: List<Category>?,
+    val author: Author?,
+    val authors: List<Author>? = null,
     val thumbnailUri: String,
-    val tags: List<Tag>,
+    val tags: List<Tag>?,
     val content: String,
     // 아래 필드는 JSON이 null이거나 없으면 기본값(null) 사용
     val components: Any? = null,
@@ -36,8 +36,8 @@ data class Category(
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Author(
     val name: String,
-    val description: String,
-    val profile: String
+    val description: String?,
+    val profile: String?
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)

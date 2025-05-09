@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.client.infrastructure
+package won.techlog.blog.domain.client
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
