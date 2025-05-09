@@ -2,6 +2,7 @@ package won.techlog.blog.domain.client.infrastructure
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.jsoup.Jsoup
 import won.techlog.blog.domain.BlogMetaData
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -13,7 +14,7 @@ data class LineOldBlogContentsResponse(
             BlogMetaData(
                 title = it.node.title,
                 thumbnailUrl = it.node.opengraphImage.get(0).fullUrl,
-                content = it.node.content,
+                content = Jsoup.parse(it.node.content).text().take(300),
                 url = "https://engineering.linecorp.com/ko/blog/${it.node.slug}"
             )
         }
