@@ -1,6 +1,10 @@
 package won.techlog.blog.domain.client.infrastructure
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.withContext
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import won.techlog.blog.domain.BlogMetaData
@@ -18,19 +22,20 @@ class LineOldWebClient(
         TODO("Not yet implemented")
     }
 
-    override suspend fun fetchBlogs(): List<BlogMetaData> {
-        val result = mutableListOf<BlogMetaData>()
-        for (idx in startIdx..endIdx) {
-            val url = getUrl(idx)
-            val response = lineOleBlogWebClient.get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(LineOldBlogContentsResponse::class.java)
-                .map { it.getBlogMetaData() }
-                .awaitSingle()
-            result.addAll(response)
+    override suspend fun fetchBlogs(): List<BlogMetaData> = withContext(Dispatchers.IO) {
+        val deferreds = (startIdx..endIdx).map { idx ->
+            async {
+                val url = getUrl(idx)
+                val response = lineOleBlogWebClient.get()
+                    .uri(url)
+                    .retrieve()
+                    .bodyToMono(LineOldBlogContentsResponse::class.java)
+                    .map { it.getBlogMetaData() }
+                    .awaitSingle()
+                response  // List<BlogMetaData>
+            }
         }
-        return result
+        deferreds.awaitAll().flatten()
     }
 
     private fun getUrl(idx: Int): String {
