@@ -10,10 +10,10 @@ data class NaverBlogContentsResponse(
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class NaverBlogContentResponse(
     val postTitle: String,
-    val postImage: String,
+    val postImage: String?,
     val postHtml: String,
     val postPublishedAt: Long,
     val url: String,
     val viewCount: Int,
-    val author: String
+    val author: String?
 )
