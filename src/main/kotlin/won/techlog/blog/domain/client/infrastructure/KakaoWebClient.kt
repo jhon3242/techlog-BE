@@ -36,7 +36,7 @@ class KakaoWebClient(
                     title = it.title,
                     thumbnailUrl = it.thumbnailUri,
                     content = Jsoup.parse(it.content).select("p").text().take(300),
-                    url = url
+                    url = "https://tech.kakao.com/posts/${it.id}"
                 )
             }
             .awaitSingle()

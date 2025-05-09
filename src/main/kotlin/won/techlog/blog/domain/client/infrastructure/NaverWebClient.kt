@@ -27,7 +27,7 @@ class NaverWebClient(
             title = response.postTitle,
             thumbnailUrl = response.postImage?.let { "https://d2.naver.com${it}" },
             content = response.postHtml,
-            url = response.url
+            url = "https://d2.naver.com${response.url}"
         )
     }
 
@@ -43,11 +43,12 @@ class NaverWebClient(
                     .map { it.content }
                     .awaitSingle() }
                     .await()
+                    .filter { it.url.startsWith("/helloworld") }
                     .map { BlogMetaData(
                         title = it.postTitle,
                         thumbnailUrl = it.postImage?.let { "https://d2.naver.com${it}" },
                         content = it.postHtml,
-                        url = it.url
+                        url = "https://d2.naver.com${it.url}"
                     ) }
                 result.addAll(response)
             }
