@@ -16,7 +16,7 @@ class KakaoClientTest: BaseServiceTest() {
         runBlocking {
             // given
 //            val url = "https://tech.kakao.com/api/v1/posts/369"
-            val url = "https://tech.kakao.com/api/v1/posts/630"
+            val url = "https://tech.kakao.com/api/v1/posts/629"
 
             // when
             val result = kakaoWebClient.fetchBlog(url)
