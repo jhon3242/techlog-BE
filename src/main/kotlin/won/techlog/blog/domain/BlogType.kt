@@ -8,6 +8,7 @@ enum class BlogType(
     WOOWABRO("https://techblog.woowahan.com/"),
     NAVER("https://d2.naver.com/helloworld"),
     LINE("https://techblog.lycorp.co.jp/ko"),
+    LINE_OLD("https://engineering.linecorp.com/ko/blog/"),
     KAKAO_PAY("https://tech.kakaopay.com/"),
     KAKAO("https://tech.kakao.com/"),
     COUPANG("https://medium.com/coupang-engineering/"),
