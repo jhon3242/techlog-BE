@@ -8,13 +8,9 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogParseRequest
 import won.techlog.blog.api.response.BlogResponse
-import won.techlog.blog.domain.crawler.NaverBlogAsyncCrawler
 import won.techlog.support.BaseControllerTest
 
 class NaverBlogParserTest : BaseControllerTest() {
-    @Autowired
-    lateinit var naverBlogAsyncParser: NaverBlogAsyncCrawler
-
 //    @Test
     fun `블로그 글 리스트를 파싱한다`() {
         // given
@@ -50,13 +46,5 @@ class NaverBlogParserTest : BaseControllerTest() {
         Assertions.assertThat(response.title).isNotEmpty()
         Assertions.assertThat(response.content).isNotEmpty()
         Assertions.assertThat(response.blogType).isNotEmpty()
-    }
-
-//    @Test
-    fun `블로그 글 리스트를 비동기로 파싱한다`() {
-        runBlocking {
-            val parseBlogs = naverBlogAsyncParser.crawlBlogs("https://d2.naver.com/helloworld?page=0")
-            println(parseBlogs)
-        }
     }
 }

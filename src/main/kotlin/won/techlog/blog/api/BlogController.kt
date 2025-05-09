@@ -37,11 +37,4 @@ class BlogController(
     ) {
         blogService.fetchBlogs(blogFetchRequest.blogType)
     }
-
-//    @PostMapping("/blogs/async")
-//    suspend fun parseBlogsAsync(
-//        @RequestBody blogParseRequest: BlogParseRequest
-//    ): List<BlogResponse> =
-//        blogService.parseBlogsAsync(blogParseRequest.url)
-//            .map { BlogResponse(it) }
 }
