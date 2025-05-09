@@ -7,6 +7,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
+import won.techlog.blog.domain.BlogType
 
 @Component
 class LineBlogCrawler : BlogCrawler {
@@ -53,5 +54,9 @@ class LineBlogCrawler : BlogCrawler {
                 .take(300)
 
         return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
+    }
+
+    override fun isSupportType(blogType: BlogType): Boolean {
+        return blogType == BlogType.LINE
     }
 }

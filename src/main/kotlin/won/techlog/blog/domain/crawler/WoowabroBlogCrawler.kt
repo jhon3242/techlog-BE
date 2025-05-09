@@ -6,6 +6,7 @@ import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.options.LoadState
 import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
+import won.techlog.blog.domain.BlogType
 
 @Component
 class WoowabroBlogCrawler : BlogCrawler {
@@ -52,6 +53,10 @@ class WoowabroBlogCrawler : BlogCrawler {
 
         return result
             ?: throw IllegalArgumentException("파싱 과정에서 에러가 발생했습니다.")
+    }
+
+    override fun isSupportType(blogType: BlogType): Boolean {
+        return blogType == BlogType.WOOWABRO
     }
 
     private fun extractBlogMetaData(

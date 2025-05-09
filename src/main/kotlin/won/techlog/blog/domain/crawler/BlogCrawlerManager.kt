@@ -7,7 +7,7 @@ import won.techlog.poster.exception.NotFoundException
 
 @Component
 class BlogCrawlerManager(
-    private val crawlerMap: Map<String, BlogCrawler>
+    private val crawlers: List<BlogCrawler>
 ) {
     fun crawlBlog(url: String): Blog {
         val blogType = BlogType.getByUrl(url)
@@ -23,15 +23,8 @@ class BlogCrawlerManager(
             .map { Blog(blogType, it) }
     }
 
-    suspend fun crawlBlogsAsync(url: String): List<Blog> {
-        val blogType = BlogType.getByUrl(url)
-        val crawler = findCrawler(blogType)
-        return crawler.crawlBlogs(url)
-            .map { Blog(blogType, it) }
-    }
-
     private fun findCrawler(blogType: BlogType): BlogCrawler {
-        return crawlerMap.get(blogType.beanName)
+        return crawlers.find { it.isSupportType(blogType) }
             ?: throw NotFoundException()
     }
 }
