@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.client.infrastructure
+package won.techlog.blog.domain.client.infrastructure.naver
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 

@@ -4,7 +4,7 @@ import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import won.techlog.blog.domain.client.infrastructure.KakaoWebClient
+import won.techlog.blog.domain.client.infrastructure.kakao.KakaoWebClient
 import won.techlog.support.BaseServiceTest
 
 class KakaoClientTest : BaseServiceTest() {

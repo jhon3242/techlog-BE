@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.client.infrastructure
+package won.techlog.blog.domain.client.infrastructure.line
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
