@@ -2,6 +2,7 @@ package won.techlog.blog.domain.client
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
 import won.techlog.poster.domain.Poster
 import won.techlog.poster.domain.PosterDao
@@ -16,10 +17,19 @@ class BlogApiManager(
     @Transactional
     suspend fun fetchBlogs(blogType: BlogType) {
         val fetchClient = getClient(blogType)
-        val result =
-            fetchClient.fetchBlogs()
-                .map { Poster(blogType = blogType, blogMetaData = it) }
+        val result = fetchClient.fetchBlogs()
+                .map { createPoster(blogType, it) }
         posterDao.savePosters(result)
+    }
+
+    private fun createPoster(
+        blogType: BlogType,
+        it: BlogMetaData
+    ): Poster {
+        if (blogType == BlogType.LINE_OLD) {
+            return Poster(blogType = BlogType.LINE, blogMetaData = it)
+        }
+        return Poster(blogType = blogType, blogMetaData = it)
     }
 
     private fun getClient(blogType: BlogType): FetchClient {

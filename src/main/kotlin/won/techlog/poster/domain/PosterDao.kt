@@ -45,6 +45,12 @@ class PosterDao(
         tagNames: List<String>?,
         blogType: String?
     ): List<Poster> {
+//        if (blogType != null && blogType.startsWith("LINE")) {
+//            val result = mutableListOf<Poster>()
+//            result.addAll(posterRepository.searchPosters(keyword, tagNames, BlogType.LINE.name))
+//            result.addAll(posterRepository.searchPosters(keyword, tagNames, BlogType.LINE_OLD.name))
+//            return result
+//        }
         return posterRepository.searchPosters(keyword, tagNames, blogType)
     }
 
