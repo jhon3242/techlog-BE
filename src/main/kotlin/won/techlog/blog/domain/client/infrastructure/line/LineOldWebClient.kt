@@ -18,7 +18,7 @@ class LineOldWebClient(
     private val startIdx = 1
     private val endIdx = 38
 
-    override suspend fun fetchBlog(url: String): BlogMetaData {
+    override suspend fun fetchBlog(uri: String): BlogMetaData {
         TODO("Not yet implemented")
     }
 

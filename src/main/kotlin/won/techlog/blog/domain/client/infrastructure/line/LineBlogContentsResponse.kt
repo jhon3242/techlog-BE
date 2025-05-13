@@ -81,11 +81,19 @@ data class LineBlogContentResponse(
     fun getBlogMetaData(): BlogMetaData {
         return BlogMetaData(
             title = result.data.blog.title,
-            thumbnailUrl = "https://techblog.lycorp.co.jp${result.data.blog.opengraphImage[0].localFile
-                .childImageSharp.gatsbyImageData.images.fallback.src}",
+            thumbnailUrl = getThumbnailUrl(),
             content = Jsoup.parse(result.data.blog.content).text().take(300),
             url = "https://techblog.lycorp.co.jp/ko/${result.data.blog.slug}"
         )
+    }
+
+    private fun getThumbnailUrl(): String? {
+        val url = result.data.blog.opengraphImage[0].localFile
+            .childImageSharp.gatsbyImageData.images.fallback.src
+        if (url.startsWith("/static")) {
+            return null
+        }
+        return "https://techblog.lycorp.co.jp${url}"
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
