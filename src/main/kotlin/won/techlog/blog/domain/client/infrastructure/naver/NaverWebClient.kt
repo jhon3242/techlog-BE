@@ -17,8 +17,8 @@ class NaverWebClient(
     private val maxPage = 6
     private val size = 100
 
-    override suspend fun fetchBlog(url: String): BlogMetaData {
-        val idx = url.substringAfterLast("/")
+    override suspend fun fetchBlog(uri: String): BlogMetaData {
+        val idx = uri.substringAfterLast("/")
         val response =
             naverBlogWebClient.get()
                 .uri("/$idx")

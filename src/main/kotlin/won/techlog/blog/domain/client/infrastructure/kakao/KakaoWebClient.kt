@@ -27,15 +27,15 @@ class KakaoWebClient(
             "event", "internship", "blind-recruitment", "career", "seminar", "code-festival", "programming-contest"
         )
 
-    override suspend fun fetchBlog(url: String): BlogMetaData =
+    override suspend fun fetchBlog(uri: String): BlogMetaData =
         kakaoBlogWebClient.get()
-            .uri(url)
+            .uri(uri)
             .retrieve()
             .onStatus({ it.is4xxClientError }, { resp -> // ★ 4xx 에러 처리
-                Mono.error(IllegalArgumentException("Client Error: ${resp.statusCode()} url=$url"))
+                Mono.error(IllegalArgumentException("Client Error: ${resp.statusCode()} url=$uri"))
             })
             .onStatus({ it.is5xxServerError }, { resp -> // ★ 5xx 에러 처리
-                Mono.error(IllegalArgumentException("Server Error: ${resp.statusCode()} url$url"))
+                Mono.error(IllegalArgumentException("Server Error: ${resp.statusCode()} url$uri"))
             })
             .bodyToMono(KakaoBlogContentResponse::class.java)
             .filter { res -> validTags(res.tags) }
