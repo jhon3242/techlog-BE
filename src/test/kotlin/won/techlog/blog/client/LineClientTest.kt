@@ -48,4 +48,22 @@ class LineClientTest: BaseServiceTest() {
             Assertions.assertThat(result.get(0).url).isNotEmpty()
         }
     }
+
+    @Test
+    fun `썸네일을 조회할 수 없는 경우 null이 들어간다`() {
+        runBlocking {
+            // given
+            // when
+            val result = lineWebClient.fetchBlog("techniques-for-improving-code-quality-4")
+
+            println(result)
+
+            // then
+            Assertions.assertThat(result.title).isNotEmpty()
+            Assertions.assertThat(result.url).isNotEmpty()
+            Assertions.assertThat(result.content).isNotEmpty()
+            Assertions.assertThat(result.thumbnailUrl).isNull()
+        }
+    }
+
 }

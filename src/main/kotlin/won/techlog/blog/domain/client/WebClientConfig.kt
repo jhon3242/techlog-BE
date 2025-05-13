@@ -32,4 +32,10 @@ class WebClientConfig {
         builder.baseUrl("https://techblog.lycorp.co.jp/page-data/ko")
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build()
+
+    @Bean
+    fun woowabroBlogWebClient(builder: WebClient.Builder): WebClient =
+        builder.baseUrl("https://techblog.woowahan.com/")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .build()
 }
