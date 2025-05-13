@@ -13,11 +13,8 @@ import won.techlog.support.fixture.PosterFixture
 import won.techlog.support.fixture.TagsFixture
 
 private const val BASE_URL = "/api/posters"
-private const val ADMIN_HEADER = "X-Admin-Header"
 
 class AdminControllerTest : BaseControllerTest() {
-    @Value("\${admin.header}")
-    lateinit var adminHeaderKey: String
 
     @Test
     fun `어드민 권한이 없으면 요청에 실패한다`() {

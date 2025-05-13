@@ -4,6 +4,7 @@ import io.restassured.RestAssured
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
 import won.techlog.blog.domain.recommendation.BlogRecommendationDao
@@ -15,6 +16,11 @@ import won.techlog.tag.domain.TagDao
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 abstract class BaseControllerTest {
+    @Value("\${admin.header}")
+    lateinit var adminHeaderKey: String
+
+    protected val ADMIN_HEADER = "X-Admin-Header"
+
     @Autowired
     lateinit var posterDao: PosterDao
 

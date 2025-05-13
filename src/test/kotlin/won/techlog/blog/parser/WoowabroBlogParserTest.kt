@@ -2,6 +2,7 @@ package won.techlog.blog.parser
 
 import io.restassured.RestAssured
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogParseRequest
@@ -17,6 +18,7 @@ class WoowabroBlogParserTest : BaseControllerTest() {
         val result =
             RestAssured.given().log().all()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(ADMIN_HEADER, adminHeaderKey)
                 .body(request)
                 .`when`().post("/api/blogs")
                 .then().log().all()
@@ -25,7 +27,7 @@ class WoowabroBlogParserTest : BaseControllerTest() {
         println(result)
     }
 
-//    @Test
+    @Test
     fun `블로그 글을 파싱한다`() {
         // given
         val url = "https://techblog.woowahan.com/21905/"
@@ -33,6 +35,7 @@ class WoowabroBlogParserTest : BaseControllerTest() {
         val response =
             RestAssured.given().log().all()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(ADMIN_HEADER, adminHeaderKey)
                 .body(request)
                 .`when`().post("/api/blog")
                 .then().log().all()
