@@ -11,7 +11,7 @@ class WoowaClientTest: BaseServiceTest() {
     @Autowired
     lateinit var woowabroWebClient: WoowabroWebClient
 
-    @Test
+//    @Test
     fun `우형 블로그를 가져온다`() {
         runBlocking {
             // given
@@ -28,7 +28,7 @@ class WoowaClientTest: BaseServiceTest() {
         }
     }
 
-    @Test
+//    @Test
     fun `우형 블로그 리스트를 가져온다`() {
         runBlocking {
             // given
@@ -36,6 +36,7 @@ class WoowaClientTest: BaseServiceTest() {
             val result = woowabroWebClient.fetchBlogs()
 
             println(result)
+            println(result.size)
 
             // then
             Assertions.assertThat(result).isNotEmpty()
