@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
+import won.techlog.common.BaseTimeEntity
 
 @Entity
 class Poster(
@@ -23,4 +24,4 @@ class Poster(
     var recommendations: Long = 0L,
     var views: Long = 0L,
     var isDeleted: Boolean = false
-)
+): BaseTimeEntity()
