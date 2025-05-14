@@ -17,7 +17,8 @@ class BlogApiManager(
     @Transactional
     suspend fun fetchBlogs(blogType: BlogType) {
         val fetchClient = getClient(blogType)
-        val result = fetchClient.fetchBlogs()
+        val result =
+            fetchClient.fetchBlogs()
                 .map { createPoster(blogType, it) }
         posterDao.savePosters(result)
     }

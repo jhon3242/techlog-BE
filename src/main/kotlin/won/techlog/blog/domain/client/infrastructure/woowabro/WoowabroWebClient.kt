@@ -18,16 +18,19 @@ private const val INVALID_URL_PREFIX = "https://techblog.woowa.in"
 @Component
 class WoowabroWebClient(
     private val woowabroBlogWebClient: WebClient
-): FetchClient {
+) : FetchClient {
     private val startIdx = 1
+
 //    private val endIdx = 3
     private val endIdx = 46
+
     override suspend fun fetchBlog(uri: String): BlogMetaData {
-        val html = woowabroBlogWebClient.get()
-            .uri(uri)
-            .retrieve()
-            .bodyToMono(String::class.java)
-            .awaitSingle()
+        val html =
+            woowabroBlogWebClient.get()
+                .uri(uri)
+                .retrieve()
+                .bodyToMono(String::class.java)
+                .awaitSingle()
         return parseBlogMetaData(html)
     }
 
@@ -54,26 +57,29 @@ class WoowabroWebClient(
         return url
     }
 
-    override suspend fun fetchBlogs(): List<BlogMetaData> = withContext(Dispatchers.IO) {
-        val deferreds = (startIdx..endIdx).map { idx ->
-            async {
-                val html = woowabroBlogWebClient.get()
-                    .uri(getUriByIdx(idx))
-                    .retrieve()
-                    .bodyToMono(String::class.java)
-                    .awaitSingle()
-                val doc = Jsoup.parse(html)
-                doc.select("div.post-item.firstpaint a")
-                    .map { it.absUrl("href") }
-                    .map { fetchBlog(it) }
-            }
+    override suspend fun fetchBlogs(): List<BlogMetaData> =
+        withContext(Dispatchers.IO) {
+            val deferreds =
+                (startIdx..endIdx).map { idx ->
+                    async {
+                        val html =
+                            woowabroBlogWebClient.get()
+                                .uri(getUriByIdx(idx))
+                                .retrieve()
+                                .bodyToMono(String::class.java)
+                                .awaitSingle()
+                        val doc = Jsoup.parse(html)
+                        doc.select("div.post-item.firstpaint a")
+                            .map { it.absUrl("href") }
+                            .map { fetchBlog(it) }
+                    }
+                }
+            deferreds.awaitAll().flatten()
         }
-        deferreds.awaitAll().flatten()
-    }
 
     private fun getUriByIdx(idx: Int): String {
-        if (idx == 1) return "/?paged=1";
-        return "/page/${idx}/?paged=${idx}"
+        if (idx == 1) return "/?paged=1"
+        return "/page/$idx/?paged=$idx"
     }
 
     override fun supportType(): BlogType {

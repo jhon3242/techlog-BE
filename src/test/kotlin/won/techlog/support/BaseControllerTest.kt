@@ -19,8 +19,6 @@ abstract class BaseControllerTest {
     @Value("\${admin.header}")
     lateinit var adminHeaderKey: String
 
-    protected val ADMIN_HEADER = "X-Admin-Header"
-
     @Autowired
     lateinit var posterDao: PosterDao
 
@@ -36,5 +34,9 @@ abstract class BaseControllerTest {
     @BeforeEach
     fun setPort() {
         RestAssured.port = port
+    }
+
+    companion object {
+        protected const val ADMIN_HEADER = "X-Admin-Header"
     }
 }

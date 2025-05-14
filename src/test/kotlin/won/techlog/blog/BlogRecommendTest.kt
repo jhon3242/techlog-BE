@@ -8,7 +8,6 @@ import won.techlog.support.BaseControllerTest
 import won.techlog.support.fixture.BlogRecommendationFixture
 
 class BlogRecommendTest : BaseControllerTest() {
-
     @Test
     fun `블로그를 추천한다`() {
         // given
@@ -31,7 +30,7 @@ class BlogRecommendTest : BaseControllerTest() {
 
         // when & then
         RestAssured.given().log().all()
-            .header(ADMIN_HEADER, adminHeaderKey)
+            .header(Companion.ADMIN_HEADER, adminHeaderKey)
             .`when`().get("/api/blogs/recommendations")
             .then().log().all()
             .statusCode(200)
@@ -45,7 +44,7 @@ class BlogRecommendTest : BaseControllerTest() {
 
         // when & then
         RestAssured.given().log().all()
-            .header(ADMIN_HEADER, adminHeaderKey)
+            .header(Companion.ADMIN_HEADER, adminHeaderKey)
             .pathParam("id", blogRecommendation.id)
             .`when`().delete("/api/blogs/recommendations/{id}")
             .then().log().all()

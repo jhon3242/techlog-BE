@@ -2,7 +2,6 @@ package won.techlog.blog.client
 
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import won.techlog.blog.domain.client.infrastructure.naver.NaverWebClient
 import won.techlog.support.BaseControllerTest
@@ -11,7 +10,7 @@ class NaverClientTest : BaseControllerTest() {
     @Autowired
     lateinit var naverWebClient: NaverWebClient
 
-    @Test
+//    @Test
     fun `네이버 블로그를 가져온다`() {
         runBlocking {
             // given

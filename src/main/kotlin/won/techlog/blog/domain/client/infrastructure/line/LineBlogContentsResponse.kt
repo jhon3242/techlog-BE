@@ -41,7 +41,7 @@ data class LineBlogContentsResponse(
         @JsonProperty("opengraph_image")
         val opengraphImage: List<OpengraphImage>,
         val pubdate: String,
-        val slug: String,
+        val slug: String
     )
 
     data class OpengraphImage(
@@ -88,12 +88,13 @@ data class LineBlogContentResponse(
     }
 
     private fun getThumbnailUrl(): String? {
-        val url = result.data.blog.opengraphImage[0].localFile
-            .childImageSharp.gatsbyImageData.images.fallback.src
+        val url =
+            result.data.blog.opengraphImage[0].localFile
+                .childImageSharp.gatsbyImageData.images.fallback.src
         if (url.startsWith("/static")) {
             return null
         }
-        return "https://techblog.lycorp.co.jp${url}"
+        return "https://techblog.lycorp.co.jp$url"
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -155,4 +156,3 @@ data class LineBlogContentResponse(
         val src: String
     )
 }
-

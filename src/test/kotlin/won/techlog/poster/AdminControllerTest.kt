@@ -2,7 +2,6 @@ package won.techlog.poster
 
 import io.restassured.RestAssured
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders.CONTENT_TYPE
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import won.techlog.blog.domain.BlogType
@@ -15,7 +14,6 @@ import won.techlog.support.fixture.TagsFixture
 private const val BASE_URL = "/api/posters"
 
 class AdminControllerTest : BaseControllerTest() {
-
     @Test
     fun `어드민 권한이 없으면 요청에 실패한다`() {
         // given
@@ -78,7 +76,7 @@ class AdminControllerTest : BaseControllerTest() {
         RestAssured.given().log().all()
             .body(request)
             .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
-            .header(ADMIN_HEADER, adminHeaderKey)
+            .header(Companion.ADMIN_HEADER, adminHeaderKey)
             .post("/api/poster")
             .then().log().all()
             .statusCode(201)
@@ -115,7 +113,7 @@ class AdminControllerTest : BaseControllerTest() {
         RestAssured.given().log().all()
             .body(request)
             .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
-            .header(ADMIN_HEADER, adminHeaderKey)
+            .header(Companion.ADMIN_HEADER, adminHeaderKey)
             .post("/api/posters")
             .then().log().all()
             .statusCode(201)
@@ -130,7 +128,7 @@ class AdminControllerTest : BaseControllerTest() {
         // when & then
         RestAssured.given().log().all()
             .pathParam("id", savePoster.id)
-            .header(ADMIN_HEADER, adminHeaderKey)
+            .header(Companion.ADMIN_HEADER, adminHeaderKey)
             .`when`().delete("$BASE_URL/{id}")
             .then().log().all()
             .statusCode(200)

@@ -2,12 +2,11 @@ package won.techlog.blog.client
 
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import won.techlog.blog.domain.client.infrastructure.woowabro.WoowabroWebClient
 import won.techlog.support.BaseServiceTest
 
-class WoowaClientTest: BaseServiceTest() {
+class WoowaClientTest : BaseServiceTest() {
     @Autowired
     lateinit var woowabroWebClient: WoowabroWebClient
 
@@ -45,5 +44,4 @@ class WoowaClientTest: BaseServiceTest() {
             Assertions.assertThat(result.get(0).url).isNotEmpty()
         }
     }
-
 }

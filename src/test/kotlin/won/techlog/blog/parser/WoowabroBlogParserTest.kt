@@ -18,7 +18,7 @@ class WoowabroBlogParserTest : BaseControllerTest() {
         val result =
             RestAssured.given().log().all()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(ADMIN_HEADER, adminHeaderKey)
+                .header(Companion.ADMIN_HEADER, adminHeaderKey)
                 .body(request)
                 .`when`().post("/api/blogs")
                 .then().log().all()
@@ -35,7 +35,7 @@ class WoowabroBlogParserTest : BaseControllerTest() {
         val response =
             RestAssured.given().log().all()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(ADMIN_HEADER, adminHeaderKey)
+                .header(Companion.ADMIN_HEADER, adminHeaderKey)
                 .body(request)
                 .`when`().post("/api/blog")
                 .then().log().all()

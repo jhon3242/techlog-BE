@@ -11,7 +11,7 @@ enum class BlogType(
     LINE_OLD("https://engineering.linecorp.com/ko/blog/"),
     KAKAO_PAY("https://tech.kakaopay.com/"),
     KAKAO("https://tech.kakao.com/"),
-    COUPANG("https://medium.com/coupang-engineering/"),
+    COUPANG("https://medium.com/coupang-engineering/")
     ;
 
     companion object {

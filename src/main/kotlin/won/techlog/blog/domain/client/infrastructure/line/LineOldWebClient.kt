@@ -14,7 +14,7 @@ import won.techlog.blog.domain.client.FetchClient
 @Component
 class LineOldWebClient(
     private val lineOleBlogWebClient: WebClient
-): FetchClient {
+) : FetchClient {
     private val startIdx = 1
     private val endIdx = 38
 
@@ -22,21 +22,24 @@ class LineOldWebClient(
         TODO("Not yet implemented")
     }
 
-    override suspend fun fetchBlogs(): List<BlogMetaData> = withContext(Dispatchers.IO) {
-        val deferreds = (startIdx..endIdx).map { idx ->
-            async {
-                val url = getUrl(idx)
-                val response = lineOleBlogWebClient.get()
-                    .uri(url)
-                    .retrieve()
-                    .bodyToMono(LineOldBlogContentsResponse::class.java)
-                    .map { it.getBlogMetaData() }
-                    .awaitSingle()
-                response  // List<BlogMetaData>
-            }
+    override suspend fun fetchBlogs(): List<BlogMetaData> =
+        withContext(Dispatchers.IO) {
+            val deferreds =
+                (startIdx..endIdx).map { idx ->
+                    async {
+                        val url = getUrl(idx)
+                        val response =
+                            lineOleBlogWebClient.get()
+                                .uri(url)
+                                .retrieve()
+                                .bodyToMono(LineOldBlogContentsResponse::class.java)
+                                .map { it.getBlogMetaData() }
+                                .awaitSingle()
+                        response // List<BlogMetaData>
+                    }
+                }
+            deferreds.awaitAll().flatten()
         }
-        deferreds.awaitAll().flatten()
-    }
 
     private fun getUrl(idx: Int): String {
         if (idx == startIdx) {

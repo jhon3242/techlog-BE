@@ -1,9 +1,7 @@
 package won.techlog.blog.parser
 
 import io.restassured.RestAssured
-import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogParseRequest
