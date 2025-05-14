@@ -32,7 +32,7 @@ class PosterController(
     @GetMapping("/search")
     fun searchPosters(
         @ModelAttribute request: PosterSearchRequest
-    ): List<PosterResponse> {
+    ): PostersResponse {
         return posterService.searchPosters(request)
     }
 
