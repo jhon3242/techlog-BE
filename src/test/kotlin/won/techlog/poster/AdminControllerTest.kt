@@ -9,7 +9,7 @@ import won.techlog.poster.api.request.PosterCreateRequest
 import won.techlog.poster.api.request.PostersCreateRequest
 import won.techlog.support.BaseControllerTest
 import won.techlog.support.fixture.PosterFixture
-import won.techlog.support.fixture.TagsFixture
+import won.techlog.support.fixture.TagFixture
 
 private const val BASE_URL = "/api/posters"
 
@@ -18,7 +18,7 @@ class AdminControllerTest : BaseControllerTest() {
     fun `어드민 권한이 없으면 요청에 실패한다`() {
         // given
         val poster = PosterFixture.create()
-        val tagNames = TagsFixture.create()
+        val tagNames = TagFixture.createList()
         tagNames.forEach { tagDao.save(it) }
         val request =
             PosterCreateRequest(
@@ -59,7 +59,7 @@ class AdminControllerTest : BaseControllerTest() {
                 url = "https://techblog.lycorp.co.jp/ko/sli-and-slo-for-improving-reliability-1",
                 blogType = BlogType.LINE
             )
-        val tagNames = TagsFixture.create()
+        val tagNames = TagFixture.createList()
         tagNames.forEach { tagDao.save(it) }
         val request =
             PosterCreateRequest(
@@ -86,7 +86,7 @@ class AdminControllerTest : BaseControllerTest() {
     fun `포스터 리스트를 추가한다`() {
         // given
         val poster = PosterFixture.create()
-        val tagNames = TagsFixture.create()
+        val tagNames = TagFixture.createList()
         tagNames.forEach { tagDao.save(it) }
         val posterA =
             PosterCreateRequest(

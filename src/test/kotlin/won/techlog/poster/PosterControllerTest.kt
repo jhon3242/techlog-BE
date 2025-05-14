@@ -9,7 +9,7 @@ import won.techlog.poster.api.response.PosterResponse
 import won.techlog.poster.domain.PosterTagDao
 import won.techlog.support.BaseControllerTest
 import won.techlog.support.fixture.PosterFixture
-import won.techlog.support.fixture.TagsFixture
+import won.techlog.support.fixture.TagFixture
 
 private const val BASE_URL = "/api/posters"
 
@@ -72,7 +72,7 @@ class PosterControllerTest : BaseControllerTest() {
     fun `포스터를 검색한다`() {
         // given
         val poster = PosterFixture.create(title = "Kotlin Study")
-        val tagNames = TagsFixture.create()
+        val tagNames = TagFixture.createList()
         tagNames.forEach { tagDao.save(it) }
         val savedPoster = posterDao.savePoster(poster)
         val savedTags = tagDao.findAllByNames(tagNames)
