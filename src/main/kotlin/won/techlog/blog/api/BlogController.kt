@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import won.techlog.blog.api.request.BlogFetchRequest
+import won.techlog.blog.api.request.BlogsFetchRequest
 import won.techlog.blog.api.request.BlogParseRequest
 import won.techlog.blog.api.response.BlogResponse
 import won.techlog.blog.domain.BlogService
@@ -33,8 +34,16 @@ class BlogController(
     @PostMapping("/blogs/fetch")
     @ResponseStatus(HttpStatus.CREATED)
     suspend fun fetchBlogs(
+        @RequestBody blogsFetchRequest: BlogsFetchRequest
+    ) {
+        blogService.fetchBlogs(blogsFetchRequest.blogType)
+    }
+
+    @PostMapping("/blog/fetch")
+    @ResponseStatus(HttpStatus.CREATED)
+    suspend fun fetchBlog(
         @RequestBody blogFetchRequest: BlogFetchRequest
     ) {
-        blogService.fetchBlogs(blogFetchRequest.blogType)
+        blogService.fetchBlog(blogFetchRequest.url)
     }
 }

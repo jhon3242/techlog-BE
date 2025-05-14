@@ -44,7 +44,7 @@ class BlogRecommendTest : BaseControllerTest() {
 
         // when & then
         RestAssured.given().log().all()
-            .header(Companion.ADMIN_HEADER, adminHeaderKey)
+            .header(ADMIN_HEADER, adminHeaderKey)
             .pathParam("id", blogRecommendation.id)
             .`when`().delete("/api/blogs/recommendations/{id}")
             .then().log().all()

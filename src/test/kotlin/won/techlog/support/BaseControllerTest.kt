@@ -37,6 +37,6 @@ abstract class BaseControllerTest {
     }
 
     companion object {
-        protected const val ADMIN_HEADER = "X-Admin-Header"
+        const val ADMIN_HEADER = "X-Admin-Header"
     }
 }

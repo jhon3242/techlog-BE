@@ -23,6 +23,14 @@ class BlogApiManager(
         posterDao.savePosters(result)
     }
 
+    suspend fun fetchBlog(url: String) {
+        val blogType = BlogType.getByUrl(url)
+        val fetchClient = getClient(blogType)
+        val result = fetchClient.fetchBlog(url)
+                .let { createPoster(blogType, it) }
+        posterDao.savePoster(result)
+    }
+
     private fun createPoster(
         blogType: BlogType,
         it: BlogMetaData

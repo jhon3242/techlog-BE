@@ -25,4 +25,8 @@ class BlogService(
     suspend fun fetchBlogs(blogType: String) {
         blogApiManager.fetchBlogs(BlogType.valueOf(blogType))
     }
+
+    suspend fun fetchBlog(url: String) {
+        blogApiManager.fetchBlog(url)
+    }
 }
