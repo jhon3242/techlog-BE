@@ -3,6 +3,7 @@ package won.techlog.poster.domain
 import org.springframework.stereotype.Service
 import won.techlog.poster.api.request.PosterSearchRequest
 import won.techlog.poster.api.response.PosterResponse
+import won.techlog.poster.api.response.PostersResponse
 import won.techlog.tag.domain.Tag
 import won.techlog.tag.domain.TagDao
 
@@ -31,9 +32,10 @@ class PosterService(
     fun getPosters(
         page: Int,
         size: Int
-    ): List<PosterResponse> {
+    ): PostersResponse {
         val posters = posterDao.getPosters(page, size)
         return posters.map { PosterResponse(it, posterTagDao.findTags(it)) }
+            .let { PostersResponse(it) }
     }
 
     fun searchPosters(request: PosterSearchRequest): List<PosterResponse> {

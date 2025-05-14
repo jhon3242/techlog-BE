@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import won.techlog.poster.api.request.PosterSearchRequest
 import won.techlog.poster.api.response.PosterResponse
+import won.techlog.poster.api.response.PostersResponse
 import won.techlog.poster.domain.PosterService
 
 @RestController
@@ -21,7 +22,7 @@ class PosterController(
     fun getPosters(
         @RequestParam page: Int,
         @RequestParam size: Int
-    ): List<PosterResponse> = posterService.getPosters(page, size)
+    ): PostersResponse = posterService.getPosters(page, size)
 
     @GetMapping("/posters/{id}")
     fun getPoster(
