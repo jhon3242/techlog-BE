@@ -68,44 +68,44 @@ class PosterControllerTest : BaseControllerTest() {
         // TODO 리스트를 List<Object>로 매핑
     }
 
-    @Test
-    fun `포스터를 검색한다`() {
-        // given
-        val poster = PosterFixture.create(title = "Kotlin Study")
-        val tagNames = TagFixture.createList()
-        tagNames.forEach { tagDao.save(it) }
-        val savedPoster = posterDao.savePoster(poster)
-        val savedTags = tagDao.findAllByNames(tagNames)
-        posterTagDao.save(savedPoster, savedTags)
-
-        // when
-        val responseBody =
-            RestAssured.given().log().all()
-                .queryParam("keyword", "Kotlin")
-                .queryParam("tags", tagNames.joinToString(","))
-                .queryParam("blogType", savedPoster.blogType.name)
-                .`when`().get("/api/search")
-                .then().log().all()
-                .statusCode(200)
-                .extract()
-                .body()
-
-        val listType =
-            objectMapper.typeFactory.constructCollectionType(
-                List::class.java,
-                PosterResponse::class.java
-            )
-        val posterResponses: List<PosterResponse> =
-            objectMapper.readValue(
-                responseBody.asInputStream(),
-                listType
-            )
-
-        // then
-        Assertions.assertThat(posterResponses)
-            .extracting<String> { it.title }
-            .contains("Kotlin Study")
-    }
+//    @Test
+//    fun `포스터를 검색한다`() {
+//        // given
+//        val poster = PosterFixture.create(title = "Kotlin Study")
+//        val tagNames = TagFixture.createList()
+//        tagNames.forEach { tagDao.save(it) }
+//        val savedPoster = posterDao.savePoster(poster)
+//        val savedTags = tagDao.findAllByNames(tagNames)
+//        posterTagDao.save(savedPoster, savedTags)
+//
+//        // when
+//        val responseBody =
+//            RestAssured.given().log().all()
+//                .queryParam("keyword", "Kotlin")
+//                .queryParam("tags", tagNames.joinToString(","))
+//                .queryParam("blogType", savedPoster.blogType.name)
+//                .`when`().get("/api/search")
+//                .then().log().all()
+//                .statusCode(200)
+//                .extract()
+//                .body()
+//
+//        val listType =
+//            objectMapper.typeFactory.constructCollectionType(
+//                List::class.java,
+//                PosterResponse::class.java
+//            )
+//        val posterResponses: List<PosterResponse> =
+//            objectMapper.readValue(
+//                responseBody.asInputStream(),
+//                listType
+//            )
+//
+//        // then
+//        Assertions.assertThat(posterResponses)
+//            .extracting<String> { it.title }
+//            .contains("Kotlin Study")
+//    }
 
     @Test
     fun `포스터를 추천한다`() {

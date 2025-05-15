@@ -7,6 +7,7 @@ import won.techlog.poster.api.response.PosterResponse
 import won.techlog.poster.api.response.PostersResponse
 import won.techlog.tag.domain.Tag
 import won.techlog.tag.domain.TagDao
+import kotlin.math.min
 
 @Service
 class PosterService(
@@ -40,13 +41,19 @@ class PosterService(
     }
 
     fun searchPosters(request: PosterSearchRequest): PostersResponse {
-        val posters =
-            posterDao.searchPosters(
+        val maxCount = 20
+        val searchResult =
+            posterDao.searchTop21Posters(
                 keyword = request.keyword,
-                blogType = BlogType.findByName(request.blogType)
+                blogType = BlogType.findByName(request.blogType),
+                cursor = request.cursor
             )
-        return posters.map { PosterResponse(it, posterTagDao.findTags(it)) }
-            .let { PostersResponse(it) }
+        val contents =
+            searchResult.subList(0, min(maxCount, searchResult.size))
+                .map { PosterResponse(it, posterTagDao.findTags(it)) }
+        val nextCursor = searchResult.lastOrNull()?.id
+        val hasNext = searchResult.size > maxCount
+        return PostersResponse(contents, nextCursor, hasNext)
     }
 
     fun deletePoster(id: Long) = posterDao.deletePoster(id)

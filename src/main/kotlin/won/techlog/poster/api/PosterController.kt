@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import won.techlog.poster.api.request.PosterSearchRequest
 import won.techlog.poster.api.response.PosterResponse
@@ -18,18 +17,12 @@ import won.techlog.poster.domain.PosterService
 class PosterController(
     private val posterService: PosterService
 ) {
-    @GetMapping("/posters")
-    fun getPosters(
-        @RequestParam page: Int,
-        @RequestParam size: Int
-    ): PostersResponse = posterService.getPosters(page, size)
-
     @GetMapping("/posters/{id}")
     fun getPoster(
         @PathVariable id: Long
     ): PosterResponse = posterService.getPoster(id)
 
-    @GetMapping("/search")
+    @GetMapping("/posters")
     fun searchPosters(
         @ModelAttribute request: PosterSearchRequest
     ): PostersResponse {

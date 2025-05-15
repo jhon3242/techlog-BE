@@ -16,7 +16,7 @@ class PosterDaoTest : BaseServiceTest() {
         posterDao.savePoster(PosterFixture.create(title = "redis test"))
 
         // when
-        val result = posterDao.searchPosters("redis")
+        val result = posterDao.searchTop21Posters("redis")
 
         // then
         Assertions.assertThat(result.size).isEqualTo(1)
@@ -28,7 +28,7 @@ class PosterDaoTest : BaseServiceTest() {
         posterDao.savePoster(PosterFixture.create(content = "redis test"))
 
         // when
-        val result = posterDao.searchPosters("redis")
+        val result = posterDao.searchTop21Posters("redis")
 
         // then
         Assertions.assertThat(result.size).isEqualTo(1)
@@ -42,7 +42,7 @@ class PosterDaoTest : BaseServiceTest() {
         posterTagDao.save(PosterTag(poster = savedPoster, tag = savedTag))
 
         // when
-        val result = posterDao.searchPosters("redis")
+        val result = posterDao.searchTop21Posters("redis")
 
         // then
         Assertions.assertThat(result.size).isEqualTo(1)
@@ -58,9 +58,9 @@ class PosterDaoTest : BaseServiceTest() {
 
         // then
         assertAll(
-            { Assertions.assertThat(posterDao.searchPosters(blogType = BlogType.LINE)).hasSize(1) },
-            { Assertions.assertThat(posterDao.searchPosters(blogType = BlogType.WOOWABRO)).hasSize(2) },
-            { Assertions.assertThat(posterDao.searchPosters(blogType = BlogType.NAVER)).hasSize(0) }
+            { Assertions.assertThat(posterDao.searchTop21Posters(blogType = BlogType.LINE)).hasSize(1) },
+            { Assertions.assertThat(posterDao.searchTop21Posters(blogType = BlogType.WOOWABRO)).hasSize(2) },
+            { Assertions.assertThat(posterDao.searchTop21Posters(blogType = BlogType.NAVER)).hasSize(0) }
         )
     }
 
@@ -74,23 +74,23 @@ class PosterDaoTest : BaseServiceTest() {
         posterTagDao.save(PosterTag(poster = savedPoster, tag = savedTag))
 
         // when
-        val result = posterDao.searchPosters("No")
+        val result = posterDao.searchTop21Posters("No")
 
         // then
         Assertions.assertThat(result.size).isEqualTo(0)
     }
 
     @Test
-    fun `상위 20개만 조회된다`() {
+    fun `상위 21개만 조회된다`() {
         // given
         for (idx in 0..50) {
             posterDao.savePoster(PosterFixture.create(blogType = BlogType.WOOWABRO))
         }
 
         // when
-        val result = posterDao.searchPosters(blogType = BlogType.WOOWABRO)
+        val result = posterDao.searchTop21Posters(blogType = BlogType.WOOWABRO)
 
         // then
-        Assertions.assertThat(result).hasSize(20)
+        Assertions.assertThat(result).hasSize(21)
     }
 }

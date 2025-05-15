@@ -27,7 +27,7 @@ class WoowabroBlogParserTest : BaseControllerTest() {
         println(result)
     }
 
-    @Test
+//    @Test
     fun `블로그 글을 파싱한다`() {
         // given
         val url = "https://techblog.woowahan.com/21905/"

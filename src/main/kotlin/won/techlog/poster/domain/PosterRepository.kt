@@ -24,12 +24,12 @@ interface PosterRepository : JpaRepository<Poster, Long> {
         OR p.blogMetaData.title LIKE %:keyword%
      )
     ORDER BY p.id DESC
-    LIMIT 20
+    LIMIT 21
 """
     )
-    fun findTop20ByCursor(
-        keyword: String?,
-        blogType: BlogType?,
-        cursor: Long?
+    fun findTop21ByCursor(
+        keyword: String? = null,
+        blogType: BlogType? = null,
+        cursor: Long? = null
     ): List<Poster>
 }
