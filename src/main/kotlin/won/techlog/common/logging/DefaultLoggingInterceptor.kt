@@ -21,7 +21,7 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
         request: HttpServletRequest,
         response: HttpServletResponse,
         handler: Any,
-        ex: Exception?,
+        ex: Exception?
     ) {
         if (shouldIgnore(request)) return
 

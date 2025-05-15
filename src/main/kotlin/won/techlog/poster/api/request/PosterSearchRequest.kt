@@ -4,4 +4,6 @@ data class PosterSearchRequest(
     val keyword: String? = null,
     val tags: List<String>? = null,
     val blogType: String? = null
+//    val cursor: Long? = null,
+//    val size: Int = 20
 )

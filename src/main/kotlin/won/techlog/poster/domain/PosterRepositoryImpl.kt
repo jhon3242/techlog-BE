@@ -6,6 +6,7 @@ import won.techlog.blog.domain.BlogType
 import won.techlog.poster.domain.QPoster.poster
 import won.techlog.poster.domain.QPosterTag.posterTag
 import won.techlog.tag.domain.QTag.tag
+import java.time.LocalDateTime
 
 class PosterRepositoryImpl(
     private val queryFactory: JPAQueryFactory
@@ -13,7 +14,10 @@ class PosterRepositoryImpl(
     override fun searchPosters(
         keyword: String?,
         tagNames: List<String>?,
-        blogType: String?
+        blogType: String?,
+        cursorCreatedAt: LocalDateTime?,
+        cursorId: Long?,
+        size: Int
     ): List<Poster> {
         val query =
             queryFactory.selectFrom(poster)
@@ -39,10 +43,22 @@ class PosterRepositoryImpl(
             val wordCondition =
                 poster.blogMetaData.title.containsIgnoreCase(word)
                     .or(poster.blogMetaData.content.containsIgnoreCase(word))
+                    .or(tag.name.containsIgnoreCase(word))
 
             condition = condition?.and(wordCondition) ?: wordCondition
         }
 
         return condition
+    }
+
+    private fun buildCursorCondition(
+        createdAt: LocalDateTime?,
+        id: Long?
+    ): BooleanExpression? {
+        if (createdAt == null || id == null) return null
+
+//        return poster.createdAt.lt(createdAt)
+//            .or(poster.createdAt.eq(createdAt).and(poster.id.lt(id)))
+        return null
     }
 }

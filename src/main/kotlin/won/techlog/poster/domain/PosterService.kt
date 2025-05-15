@@ -1,6 +1,7 @@
 package won.techlog.poster.domain
 
 import org.springframework.stereotype.Service
+import won.techlog.blog.domain.BlogType
 import won.techlog.poster.api.request.PosterSearchRequest
 import won.techlog.poster.api.response.PosterResponse
 import won.techlog.poster.api.response.PostersResponse
@@ -38,14 +39,14 @@ class PosterService(
             .let { PostersResponse(it) }
     }
 
-    fun searchPosters(request: PosterSearchRequest): List<PosterResponse> {
+    fun searchPosters(request: PosterSearchRequest): PostersResponse {
         val posters =
             posterDao.searchPosters(
                 keyword = request.keyword,
-                tagNames = request.tags,
-                blogType = request.blogType
+                blogType = BlogType.findByName(request.blogType)
             )
         return posters.map { PosterResponse(it, posterTagDao.findTags(it)) }
+            .let { PostersResponse(it) }
     }
 
     fun deletePoster(id: Long) = posterDao.deletePoster(id)

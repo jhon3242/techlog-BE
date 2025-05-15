@@ -26,7 +26,8 @@ class BlogApiManager(
     suspend fun fetchBlog(url: String) {
         val blogType = BlogType.getByUrl(url)
         val fetchClient = getClient(blogType)
-        val result = fetchClient.fetchBlog(url)
+        val result =
+            fetchClient.fetchBlog(url)
                 .let { createPoster(blogType, it) }
         posterDao.savePoster(result)
     }

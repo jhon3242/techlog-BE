@@ -24,4 +24,4 @@ class Poster(
     var recommendations: Long = 0L,
     var views: Long = 0L,
     var isDeleted: Boolean = false
-): BaseTimeEntity()
+) : BaseTimeEntity()

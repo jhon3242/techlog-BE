@@ -3,6 +3,7 @@ package won.techlog.poster.domain
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import won.techlog.blog.domain.BlogType
 import won.techlog.poster.exception.NotFoundException
 
 @Component
@@ -39,19 +40,23 @@ class PosterDao(
         return posterRepository.findAll(pageable).content
     }
 
+//    @Transactional(readOnly = true)
+//    fun searchPosters(
+//        keyword: String?,
+//        tagNames: List<String>?,
+//        blogType: String?,
+//        cursor: Long?
+//    ): List<Poster> {
+//        return posterRepository.searchPosters(keyword, tagNames, blogType)
+//    }
+
     @Transactional(readOnly = true)
     fun searchPosters(
-        keyword: String?,
-        tagNames: List<String>?,
-        blogType: String?
+        keyword: String? = null,
+        blogType: BlogType? = null,
+        cursor: Long? = null
     ): List<Poster> {
-//        if (blogType != null && blogType.startsWith("LINE")) {
-//            val result = mutableListOf<Poster>()
-//            result.addAll(posterRepository.searchPosters(keyword, tagNames, BlogType.LINE.name))
-//            result.addAll(posterRepository.searchPosters(keyword, tagNames, BlogType.LINE_OLD.name))
-//            return result
-//        }
-        return posterRepository.searchPosters(keyword, tagNames, blogType)
+        return posterRepository.findTop20ByCursor(keyword, blogType, cursor)
     }
 
     @Transactional
