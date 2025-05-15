@@ -9,7 +9,6 @@ import won.techlog.poster.api.response.PosterResponse
 import won.techlog.poster.domain.PosterTagDao
 import won.techlog.support.BaseControllerTest
 import won.techlog.support.fixture.PosterFixture
-import won.techlog.support.fixture.TagFixture
 
 private const val BASE_URL = "/api/posters"
 
