@@ -38,6 +38,7 @@ class WebClientConfig {
     @Bean
     fun woowabroBlogWebClient(builder: WebClient.Builder): WebClient =
         builder.baseUrl("https://techblog.woowahan.com")
+            .filter(logRequest())
             .defaultHeader("Accept", MediaType.TEXT_HTML_VALUE)
             .build()
 
