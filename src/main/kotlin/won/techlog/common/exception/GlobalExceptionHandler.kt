@@ -47,7 +47,7 @@ class GlobalExceptionHandler {
         logger.error { e?.message }
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
-            .body(ErrorResponse("Resource not found"))
+            .body(ErrorResponse("Invalid request"))
     }
 
     @ExceptionHandler(Exception::class)
