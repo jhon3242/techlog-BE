@@ -20,6 +20,7 @@ class WoowabroBlogCrawler : BlogCrawler {
             val page = browser.newPage()
             page.navigate(url)
             page.waitForLoadState(LoadState.NETWORKIDLE)
+            page.setDefaultTimeout(60000.0) // 60초
 
             val urls: List<String> =
                 page.locator(
@@ -45,6 +46,7 @@ class WoowabroBlogCrawler : BlogCrawler {
                 )
 
             val page = browser.newPage()
+            page.setDefaultTimeout(60000.0) // 60초
 
             result = extractBlogMetaData(page, url)
 
@@ -68,6 +70,7 @@ class WoowabroBlogCrawler : BlogCrawler {
 
         // 페이지 로드 기다리기 (옵션)
         page.waitForLoadState(LoadState.NETWORKIDLE)
+        page.setDefaultTimeout(60000.0) // 60초
 
         val title = page.textContent("div.post-header").trim().split("\n").first()
         val content =
