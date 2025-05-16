@@ -49,7 +49,8 @@ class WoowabroBlogCrawler : BlogCrawler {
             val page = browser.newPage()
             page.setExtraHTTPHeaders(
                 mapOf(
-                    "User-Agent" to "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+                    "User-Agent" to "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) A" +
+                        "ppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
                 )
             )
             page.setDefaultTimeout(60000.0) // 60초
