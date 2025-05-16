@@ -23,10 +23,18 @@ class BlogService(
     fun deleteBlogRecommendation(id: Long) = blogRecommendationDao.delete(id)
 
     suspend fun fetchBlogs(blogType: String) {
-        blogApiManager.fetchBlogs(BlogType.valueOf(blogType))
+        val findBlogType = BlogType.valueOf(blogType)
+        if (blogApiManager.canHandle(findBlogType)) {
+            blogApiManager.fetchBlogs(findBlogType)
+            return
+        }
     }
 
     suspend fun fetchBlog(url: String) {
         blogApiManager.fetchBlog(url)
+    }
+
+    fun fetchBlogsByUrl(url: String) {
+        blogCrawlerManager.fetchBlogs(url)
     }
 }

@@ -7,7 +7,6 @@ import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
@@ -15,7 +14,7 @@ import won.techlog.blog.domain.client.FetchClient
 
 private const val INVALID_URL_PREFIX = "https://techblog.woowa.in"
 
-@Component
+//@Component  TODO 로컬에서만 동작
 class WoowabroWebClient(
     private val woowabroBlogWebClient: WebClient
 ) : FetchClient {

@@ -1,14 +1,20 @@
 package won.techlog.blog.domain.crawler
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Component
 import won.techlog.blog.domain.Blog
+import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
+import won.techlog.poster.domain.Poster
+import won.techlog.poster.domain.PosterDao
 import won.techlog.poster.exception.NotFoundException
 
 @Component
 class BlogCrawlerManager(
-    private val crawlers: List<BlogCrawler>
+    private val crawlers: List<BlogCrawler>,
+    private val posterDao: PosterDao
 ) {
+    private val log = KotlinLogging.logger {  }
     fun crawlBlog(url: String): Blog {
         val blogType = BlogType.getByUrl(url)
         val crawler = findCrawler(blogType)
@@ -21,6 +27,15 @@ class BlogCrawlerManager(
         val crawler = findCrawler(blogType)
         return crawler.crawlBlogs(url)
             .map { Blog(blogType, it) }
+    }
+
+    fun fetchBlogs(url: String) {
+        val blogType = BlogType.getByUrl(url)
+        val crawler = findCrawler(blogType)
+        val posters: List<BlogMetaData> = crawler.crawlBlogs(url)
+        posters.map { Poster(blogType = blogType, blogMetaData = it) }
+            .let { posterDao.savePosters(it) }
+        log.info { "${posters.size}개 저장 완료, url=${url}" }
     }
 
     private fun findCrawler(blogType: BlogType): BlogCrawler {

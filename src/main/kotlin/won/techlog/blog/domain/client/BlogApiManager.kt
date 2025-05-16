@@ -49,8 +49,7 @@ class BlogApiManager(
         return fetchClient
     }
 
-    fun canHandle(url: String): Boolean {
-        val blogType = BlogType.getByUrl(url)
+    fun canHandle(blogType: BlogType): Boolean {
         return clientMap.containsKey(blogType)
     }
 }
