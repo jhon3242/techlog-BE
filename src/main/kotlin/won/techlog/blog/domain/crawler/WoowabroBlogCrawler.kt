@@ -47,8 +47,13 @@ class WoowabroBlogCrawler : BlogCrawler {
                 )
 
             val page = browser.newPage()
+            page.setExtraHTTPHeaders(
+                mapOf(
+                    "User-Agent" to "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+                )
+            )
             page.setDefaultTimeout(60000.0) // 60초
-
+            println("페이지 url: $url")
             result = extractBlogMetaData(page, url)
 
             browser.close()
@@ -78,20 +83,21 @@ class WoowabroBlogCrawler : BlogCrawler {
         val doc = Jsoup.parse(html)
 
         val title =
-            doc.selectFirst("div.post-header h1")
-                .text()
+            doc.select("h1")[1].text()
+                ?: doc.select("meta[property=og:title]").attr("content")
+                    .ifBlank { doc.title() }
+
+        // 썸네일: 본문 내 첫 번째 이미지
+        val thumbnail =
+            doc.select("img[decoding]").first()?.absUrl("src")
+                ?.replace("https://techblog.woowahan.com", "")
+                .let { if (it != null) "https://techblog.woowahan.com$it" else null }
 
         val content =
-            doc.selectFirst("div.post-content-body")
-                .text()
-                .trim()
-                .take(300)
+            doc.select("div.post-content p")
+                .take(3) // 앞 2문단 추출
+                .joinToString(" ") { it.text() }
 
-        val thumbnail =
-            doc.selectFirst("div.content-single .post-content-body img")
-                .attribute("src")
-                .value.replace("https://techblog.woowahan.com", "")
-                .let { "https://techblog.woowahan.com$it" }
         return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }
 }
