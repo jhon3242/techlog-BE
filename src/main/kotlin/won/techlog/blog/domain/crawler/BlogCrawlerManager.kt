@@ -14,7 +14,8 @@ class BlogCrawlerManager(
     private val crawlers: List<BlogCrawler>,
     private val posterDao: PosterDao
 ) {
-    private val log = KotlinLogging.logger {  }
+    private val log = KotlinLogging.logger { }
+
     fun crawlBlog(url: String): Blog {
         val blogType = BlogType.getByUrl(url)
         val crawler = findCrawler(blogType)
@@ -35,7 +36,7 @@ class BlogCrawlerManager(
         val posters: List<BlogMetaData> = crawler.crawlBlogs(url)
         posters.map { Poster(blogType = blogType, blogMetaData = it) }
             .let { posterDao.savePosters(it) }
-        log.info { "${posters.size}개 저장 완료, url=${url}" }
+        log.info { "${posters.size}개 저장 완료, url=$url" }
     }
 
     private fun findCrawler(blogType: BlogType): BlogCrawler {
