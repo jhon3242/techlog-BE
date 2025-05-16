@@ -52,7 +52,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     fun handleException(e: Exception?): ResponseEntity<ErrorResponse> {
-        logger.error { e?.message }
+        logger.error(e) { "${e!!::class.qualifiedName} - ${e.message}" }
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(ErrorResponse("Internal server error"))
