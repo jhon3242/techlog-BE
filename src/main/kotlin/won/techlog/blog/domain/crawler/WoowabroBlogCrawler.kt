@@ -23,7 +23,6 @@ class WoowabroBlogCrawler : BlogCrawler {
             page.navigate(url)
             page.waitForLoadState(LoadState.NETWORKIDLE)
 
-
             val urls: List<String> =
                 page.locator(
                     "body > div.content.vuejs > div.content-wrap > div.page-main > " +
