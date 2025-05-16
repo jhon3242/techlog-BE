@@ -79,6 +79,7 @@ class WoowabroBlogCrawler : BlogCrawler {
                 .first()
                 .getAttribute("src")
                 .ifBlank { null }
+                .let { it?.replace("https://techblog.woowahan.com", "") }
                 .let { "https://techblog.woowahan.com$it" }
         return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }
