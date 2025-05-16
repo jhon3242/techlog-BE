@@ -4,6 +4,7 @@ import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Page
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.options.LoadState
+import org.jsoup.Jsoup
 import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
@@ -72,17 +73,23 @@ class WoowabroBlogCrawler : BlogCrawler {
         page.waitForLoadState(LoadState.NETWORKIDLE)
         page.setDefaultTimeout(60000.0) // 60초
 
-        val title = page.textContent("div.post-header").trim().split("\n").first()
+        val html = page.content()
+        val doc = Jsoup.parse(html)
+
+        val title =
+            doc.selectFirst("div.post-header h1")
+                .text()
+
         val content =
-            page.textContent("div.post-content-body")
+            doc.selectFirst("div.post-content-body")
+                .text()
                 .trim()
                 .take(300)
+
         val thumbnail =
-            page.locator("div.content-single .post-content-body img")
-                .first()
-                .getAttribute("src")
-                .ifBlank { null }
-                .let { it?.replace("https://techblog.woowahan.com", "") }
+            doc.selectFirst("div.content-single .post-content-body img")
+                .attribute("src")
+                .value.replace("https://techblog.woowahan.com", "")
                 .let { "https://techblog.woowahan.com$it" }
         return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }
