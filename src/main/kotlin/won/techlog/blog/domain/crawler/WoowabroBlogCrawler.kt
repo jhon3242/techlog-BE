@@ -1,11 +1,9 @@
 package won.techlog.blog.domain.crawler
 
 import com.microsoft.playwright.BrowserType
-import com.microsoft.playwright.Locator
 import com.microsoft.playwright.Page
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.options.LoadState
-import com.microsoft.playwright.options.WaitForSelectorState
 import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
@@ -29,7 +27,6 @@ class WoowabroBlogCrawler : BlogCrawler {
                         "div.post-main > div.post-list > div > a"
                 )
                     .evaluateAll("nodes => nodes.map(n => n.href)") as List<String>
-
 
             val list =
                 urls.map { extractBlogMetaData(page, it) }
