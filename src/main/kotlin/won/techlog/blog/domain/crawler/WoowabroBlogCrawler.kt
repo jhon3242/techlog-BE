@@ -74,6 +74,7 @@ class WoowabroBlogCrawler : BlogCrawler {
         page.setDefaultTimeout(60000.0) // 60초
 
         val html = page.content()
+        println("페이지 HTML: $html")
         val doc = Jsoup.parse(html)
 
         val title =
