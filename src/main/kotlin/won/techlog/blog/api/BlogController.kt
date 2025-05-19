@@ -55,6 +55,7 @@ class BlogController(
     ) {
         blogService.fetchBlogsByUrl(blogFetchByUrlRequest.url)
     }
+
     @PostMapping("/blog/fetch/url")
     @ResponseStatus(HttpStatus.CREATED)
     fun fetchBlogByUrl(

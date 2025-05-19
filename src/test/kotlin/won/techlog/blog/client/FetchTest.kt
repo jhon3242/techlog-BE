@@ -48,5 +48,4 @@ class FetchTest : BaseControllerTest() {
         Assertions.assertThat(result).hasSize(1)
         Assertions.assertThat(result.get(0).blogMetaData.url).isEqualTo(url)
     }
-
 }
