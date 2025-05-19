@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import won.techlog.blog.domain.BlogType
 import won.techlog.poster.api.request.PosterSearchRequest
+import won.techlog.poster.api.request.PosterUpdateRequest
 import won.techlog.poster.domain.PosterService
 import won.techlog.poster.domain.PosterTag
 import won.techlog.support.BaseServiceTest
@@ -68,5 +69,65 @@ class PosterServiceTest : BaseServiceTest() {
 
         // then
         Assertions.assertThat(result).hasSize(1)
+    }
+
+    @Test
+    fun `포스터의 제목을 수정한다`() {
+        // given
+        val savePoster = posterDao.savePoster(PosterFixture.create())
+        val updateValue = "update title"
+        val request = PosterUpdateRequest(title = updateValue)
+
+        // when
+        posterService.updatePoster(savePoster.id, request)
+        val result = posterService.getPoster(savePoster.id)
+
+        // then
+        Assertions.assertThat(result.title).isEqualTo(updateValue)
+    }
+
+    @Test
+    fun `포스터의 썸네일을 수정한다`() {
+        // given
+        val savePoster = posterDao.savePoster(PosterFixture.create())
+        val updateValue = "update thumbnail"
+        val request = PosterUpdateRequest(thumbnail = updateValue)
+
+        // when
+        posterService.updatePoster(savePoster.id, request)
+        val result = posterService.getPoster(savePoster.id)
+
+        // then
+        Assertions.assertThat(result.thumbnail).isEqualTo(updateValue)
+    }
+
+    @Test
+    fun `포스터의 url을 수정한다`() {
+        // given
+        val savePoster = posterDao.savePoster(PosterFixture.create())
+        val updateValue = "update url"
+        val request = PosterUpdateRequest(url = updateValue)
+
+        // when
+        posterService.updatePoster(savePoster.id, request)
+        val result = posterService.getPoster(savePoster.id)
+
+        // then
+        Assertions.assertThat(result.url).isEqualTo(updateValue)
+    }
+
+    @Test
+    fun `포스터의 블로그 타입을 수정한다`() {
+        // given
+        val savePoster = posterDao.savePoster(PosterFixture.create())
+        val updateValue = BlogType.WOOWABRO
+        val request = PosterUpdateRequest(blogType = updateValue.name)
+
+        // when
+        posterService.updatePoster(savePoster.id, request)
+        val result = posterService.getPoster(savePoster.id)
+
+        // then
+        Assertions.assertThat(result.blogType).isEqualTo(updateValue.name)
     }
 }

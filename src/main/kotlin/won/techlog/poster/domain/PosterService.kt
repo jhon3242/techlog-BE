@@ -1,8 +1,10 @@
 package won.techlog.poster.domain
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import won.techlog.blog.domain.BlogType
 import won.techlog.poster.api.request.PosterSearchRequest
+import won.techlog.poster.api.request.PosterUpdateRequest
 import won.techlog.poster.api.response.PosterResponse
 import won.techlog.poster.api.response.PostersResponse
 import won.techlog.tag.domain.Tag
@@ -10,6 +12,7 @@ import won.techlog.tag.domain.TagDao
 import kotlin.math.min
 
 @Service
+@Transactional
 class PosterService(
     private val posterDao: PosterDao,
     private val tagDao: TagDao,
@@ -25,12 +28,14 @@ class PosterService(
         return PosterResponse(savePoster, tags)
     }
 
+    @Transactional(readOnly = true)
     fun getPoster(id: Long): PosterResponse {
         val poster = posterDao.getPoster(id)
         val tags = posterTagDao.findTags(poster)
         return PosterResponse(poster, tags)
     }
 
+    @Transactional(readOnly = true)
     fun getPosters(
         page: Int,
         size: Int
@@ -40,6 +45,7 @@ class PosterService(
             .let { PostersResponse(it) }
     }
 
+    @Transactional(readOnly = true)
     fun searchPosters(request: PosterSearchRequest): PostersResponse {
         val maxCount = 20
         val searchResult =
@@ -54,6 +60,26 @@ class PosterService(
         val nextCursor = searchResult.lastOrNull()?.id
         val hasNext = searchResult.size > maxCount
         return PostersResponse(contents, nextCursor, hasNext)
+    }
+
+    fun updatePoster(
+        id: Long,
+        request: PosterUpdateRequest
+    ): PosterResponse {
+        val poster = posterDao.getPoster(id)
+        poster.update(
+            title = request.title,
+            thumbnailUrl = request.thumbnail,
+            content = request.content,
+            url = request.url,
+            blogType =
+                BlogType.findByName(
+                    request.blogType
+                )
+        )
+        val tags = tagDao.findAllByNames(request.tags)
+        posterTagDao.save(poster, tags)
+        return PosterResponse(poster, tags)
     }
 
     fun deletePoster(id: Long) = posterDao.deletePoster(id)

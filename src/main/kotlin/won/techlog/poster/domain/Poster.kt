@@ -20,8 +20,24 @@ class Poster(
     val blogMetaData: BlogMetaData,
     @Enumerated(EnumType.STRING)
     @Column(name = "blog_type", length = 20)
-    val blogType: BlogType,
+    var blogType: BlogType,
     var recommendations: Long = 0L,
     var views: Long = 0L,
     var isDeleted: Boolean = false
-) : BaseTimeEntity()
+) : BaseTimeEntity() {
+    fun update(
+        title: String? = null,
+        url: String? = null,
+        content: String? = null,
+        thumbnailUrl: String? = null,
+        blogType: BlogType? = null
+    ) {
+        blogMetaData.update(
+            title = title,
+            url = url,
+            content = content,
+            thumbnailUrl = thumbnailUrl
+        )
+        this.blogType = blogType ?: this.blogType
+    }
+}
