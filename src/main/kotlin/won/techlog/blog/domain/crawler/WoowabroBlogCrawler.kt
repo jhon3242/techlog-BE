@@ -34,7 +34,6 @@ class WoowabroBlogCrawler : BlogCrawler {
                         "div.post-main > div.post-list > div > a"
                 )
                     .evaluateAll("nodes => nodes.map(n => n.href)") as List<String>
-
             val list =
                 urls.map { extractBlogMetaData(page, it) }
                     .toList()

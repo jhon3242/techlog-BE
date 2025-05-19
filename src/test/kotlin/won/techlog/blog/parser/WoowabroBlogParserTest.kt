@@ -15,10 +15,11 @@ class WoowabroBlogParserTest : BaseControllerTest() {
     @Autowired
     lateinit var woowabroBlogCrawler: WoowabroBlogCrawler
 
-//    @Test
+    @Test
     fun `블로그 글을 찾는다`() {
         // given
-        val url = "https://techblog.woowahan.com/?paged=1"
+//        val url = "https://techblog.woowahan.com/?paged=1"
+        val url = "https://techblog.woowahan.com/?paged=27"
         val request = BlogParseRequest(url)
         val result =
             RestAssured.given().log().all()

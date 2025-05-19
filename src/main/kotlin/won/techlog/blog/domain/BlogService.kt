@@ -37,4 +37,8 @@ class BlogService(
     fun fetchBlogsByUrl(url: String) {
         blogCrawlerManager.fetchBlogs(url)
     }
+
+    fun fetchBlogByUrl(url: String) {
+        blogCrawlerManager.fetchBlog(url)
+    }
 }

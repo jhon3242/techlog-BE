@@ -39,6 +39,13 @@ class BlogCrawlerManager(
         log.info { "${posters.size}개 저장 완료, url=$url" }
     }
 
+    fun fetchBlog(url: String) {
+        val blogType = BlogType.getByUrl(url)
+        val crawler = findCrawler(blogType)
+        Poster(blogType = blogType, blogMetaData = crawler.crawlBlog(url))
+            .let { posterDao.savePoster(it) }
+    }
+
     private fun findCrawler(blogType: BlogType): BlogCrawler {
         return crawlers.find { it.isSupportType(blogType) }
             ?: throw NotFoundException()
