@@ -11,6 +11,10 @@ import won.techlog.blog.domain.BlogType
 
 @Component
 class WoowabroBlogCrawler : BlogCrawler {
+    companion object {
+        private const val BASE_URL = "https://techblog.woowahan.com"
+    }
+
     override fun crawlBlogs(url: String): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
         Playwright.create().use { playwright ->
@@ -54,7 +58,6 @@ class WoowabroBlogCrawler : BlogCrawler {
                 )
             )
             page.setDefaultTimeout(60000.0) // 60초
-            println("페이지 url: $url")
             result = extractBlogMetaData(page, url)
 
             browser.close()
@@ -80,7 +83,6 @@ class WoowabroBlogCrawler : BlogCrawler {
         page.setDefaultTimeout(60000.0) // 60초
 
         val html = page.content()
-        println("페이지 HTML: $html")
         val doc = Jsoup.parse(html)
 
         val title =
@@ -89,16 +91,17 @@ class WoowabroBlogCrawler : BlogCrawler {
                     .ifBlank { doc.title() }
 
         // 썸네일: 본문 내 첫 번째 이미지
-        val thumbnail =
-            doc.select("img[decoding]").first()?.absUrl("src")
-                ?.replace("https://techblog.woowahan.com", "")
-                .let { if (it != null) "https://techblog.woowahan.com$it" else null }
+        val rawImageUrl = doc.selectFirst("img[decoding]")?.attr("src")
+        val thumbnailUrl = normalizeImageUrl(rawImageUrl)
 
         val content =
             doc.select("div.post-content p")
                 .take(3) // 앞 2문단 추출
                 .joinToString(" ") { it.text() }
 
-        return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
+        return BlogMetaData(title = title, thumbnailUrl = thumbnailUrl, content = content, url = url)
     }
+
+    private fun normalizeImageUrl(imageUrl: String?): String? =
+        if (imageUrl == null || imageUrl.startsWith(BASE_URL)) imageUrl else "$BASE_URL$imageUrl"
 }
