@@ -13,6 +13,7 @@ import won.techlog.blog.domain.BlogType
 class WoowabroBlogCrawler : BlogCrawler {
     companion object {
         private const val BASE_URL = "https://techblog.woowahan.com"
+        private const val INVALID_BASE_URL = "https://techblog.woowa.in"
     }
 
     override fun crawlBlogs(url: String): List<BlogMetaData> {
@@ -91,7 +92,7 @@ class WoowabroBlogCrawler : BlogCrawler {
                     .ifBlank { doc.title() }
 
         // 썸네일: 본문 내 첫 번째 이미지
-        val rawImageUrl = doc.selectFirst("img[decoding]")?.attr("src")
+        val rawImageUrl = doc.selectFirst("meta[property=og:image]")?.attr("content")
         val thumbnailUrl = normalizeImageUrl(rawImageUrl)
 
         val content =
@@ -103,5 +104,9 @@ class WoowabroBlogCrawler : BlogCrawler {
     }
 
     private fun normalizeImageUrl(imageUrl: String?): String? =
-        if (imageUrl == null || imageUrl.startsWith(BASE_URL)) imageUrl else "$BASE_URL$imageUrl"
+        if (imageUrl != null && imageUrl.startsWith(INVALID_BASE_URL)) {
+            BASE_URL + imageUrl.substringAfterLast(INVALID_BASE_URL)
+        } else {
+            imageUrl
+        }
 }
