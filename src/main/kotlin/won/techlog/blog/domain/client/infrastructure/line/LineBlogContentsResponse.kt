@@ -91,9 +91,6 @@ data class LineBlogContentResponse(
         val url =
             result.data.blog.opengraphImage[0].localFile
                 .childImageSharp.gatsbyImageData.images.fallback.src
-        if (url.startsWith("/static")) {
-            return null
-        }
         return "https://techblog.lycorp.co.jp$url"
     }
 
