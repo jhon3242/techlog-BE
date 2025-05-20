@@ -13,11 +13,13 @@ services:
       - SPRING_PROFILES_ACTIVE=dev
     restart: always
     healthcheck:
-      test: "curl -f http://localhost:8080/health || exit 1"
+      test: "curl -f http://localhost:8080/check/health || exit 1"
       interval: 1m
       timeout: 10s
       retries: 3
       start_period: 30s
+    volumes:
+      - ./logs:/app/logs
 
   techlog-green:
     container_name: techlog-green
@@ -30,11 +32,13 @@ services:
       - SPRING_PROFILES_ACTIVE=dev
     restart: always
     healthcheck:
-      test: "curl -f http://localhost:8080/health || exit 1"
+      test: "curl -f http://localhost:8080/check/health || exit 1"
       interval: 1m
       timeout: 10s
       retries: 3
       start_period: 30s
+    volumes:
+      - ./logs:/app/logs
 
   mysql:
     image: mysql:8.0
@@ -48,7 +52,7 @@ services:
       - ./mysql:/var/lib/mysql
     networks:
       - app-tier
-#tttttttt
+
   nginx:
     depends_on:
       - techlog-green
@@ -65,3 +69,15 @@ services:
     ports:
       - "80:80"
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: promtail
+    volumes:
+      - ./logs:/var/log/techlog
+      - ./promtail/promtail-config.yaml:/etc/promtail/config.yaml
+      - /tmp:/tmp
+    command: -config.file=/etc/promtail/config.yaml
+    restart: unless-stopped
+    networks:
+      - app-tier

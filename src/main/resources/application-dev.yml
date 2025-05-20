@@ -13,3 +13,25 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+
+management:
+  server:
+    port: ${secret.management.port}
+
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health
+      base-path: ${secret.management.path}
+    jmx:
+      exposure:
+        exclude: "*"
+    access:
+      default: none
+
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      enabled: true
+      show-components: never

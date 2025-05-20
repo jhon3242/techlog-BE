@@ -14,7 +14,8 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
     private val logger = KotlinLogging.logger {}
 
     companion object {
-        const val IGNORE_URI = "/health"
+        const val IGNORE_URI = "/@@@@"
+//        const val IGNORE_URI = "/health"
     }
 
     override fun afterCompletion(

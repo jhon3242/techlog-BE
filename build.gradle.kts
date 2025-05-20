@@ -30,14 +30,19 @@ dependencies {
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-    // coroutine
+    // Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j")
 
-    // webflux
+    // Webflux
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
+    // Spring Actuator
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("io.micrometer:micrometer-registry-prometheus")
+
+    // Database
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
 
@@ -80,7 +85,6 @@ tasks.register<Copy>("copySecret") {
     into("src/main/resources")
     println("Secret files이 성공적으로 복사되었습니다.")
 }
-
 tasks.register("copyHooks") {
     group = "git hooks"
     description = "Copy pre-commit and pre-push git hooks from .githooks to .git/hooks folder."
