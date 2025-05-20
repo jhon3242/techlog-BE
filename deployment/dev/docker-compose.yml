@@ -79,3 +79,5 @@ services:
       - /tmp:/tmp
     command: -config.file=/etc/promtail/config.yaml
     restart: unless-stopped
+    networks:
+      - app-tier
