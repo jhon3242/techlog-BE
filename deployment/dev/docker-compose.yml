@@ -18,6 +18,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+    volumes:
+      - ./logs:/app/logs
 
   techlog-green:
     container_name: techlog-green
@@ -35,6 +37,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+    volumes:
+      - ./logs:/app/logs
 
   mysql:
     image: mysql:8.0
@@ -65,3 +69,13 @@ services:
     ports:
       - "80:80"
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: promtail
+    volumes:
+      - ./logs:/var/log/techlog
+      - ./promtail/promtail-config.yaml:/etc/promtail/config.yaml
+      - /tmp:/tmp
+    command: -config.file=/etc/promtail/config.yaml
+    restart: unless-stopped
