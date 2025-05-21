@@ -21,7 +21,7 @@ class WoowabroWebClient(
     private val woowabroBlogWebClient: WebClient
 ) : FetchClient {
     private val startIdx = 1
-    private val endIdx = 47
+    private val endIdx = 48
 
     override suspend fun fetchBlog(uri: String): BlogMetaData {
         val html =
