@@ -11,8 +11,8 @@ import java.time.OffsetDateTime
 @EntityListeners(AuditingEntityListener::class)
 abstract class BaseTimeEntity {
     @CreatedDate
-    var createdAt: OffsetDateTime = OffsetDateTime.now()
+    var createdAt: OffsetDateTime = TimeProvider.now()
 
     @LastModifiedDate
-    var modifiedAt: OffsetDateTime = OffsetDateTime.now()
+    var modifiedAt: OffsetDateTime = TimeProvider.now()
 }
