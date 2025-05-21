@@ -6,5 +6,7 @@ import won.techlog.blog.domain.BlogType
 interface Relayable {
     fun getBlogs(): List<BlogMetaData>
 
+    fun getBlog(url: String): BlogMetaData
+
     fun isSupportType(blogType: BlogType): Boolean
 }

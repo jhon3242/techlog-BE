@@ -24,7 +24,22 @@ class RemoteServerManager(
         remoteServerClient.post()
             .uri("/api/posters")
             .contentType(MediaType.APPLICATION_JSON)
-            .body(Mono.just(request), PostersCreateRequest::class.java) // ← 수정된 부분
+            .body(Mono.just(request), PostersCreateRequest::class.java)
+            .retrieve()
+            .bodyToMono<Unit>()
+            .block()
+    }
+
+    fun saveBlog(
+        blog: BlogMetaData,
+        blogType: BlogType
+    ) {
+        val request = PosterCreateRequest(blogMetaData = blog, blogType = blogType)
+
+        remoteServerClient.post()
+            .uri("/api/poster")
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(Mono.just(request), PosterCreateRequest::class.java)
             .retrieve()
             .bodyToMono<Unit>()
             .block()

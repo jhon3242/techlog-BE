@@ -1,6 +1,7 @@
 package won.techlog.poster
 
 import io.restassured.RestAssured
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders.CONTENT_TYPE
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
@@ -80,6 +81,8 @@ class AdminControllerTest : BaseControllerTest() {
             .post("/api/poster")
             .then().log().all()
             .statusCode(201)
+
+        Assertions.assertThat(posterDao.getAllPosters()).hasSize(1)
     }
 
     @Test

@@ -19,8 +19,8 @@ private const val INVALID_URL_PREFIX = "https://techblog.woowa.in"
 class WoowabroWebClient(
     private val woowabroBlogWebClient: WebClient
 ) : FetchClient {
-    private val startIdx = 2
-    private val endIdx = 46
+    private val startIdx = 1
+    private val endIdx = 47
 
     override suspend fun fetchBlog(uri: String): BlogMetaData {
         val html =
