@@ -16,6 +16,12 @@ class WoowabroRelay(
         }
     }
 
+    override fun getBlog(url: String): BlogMetaData {
+        return runBlocking {
+            woowabroWebClient.fetchBlog(url)
+        }
+    }
+
     override fun isSupportType(blogType: BlogType): Boolean {
         return blogType == BlogType.WOOWABRO
     }

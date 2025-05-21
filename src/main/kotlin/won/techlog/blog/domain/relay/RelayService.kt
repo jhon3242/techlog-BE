@@ -9,14 +9,25 @@ class RelayService(
     private val remoteServerManager: RemoteServerManager,
     private val relayList: List<Relayable>
 ) {
-    fun relay(name: String) {
+    fun relayAll(name: String) {
         val findBlogType = BlogType.getByName(name)
-        val relay =
-            relayList.find { it.isSupportType(findBlogType) }
-                ?: throw IllegalArgumentException("지원하지 않는 블로그입니다.")
+        val relay = getRelay(findBlogType)
         val blogs = relay.getBlogs()
         blogs.chunked(10).forEach { chunk ->
             remoteServerManager.saveBlogs(chunk, findBlogType)
         }
     }
+
+    fun relay(url: String) {
+        val findBlogType = BlogType.getByUrl(url)
+        val relay = getRelay(findBlogType)
+        relay.getBlog(url)
+            .let { remoteServerManager.saveBlog(it, findBlogType) }
+    }
+
+    private fun getRelay(findBlogType: BlogType): Relayable =
+        (
+            relayList.find { it.isSupportType(findBlogType) }
+                ?: throw IllegalArgumentException("지원하지 않는 블로그입니다.")
+        )
 }
