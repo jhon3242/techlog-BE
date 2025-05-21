@@ -3,7 +3,7 @@ spring:
     import: application-common.yml,dev-env.yml
 
   datasource:
-    url: jdbc:mysql://${secret.database.host}:${secret.database.port}/${secret.database.name}?useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${secret.database.host}:${secret.database.port}/${secret.database.name}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: ${secret.database.user}
     password: ${secret.database.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
