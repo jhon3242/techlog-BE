@@ -73,6 +73,7 @@ class NaverBlogCrawler : BlogCrawler {
                 .getAttribute("src")
                 .ifBlank { null }
                 .let { "https://d2.naver.com$it" }
-        return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
+        TODO()
+//        return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }
 }

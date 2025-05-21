@@ -53,7 +53,8 @@ class LineBlogCrawler : BlogCrawler {
                 .text()
                 .take(300)
 
-        return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
+        TODO()
+//        return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }
 
     override fun isSupportType(blogType: BlogType): Boolean {

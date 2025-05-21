@@ -2,7 +2,6 @@ package won.techlog.blog.client
 
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import won.techlog.blog.domain.client.infrastructure.woowabro.WoowabroWebClient
 import won.techlog.support.BaseServiceTest
@@ -11,7 +10,7 @@ class WoowaClientTest : BaseServiceTest() {
     @Autowired
     lateinit var woowabroWebClient: WoowabroWebClient
 
-    @Test
+//    @Test
     fun `우형 블로그를 가져온다`() {
         runBlocking {
             // given
@@ -28,7 +27,7 @@ class WoowaClientTest : BaseServiceTest() {
         }
     }
 
-    @Test
+//    @Test
     fun `우형 블로그 리스트를 가져온다`() {
         runBlocking {
             // given

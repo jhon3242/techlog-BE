@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
 import won.techlog.blog.domain.client.FetchClient
+import won.techlog.common.TimeProvider
 
 @Component
 class NaverWebClient(
@@ -29,7 +30,8 @@ class NaverWebClient(
             title = response.postTitle,
             thumbnailUrl = response.postImage?.let { "https://d2.naver.com$it" },
             content = response.postHtml,
-            url = "https://d2.naver.com${response.url}"
+            url = "https://d2.naver.com${response.url}",
+            publishedAt = TimeProvider.parseByLong(response.postPublishedAt)
         )
     }
 
@@ -54,7 +56,8 @@ class NaverWebClient(
                                 title = it.postTitle,
                                 thumbnailUrl = it.postImage?.let { "https://d2.naver.com$it" },
                                 content = it.postHtml,
-                                url = "https://d2.naver.com${it.url}"
+                                url = "https://d2.naver.com${it.url}",
+                                publishedAt = TimeProvider.parseByLong(it.postPublishedAt)
                             )
                         }
                 result.addAll(response)

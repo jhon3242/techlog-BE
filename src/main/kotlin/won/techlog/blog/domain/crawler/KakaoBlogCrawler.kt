@@ -5,11 +5,10 @@ import com.microsoft.playwright.Page
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.options.LoadState
 import org.jsoup.Jsoup
-import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
 
-@Component
+// @Component
 class KakaoBlogCrawler : BlogCrawler {
     override fun crawlBlogs(url: String): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
@@ -79,12 +78,13 @@ class KakaoBlogCrawler : BlogCrawler {
                 ?: "본문 없음"
         val content = if (fullContent.length > 300) fullContent.substring(0, 300) else fullContent
         val thumbnail = doc.selectFirst("meta[property=og:image]")?.attr("content")?.takeIf { it.isNotBlank() }
-
-        return BlogMetaData(
-            title = title,
-            thumbnailUrl = thumbnail,
-            content = content,
-            url = url
-        )
+        TODO()
+//        return BlogMetaData(
+//            title = title,
+//            thumbnailUrl = thumbnail,
+//            content = content,
+//            url = url,
+//            publishedAt =
+//        )
     }
 }

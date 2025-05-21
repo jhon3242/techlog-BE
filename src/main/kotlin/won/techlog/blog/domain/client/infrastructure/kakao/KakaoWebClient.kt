@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
 import won.techlog.blog.domain.client.FetchClient
+import won.techlog.common.TimeProvider
 
 @Component
 class KakaoWebClient(
@@ -45,7 +46,8 @@ class KakaoWebClient(
                     title = it.title,
                     thumbnailUrl = it.thumbnailUri,
                     content = Jsoup.parse(it.content).select("p").text().take(300),
-                    url = "https://tech.kakao.com/posts/${it.id}"
+                    url = "https://tech.kakao.com/posts/${it.id}",
+                    publishedAt = TimeProvider.parseByString(it.releaseDateTime, BlogType.KAKAO)
                 )
             }
             .awaitSingle()

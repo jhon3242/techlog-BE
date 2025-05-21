@@ -91,7 +91,8 @@ class WoowabroBlogCrawler : BlogCrawler {
                 .take(3) // 앞 2문단 추출
                 .joinToString(" ") { it.text() }
 
-        return BlogMetaData(title = title, thumbnailUrl = thumbnailUrl, content = content, url = url)
+        TODO()
+//        return BlogMetaData(title = title, thumbnailUrl = thumbnailUrl, content = content, url = url)
     }
 
     private fun normalizeImageUrl(imageUrl: String?): String? =

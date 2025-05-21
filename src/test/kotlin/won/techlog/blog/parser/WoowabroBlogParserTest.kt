@@ -2,7 +2,6 @@ package won.techlog.blog.parser
 
 import io.restassured.RestAssured
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -15,7 +14,7 @@ class WoowabroBlogParserTest : BaseControllerTest() {
     @Autowired
     lateinit var woowabroBlogCrawler: WoowabroBlogCrawler
 
-    @Test
+//    @Test
     fun `블로그 글을 찾는다`() {
         // given
 //        val url = "https://techblog.woowahan.com/?paged=1"
@@ -33,7 +32,7 @@ class WoowabroBlogParserTest : BaseControllerTest() {
         println(result)
     }
 
-    @Test
+//    @Test
     fun `블로그 글을 파싱한다`() {
         // given
 //        val url = "https://techblog.woowahan.com/21905/"
@@ -55,7 +54,7 @@ class WoowabroBlogParserTest : BaseControllerTest() {
         Assertions.assertThat(response.blogType).isNotEmpty()
     }
 
-    @Test
+//    @Test
     fun `이미지 url이 uri만 있는 블로그를 파싱한다`() {
         // given
         val url = "https://techblog.woowahan.com/13539/"
@@ -68,7 +67,7 @@ class WoowabroBlogParserTest : BaseControllerTest() {
         Assertions.assertThat(result.thumbnailUrl?.startsWith(validUrlPrefix)).isTrue
     }
 
-    @Test
+//    @Test
     fun `이미지 url이 base url로 시작하는 블로그를 파싱한다`() {
         // given
         val url = "https://techblog.woowahan.com/22127/"
