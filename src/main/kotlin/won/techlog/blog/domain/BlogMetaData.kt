@@ -2,6 +2,7 @@ package won.techlog.blog.domain
 
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
+import java.time.OffsetDateTime
 
 @Embeddable
 data class BlogMetaData(
@@ -9,7 +10,8 @@ data class BlogMetaData(
     var thumbnailUrl: String?,
     @Column(columnDefinition = "TEXT")
     var content: String,
-    var url: String
+    var url: String,
+    val publishedAt: OffsetDateTime
 ) {
     fun update(
         title: String? = null,

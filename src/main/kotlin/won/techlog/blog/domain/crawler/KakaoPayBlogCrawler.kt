@@ -83,6 +83,7 @@ class KakaoPayBlogCrawler : BlogCrawler {
                 .getAttribute("src")
                 .ifBlank { null }
                 .let { "https://tech.kakaopay.com$it" }
-        return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
+        TODO()
+//        return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }
 }

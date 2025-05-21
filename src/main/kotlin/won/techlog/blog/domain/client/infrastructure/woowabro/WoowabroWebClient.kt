@@ -12,6 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
 import won.techlog.blog.domain.client.FetchClient
+import won.techlog.common.TimeProvider
 
 private const val INVALID_URL_PREFIX = "https://techblog.woowa.in"
 
@@ -38,11 +39,13 @@ class WoowabroWebClient(
         val thumbnail = getThumbnail(doc)
         val content = doc.selectFirst("meta[property=og:description]")?.attr("content") ?: "본문 없음"
         val url = doc.selectFirst("meta[property=og:url]")?.attr("content") ?: ""
+        val publishedAt = doc.selectFirst("meta[property=article:published_time]")?.attr("content") ?: ""
         return BlogMetaData(
             title = title,
             thumbnailUrl = thumbnail,
             content = content,
-            url = url
+            url = url,
+            publishedAt = TimeProvider.parseByString(publishedAt, BlogType.WOOWABRO)
         )
     }
 
