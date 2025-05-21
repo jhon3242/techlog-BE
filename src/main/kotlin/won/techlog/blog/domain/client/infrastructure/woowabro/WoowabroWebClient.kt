@@ -7,6 +7,7 @@ import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
@@ -14,13 +15,11 @@ import won.techlog.blog.domain.client.FetchClient
 
 private const val INVALID_URL_PREFIX = "https://techblog.woowa.in"
 
-// @Component  TODO 로컬에서만 동작
+@Component
 class WoowabroWebClient(
     private val woowabroBlogWebClient: WebClient
 ) : FetchClient {
-    private val startIdx = 1
-
-//    private val endIdx = 3
+    private val startIdx = 2
     private val endIdx = 46
 
     override suspend fun fetchBlog(uri: String): BlogMetaData {

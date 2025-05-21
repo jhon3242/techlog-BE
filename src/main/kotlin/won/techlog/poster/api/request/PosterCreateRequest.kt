@@ -12,6 +12,14 @@ data class PosterCreateRequest(
     val blogType: String,
     val tags: List<String> = mutableListOf()
 ) {
+    constructor(blogMetaData: BlogMetaData, blogType: BlogType) : this(
+        title = blogMetaData.title,
+        thumbnail = blogMetaData.thumbnailUrl,
+        content = blogMetaData.content,
+        url = blogMetaData.url,
+        blogType = blogType.name
+    )
+
     fun toPoster(): Poster =
         Poster(
             blogMetaData =

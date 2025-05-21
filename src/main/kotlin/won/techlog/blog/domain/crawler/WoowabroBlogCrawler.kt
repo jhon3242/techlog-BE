@@ -27,17 +27,9 @@ class WoowabroBlogCrawler : BlogCrawler {
             page.navigate(url)
             page.waitForLoadState(LoadState.NETWORKIDLE)
             page.setDefaultTimeout(60000.0) // 60초
-
-            val urls: List<String> =
-                page.locator(
-                    "body > div.content.vuejs > div.content-wrap > div.page-main > " +
-                        "div.post-main > div.post-list > div > a"
-                )
-                    .evaluateAll("nodes => nodes.map(n => n.href)") as List<String>
-            val list =
-                urls.map { extractBlogMetaData(page, it) }
-                    .toList()
-            result.addAll(list)
+            val doc = Jsoup.parse(page.content())
+            println("이것이 HTML이다 = $doc")
+            TODO()
         }
         return result
     }
