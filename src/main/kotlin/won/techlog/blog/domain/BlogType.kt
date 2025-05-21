@@ -19,6 +19,10 @@ enum class BlogType(
             entries.find { url.startsWith(it.baseUrl) }
                 ?: throw NotFoundException()
 
+        fun getByName(name: String): BlogType =
+            entries.find { it.name == name }
+                ?: throw NotFoundException()
+
         fun findByName(name: String?): BlogType? = entries.find { it.name == name }
     }
 }
