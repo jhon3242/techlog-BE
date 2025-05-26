@@ -8,6 +8,7 @@ import won.techlog.poster.domain.PosterTag
 import won.techlog.support.BaseServiceTest
 import won.techlog.support.fixture.PosterFixture
 import won.techlog.support.fixture.TagFixture
+import java.time.OffsetDateTime
 
 class PosterDaoTest : BaseServiceTest() {
     @Test
@@ -81,16 +82,37 @@ class PosterDaoTest : BaseServiceTest() {
     }
 
     @Test
-    fun `상위 21개만 조회된다`() {
+    fun `날짜 내림차순으로 상위 21개만 조회된다`() {
         // given
         for (idx in 0..50) {
-            posterDao.savePoster(PosterFixture.create(blogType = BlogType.WOOWABRO))
+            posterDao.savePoster(
+                PosterFixture.create(
+                    blogType = BlogType.WOOWABRO,
+                    publishedAt = OffsetDateTime.now().minusDays(idx.toLong())
+                )
+            )
         }
 
         // when
-        val result = posterDao.searchTop21Posters(blogType = BlogType.WOOWABRO)
+        val result = posterDao.searchTop21Posters()
 
         // then
-        Assertions.assertThat(result).hasSize(21)
+        assertAll(
+            {
+                Assertions.assertThat(
+                    result.get(0).blogMetaData.publishedAt.dayOfYear
+                ).isEqualTo(OffsetDateTime.now().minusDays(0).dayOfYear)
+            },
+            {
+                Assertions.assertThat(
+                    result.get(1).blogMetaData.publishedAt.dayOfYear
+                ).isEqualTo(OffsetDateTime.now().minusDays(1).dayOfYear)
+            },
+            {
+                Assertions.assertThat(
+                    result.get(2).blogMetaData.publishedAt.dayOfYear
+                ).isEqualTo(OffsetDateTime.now().minusDays(2).dayOfYear)
+            }
+        )
     }
 }

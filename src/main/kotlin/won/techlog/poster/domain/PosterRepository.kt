@@ -3,6 +3,7 @@ package won.techlog.poster.domain
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import won.techlog.blog.domain.BlogType
+import java.time.OffsetDateTime
 
 interface PosterRepository : JpaRepository<Poster, Long> {
     fun findByIdAndIsDeletedFalse(id: Long): Poster?
@@ -31,5 +32,27 @@ interface PosterRepository : JpaRepository<Poster, Long> {
         keyword: String? = null,
         blogType: BlogType? = null,
         cursor: Long? = null
+    ): List<Poster>
+
+    @Query(
+        """
+    SELECT p FROM Poster p
+    LEFT JOIN PosterTag pt ON p.id = pt.poster.id
+    LEFT JOIN Tag t ON pt.tag.id = t.id
+    WHERE (:cursor IS NULL OR p.blogMetaData.publishedAt < :cursor)
+      AND (:blogType IS NULL OR p.blogType = :blogType)
+      AND (:keyword IS NULL
+        OR t.name = :keyword
+        OR p.blogMetaData.content LIKE %:keyword%
+        OR p.blogMetaData.title LIKE %:keyword%
+     )
+    ORDER BY p.blogMetaData.publishedAt DESC
+    LIMIT 21
+    """
+    )
+    fun findTop21ByPublishedAtCursor(
+        keyword: String? = null,
+        blogType: BlogType? = null,
+        cursor: OffsetDateTime? = null
     ): List<Poster>
 }

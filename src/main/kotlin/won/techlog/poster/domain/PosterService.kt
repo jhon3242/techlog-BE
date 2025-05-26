@@ -57,7 +57,7 @@ class PosterService(
         val contents =
             searchResult.subList(0, min(maxCount, searchResult.size))
                 .map { PosterResponse(it, posterTagDao.findTags(it)) }
-        val nextCursor = searchResult.lastOrNull()?.id
+        val nextCursor = searchResult.lastOrNull()?.blogMetaData?.publishedAt.toString()
         val hasNext = searchResult.size > maxCount
         return PostersResponse(contents, nextCursor, hasNext)
     }
