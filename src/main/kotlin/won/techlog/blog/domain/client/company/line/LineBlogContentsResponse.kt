@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.client.infrastructure.line
+package won.techlog.blog.domain.client.company.line
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty

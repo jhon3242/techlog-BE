@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.crawler
+package won.techlog.blog.domain.crawler.company
 
 import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Playwright
@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document
 import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
+import won.techlog.blog.domain.crawler.BlogCrawler
 
 @Component
 class LineBlogCrawler : BlogCrawler {

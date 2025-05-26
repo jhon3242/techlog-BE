@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.client.infrastructure.naver
+package won.techlog.blog.domain.client.company.naver
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

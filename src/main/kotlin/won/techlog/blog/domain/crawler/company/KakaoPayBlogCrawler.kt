@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.crawler
+package won.techlog.blog.domain.crawler.company
 
 import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Page
@@ -7,9 +7,10 @@ import com.microsoft.playwright.options.LoadState
 import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
+import won.techlog.blog.domain.crawler.BlogCrawler
 
 @Component
-class NaverBlogCrawler : BlogCrawler {
+class KakaoPayBlogCrawler : BlogCrawler {
     override fun crawlBlogs(url: String): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
         Playwright.create().use { playwright ->
@@ -21,12 +22,14 @@ class NaverBlogCrawler : BlogCrawler {
             page.navigate(url)
             page.waitForLoadState(LoadState.NETWORKIDLE)
 
+            val urls: List<String> =
+                page.locator("div._postList_1cl5f_34 ul > li > a")
+                    .evaluateAll("nodes => nodes.map(n => n.href)")
+                    as List<String>
+
             val list =
-                page.locator("a.post_txt_wrap")
-                    .all()
-                    .map { it.getAttribute("href") }
-                    .map { "https://d2.naver.com$it" }
-                    .map { url -> extractBlogMetaData(page, url) }
+                urls.map { extractBlogMetaData(page, it) }
+                    .toList()
             result.addAll(list)
         }
         return result
@@ -52,7 +55,7 @@ class NaverBlogCrawler : BlogCrawler {
     }
 
     override fun isSupportType(blogType: BlogType): Boolean {
-        return blogType == BlogType.NAVER
+        return blogType == BlogType.KAKAO_PAY
     }
 
     private fun extractBlogMetaData(
@@ -65,14 +68,22 @@ class NaverBlogCrawler : BlogCrawler {
         // 페이지 로드 기다리기 (옵션)
         page.waitForLoadState(LoadState.NETWORKIDLE)
 
-        val title = page.textContent("h1.posting_tit") ?: "제목 없음"
-        val content = page.textContent("div.con_view").take(300) ?: "본문 없음"
+        val title =
+            page.locator("head meta[property='og:title']")
+                .getAttribute("content")
+                .split("|")
+                .first()
+        val content =
+            page.locator("head meta[property='og:description']")
+                .getAttribute("content")
+                .take(300)
+
         val thumbnail =
-            page.locator("div.con_view img")
+            page.locator("article img")
                 .first()
                 .getAttribute("src")
                 .ifBlank { null }
-                .let { "https://d2.naver.com$it" }
+                .let { "https://tech.kakaopay.com$it" }
         TODO()
 //        return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
     }

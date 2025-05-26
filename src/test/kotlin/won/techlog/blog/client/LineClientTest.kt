@@ -4,8 +4,8 @@ import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import won.techlog.blog.domain.client.infrastructure.line.LineOldWebClient
-import won.techlog.blog.domain.client.infrastructure.line.LineWebClient
+import won.techlog.blog.domain.client.company.line.LineOldWebClient
+import won.techlog.blog.domain.client.company.line.LineWebClient
 import won.techlog.support.BaseServiceTest
 
 class LineClientTest : BaseServiceTest() {

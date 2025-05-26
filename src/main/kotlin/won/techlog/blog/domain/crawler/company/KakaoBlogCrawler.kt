@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.crawler
+package won.techlog.blog.domain.crawler.company
 
 import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Page
@@ -7,6 +7,7 @@ import com.microsoft.playwright.options.LoadState
 import org.jsoup.Jsoup
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
+import won.techlog.blog.domain.crawler.BlogCrawler
 
 // @Component
 class KakaoBlogCrawler : BlogCrawler {

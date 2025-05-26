@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.client.infrastructure.kakao
+package won.techlog.blog.domain.client.company.kakao
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 

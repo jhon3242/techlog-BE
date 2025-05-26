@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.client.infrastructure.woowabro
+package won.techlog.blog.domain.client.company.woowabro
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

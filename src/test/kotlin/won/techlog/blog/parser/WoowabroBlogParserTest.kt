@@ -7,7 +7,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogParseRequest
 import won.techlog.blog.api.response.BlogResponse
-import won.techlog.blog.domain.crawler.WoowabroBlogCrawler
+import won.techlog.blog.domain.crawler.company.WoowabroBlogCrawler
 import won.techlog.support.BaseControllerTest
 
 class WoowabroBlogParserTest : BaseControllerTest() {

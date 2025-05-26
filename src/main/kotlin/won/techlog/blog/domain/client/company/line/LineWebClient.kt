@@ -1,4 +1,4 @@
-package won.techlog.blog.domain.client.infrastructure.line
+package won.techlog.blog.domain.client.company.line
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -12,14 +12,20 @@ import won.techlog.blog.domain.BlogType
 import won.techlog.blog.domain.client.FetchClient
 
 @Component
-class LineOldWebClient(
-    private val lineOleBlogWebClient: WebClient
+class LineWebClient(
+    private val lineBlogWebClient: WebClient
 ) : FetchClient {
     private val startIdx = 1
-    private val endIdx = 38
+    private val endIdx = 9
 
-    override suspend fun fetchBlog(uri: String): BlogMetaData {
-        TODO("Not yet implemented")
+    override suspend fun fetchBlog(slug: String): BlogMetaData {
+        val uri = "/$slug/page-data.json"
+        return lineBlogWebClient.get()
+            .uri(uri)
+            .retrieve()
+            .bodyToMono(LineBlogContentResponse::class.java)
+            .awaitSingle()
+            .getBlogMetaData()
     }
 
     override suspend fun fetchBlogs(): List<BlogMetaData> =
@@ -28,14 +34,13 @@ class LineOldWebClient(
                 (startIdx..endIdx).map { idx ->
                     async {
                         val url = getUrl(idx)
-                        val response =
-                            lineOleBlogWebClient.get()
-                                .uri(url)
-                                .retrieve()
-                                .bodyToMono(LineOldBlogContentsResponse::class.java)
-                                .map { it.getBlogMetaData() }
-                                .awaitSingle()
-                        response // List<BlogMetaData>
+                        lineBlogWebClient.get()
+                            .uri(url)
+                            .retrieve()
+                            .bodyToMono(LineBlogContentsResponse::class.java)
+                            .awaitSingle()
+                            .getSlugs()
+                            .map { fetchBlog(it) }
                     }
                 }
             deferreds.awaitAll().flatten()
@@ -49,6 +54,6 @@ class LineOldWebClient(
     }
 
     override fun supportType(): BlogType {
-        return BlogType.LINE_OLD
+        return BlogType.LINE
     }
 }

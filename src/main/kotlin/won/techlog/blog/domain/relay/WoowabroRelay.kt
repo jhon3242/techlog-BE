@@ -4,7 +4,7 @@ import kotlinx.coroutines.runBlocking
 import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
-import won.techlog.blog.domain.client.infrastructure.woowabro.WoowabroWebClient
+import won.techlog.blog.domain.client.company.woowabro.WoowabroWebClient
 
 @Component
 class WoowabroRelay(

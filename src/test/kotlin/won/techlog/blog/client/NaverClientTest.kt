@@ -3,7 +3,7 @@ package won.techlog.blog.client
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
 import org.springframework.beans.factory.annotation.Autowired
-import won.techlog.blog.domain.client.infrastructure.naver.NaverWebClient
+import won.techlog.blog.domain.client.company.naver.NaverWebClient
 import won.techlog.support.BaseControllerTest
 
 class NaverClientTest : BaseControllerTest() {
