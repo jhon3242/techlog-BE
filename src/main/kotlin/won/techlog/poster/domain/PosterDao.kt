@@ -33,18 +33,6 @@ class PosterDao(
     fun getAllPosters(): List<Poster> = posterRepository.findAllByIsDeletedFalse()
 
     @Transactional(readOnly = true)
-    fun getAllPostersByCursor(cursor: Long?): List<Poster> = posterRepository.findTop21ByCursor(cursor = cursor)
-
-    @Transactional(readOnly = true)
-    fun getPosters(
-        page: Int,
-        size: Int
-    ): List<Poster> {
-        val pageable = PageRequest.of(page, size)
-        return posterRepository.findAll(pageable).content
-    }
-
-    @Transactional(readOnly = true)
     fun searchTop21Posters(
         keyword: String? = null,
         blogType: BlogType? = null,

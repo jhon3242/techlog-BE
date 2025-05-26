@@ -36,16 +36,6 @@ class PosterService(
     }
 
     @Transactional(readOnly = true)
-    fun getPosters(
-        page: Int,
-        size: Int
-    ): PostersResponse {
-        val posters = posterDao.getPosters(page, size)
-        return posters.map { PosterResponse(it, posterTagDao.findTags(it)) }
-            .let { PostersResponse(it) }
-    }
-
-    @Transactional(readOnly = true)
     fun searchPosters(request: PosterSearchRequest): PostersResponse {
         val maxCount = 20
         val searchResult =
