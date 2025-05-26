@@ -1,6 +1,5 @@
 package won.techlog.poster.domain
 
-import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import won.techlog.blog.domain.BlogType
@@ -35,10 +34,11 @@ class PosterDao(
     @Transactional(readOnly = true)
     fun searchTop21Posters(
         keyword: String? = null,
+        tagNames: List<String>? = null,
         blogType: BlogType? = null,
         cursor: OffsetDateTime? = null
     ): List<Poster> {
-        return posterRepository.findTop21ByPublishedAtCursor(keyword, blogType, cursor)
+        return posterRepository.findTop21ByPublishedAtCursor(keyword, tagNames, blogType, cursor)
     }
 
     @Transactional

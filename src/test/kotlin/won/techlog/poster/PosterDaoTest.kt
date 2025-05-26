@@ -38,7 +38,7 @@ class PosterDaoTest : BaseServiceTest() {
     }
 
     @Test
-    fun `키워드로 태그 검색한다`() {
+    fun `태그 검색한다`() {
         // given
         val savedPoster = posterDao.savePoster(PosterFixture.create())
         val savedPoster2 = posterDao.savePoster(PosterFixture.create())
@@ -46,7 +46,7 @@ class PosterDaoTest : BaseServiceTest() {
         posterTagDao.save(PosterTag(poster = savedPoster, tag = savedTag))
 
         // when
-        val result = posterDao.searchTop21Posters("redis")
+        val result = posterDao.searchTop21Posters(tagNames = listOf("redis"))
 
         // then
         Assertions.assertThat(result.size).isEqualTo(1)

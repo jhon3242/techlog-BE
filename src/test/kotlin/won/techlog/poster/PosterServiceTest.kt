@@ -23,9 +23,6 @@ class PosterServiceTest : BaseServiceTest() {
         posterDao.savePoster(PosterFixture.create(title = "redis test"))
         posterDao.savePoster(PosterFixture.create(content = "redis test"))
         posterDao.savePoster(PosterFixture.create(content = "Nothing test"))
-        val savedPoster = posterDao.savePoster(PosterFixture.create())
-        val savedTag = tagDao.save(TagFixture.create(name = "redis"))
-        posterTagDao.save(PosterTag(poster = savedPoster, tag = savedTag))
 
         // when
         val result =
@@ -33,7 +30,7 @@ class PosterServiceTest : BaseServiceTest() {
                 .posters
 
         // then
-        Assertions.assertThat(result).hasSize(3)
+        Assertions.assertThat(result).hasSize(2)
     }
 
     @Test

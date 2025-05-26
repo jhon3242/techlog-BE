@@ -41,6 +41,7 @@ class PosterService(
         val searchResult =
             posterDao.searchTop21Posters(
                 keyword = request.keyword,
+                tagNames = request.tags,
                 blogType = BlogType.findByName(request.blogType),
                 cursor = request.cursor
             )
@@ -51,6 +52,14 @@ class PosterService(
         val hasNext = searchResult.size > maxCount
         return PostersResponse(contents, nextCursor, hasNext)
     }
+
+//    private fun searchPostersWithTags(request: PosterSearchRequest): PostersResponse {
+//        val maxCount = 20
+//        if (request.tags == null) {
+//            throw IllegalArgumentException("태그로 조회할 수 없습니다.")
+//        }
+//        posterTagDao.findByTagNames(request.tags)
+//    }
 
     fun updatePoster(
         id: Long,
