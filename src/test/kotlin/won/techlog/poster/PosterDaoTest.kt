@@ -15,6 +15,7 @@ class PosterDaoTest : BaseServiceTest() {
     fun `키워드로 제목 검색한다`() {
         // given
         posterDao.savePoster(PosterFixture.create(title = "redis test"))
+        posterDao.savePoster(PosterFixture.create(title = "Nothing test"))
 
         // when
         val result = posterDao.searchTop21Posters("redis")
@@ -27,6 +28,7 @@ class PosterDaoTest : BaseServiceTest() {
     fun `키워드로 내용 검색한다`() {
         // given
         posterDao.savePoster(PosterFixture.create(content = "redis test"))
+        posterDao.savePoster(PosterFixture.create(content = "Nothing test"))
 
         // when
         val result = posterDao.searchTop21Posters("redis")
@@ -39,6 +41,7 @@ class PosterDaoTest : BaseServiceTest() {
     fun `키워드로 태그 검색한다`() {
         // given
         val savedPoster = posterDao.savePoster(PosterFixture.create())
+        val savedPoster2 = posterDao.savePoster(PosterFixture.create())
         val savedTag = tagDao.save(TagFixture.create(name = "redis"))
         posterTagDao.save(PosterTag(poster = savedPoster, tag = savedTag))
 
