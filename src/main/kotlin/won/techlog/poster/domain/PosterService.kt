@@ -53,14 +53,6 @@ class PosterService(
         return PostersResponse(contents, nextCursor, hasNext)
     }
 
-//    private fun searchPostersWithTags(request: PosterSearchRequest): PostersResponse {
-//        val maxCount = 20
-//        if (request.tags == null) {
-//            throw IllegalArgumentException("태그로 조회할 수 없습니다.")
-//        }
-//        posterTagDao.findByTagNames(request.tags)
-//    }
-
     fun updatePoster(
         id: Long,
         request: PosterUpdateRequest
