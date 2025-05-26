@@ -22,14 +22,7 @@ class AdminControllerTest : BaseControllerTest() {
         val tagNames = TagFixture.createList()
         tagNames.forEach { tagDao.save(it) }
         val request =
-            PosterCreateRequest(
-                title = poster.blogMetaData.title,
-                thumbnail = poster.blogMetaData.thumbnailUrl,
-                url = poster.blogMetaData.url,
-                content = poster.blogMetaData.content,
-                blogType = poster.blogType.name,
-                tags = tagNames
-            )
+            PosterCreateRequest(poster = poster, tags = tagNames)
 
         // when
         // then
@@ -64,11 +57,7 @@ class AdminControllerTest : BaseControllerTest() {
         tagNames.forEach { tagDao.save(it) }
         val request =
             PosterCreateRequest(
-                title = poster.blogMetaData.title,
-                thumbnail = poster.blogMetaData.thumbnailUrl,
-                url = poster.blogMetaData.url,
-                content = poster.blogMetaData.content,
-                blogType = poster.blogType.name,
+                poster = poster,
                 tags = tagNames
             )
 
@@ -98,7 +87,8 @@ class AdminControllerTest : BaseControllerTest() {
                 url = poster.blogMetaData.url,
                 content = poster.blogMetaData.content,
                 blogType = poster.blogType.name,
-                tags = tagNames
+                tags = tagNames,
+                publishedAt = poster.blogMetaData.publishedAt
             )
         val posterB =
             PosterCreateRequest(
@@ -107,7 +97,8 @@ class AdminControllerTest : BaseControllerTest() {
                 url = poster.blogMetaData.url,
                 content = poster.blogMetaData.content,
                 blogType = poster.blogType.name,
-                tags = tagNames
+                tags = tagNames,
+                publishedAt = poster.blogMetaData.publishedAt
             )
         val request = PostersCreateRequest(listOf(posterA, posterB))
 

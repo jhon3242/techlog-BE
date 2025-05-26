@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import won.techlog.blog.domain.BlogType
 import won.techlog.poster.exception.NotFoundException
+import java.time.OffsetDateTime
 
 @Component
 class PosterDao(
@@ -47,9 +48,9 @@ class PosterDao(
     fun searchTop21Posters(
         keyword: String? = null,
         blogType: BlogType? = null,
-        cursor: Long? = null
+        cursor: OffsetDateTime? = null
     ): List<Poster> {
-        return posterRepository.findTop21ByCursor(keyword, blogType, cursor)
+        return posterRepository.findTop21ByPublishedAtCursor(keyword, blogType, cursor)
     }
 
     @Transactional

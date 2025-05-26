@@ -22,6 +22,7 @@ class PosterServiceTest : BaseServiceTest() {
         val request = PosterSearchRequest(keyword = "redis")
         posterDao.savePoster(PosterFixture.create(title = "redis test"))
         posterDao.savePoster(PosterFixture.create(content = "redis test"))
+        posterDao.savePoster(PosterFixture.create(content = "Nothing test"))
         val savedPoster = posterDao.savePoster(PosterFixture.create())
         val savedTag = tagDao.save(TagFixture.create(name = "redis"))
         posterTagDao.save(PosterTag(poster = savedPoster, tag = savedTag))

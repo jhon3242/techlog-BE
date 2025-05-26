@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.jsoup.Jsoup
 import won.techlog.blog.domain.BlogMetaData
+import won.techlog.blog.domain.BlogType
+import won.techlog.common.TimeProvider
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class LineOldBlogContentsResponse(
@@ -15,7 +17,8 @@ data class LineOldBlogContentsResponse(
                 title = it.node.title,
                 thumbnailUrl = it.node.opengraphImage.get(0).fullUrl,
                 content = Jsoup.parse(it.node.content).text().take(300),
-                url = "https://engineering.linecorp.com/ko/blog/${it.node.slug}"
+                url = "https://engineering.linecorp.com/ko/blog/${it.node.slug}",
+                publishedAt = TimeProvider.parseByString(it.node.pubdate, BlogType.LINE_OLD)
             )
         }
     }

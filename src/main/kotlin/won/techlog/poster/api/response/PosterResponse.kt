@@ -12,7 +12,8 @@ class PosterResponse(
     val blogType: String,
     val recommendations: Long,
     val views: Long,
-    val tags: List<String>
+    val tags: List<String>,
+    val publishedAt: String
 ) {
     constructor(poster: Poster, tags: List<Tag>) : this(
         id = poster.id,
@@ -23,6 +24,7 @@ class PosterResponse(
         blogType = poster.blogType.name,
         recommendations = poster.recommendations,
         views = poster.views,
-        tags = tags.map { it.name }
+        tags = tags.map { it.name },
+        publishedAt = poster.blogMetaData.publishedAt.toString()
     )
 }

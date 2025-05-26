@@ -2,7 +2,7 @@ spring:
   config:
     import: application-common.yml
   datasource:
-    url: jdbc:mysql://localhost:33060/techlog?useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:33060/techlog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: user
     password: user
     driver-class-name: com.mysql.cj.jdbc.Driver

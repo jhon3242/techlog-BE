@@ -2,6 +2,7 @@ package won.techlog.blog.client
 
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import won.techlog.blog.domain.client.infrastructure.line.LineOldWebClient
 import won.techlog.blog.domain.client.infrastructure.line.LineWebClient
@@ -14,7 +15,7 @@ class LineClientTest : BaseServiceTest() {
     @Autowired
     lateinit var lineWebClient: LineWebClient
 
-//    @Test
+    @Test
     fun `과거 라인 블로그 리스트를 가져온다`() {
         runBlocking {
             // given
