@@ -52,7 +52,7 @@ class BlogCrawlerManager(
         val blogType = BlogType.getByUrl(url)
         val crawler = findCrawler(blogType)
         Poster(blogType = blogType, blogMetaData = crawler.crawlBlog(url))
-            .let { posterDao.savePoster(it) }
+            .let { posterDao.save(it) }
     }
 
     fun canHandle(blogType: BlogType): Boolean {

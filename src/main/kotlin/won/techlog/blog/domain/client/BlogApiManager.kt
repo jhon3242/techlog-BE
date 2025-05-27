@@ -29,7 +29,7 @@ class BlogApiManager(
         val result =
             fetchClient.fetchBlog(url)
                 .let { createPoster(blogType, it) }
-        posterDao.savePoster(result)
+        posterDao.save(result)
     }
 
     private fun createPoster(

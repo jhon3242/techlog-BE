@@ -23,7 +23,7 @@ class PosterService(
         names: List<String>
     ): PosterResponse {
         val tags: List<Tag> = tagDao.findAllByNames(names)
-        val savePoster = posterDao.savePoster(poster)
+        val savePoster = posterDao.save(poster)
         posterTagDao.save(savePoster, tags)
         return PosterResponse(savePoster, tags)
     }

@@ -117,7 +117,7 @@ class AdminControllerTest : BaseControllerTest() {
     fun `포스터를 삭제한다`() {
         // given
         val poster = PosterFixture.create()
-        val savePoster = posterDao.savePoster(poster)
+        val savePoster = posterDao.save(poster)
 
         // when & then
         RestAssured.given().log().all()

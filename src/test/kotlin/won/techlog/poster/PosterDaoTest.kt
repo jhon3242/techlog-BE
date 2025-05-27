@@ -14,8 +14,8 @@ class PosterDaoTest : BaseServiceTest() {
     @Test
     fun `키워드로 제목 검색한다`() {
         // given
-        posterDao.savePoster(PosterFixture.create(title = "redis test"))
-        posterDao.savePoster(PosterFixture.create(title = "Nothing test"))
+        posterDao.save(PosterFixture.create(title = "redis test"))
+        posterDao.save(PosterFixture.create(title = "Nothing test"))
 
         // when
         val result = posterDao.searchTop21Posters("redis")
@@ -27,8 +27,8 @@ class PosterDaoTest : BaseServiceTest() {
     @Test
     fun `키워드로 내용 검색한다`() {
         // given
-        posterDao.savePoster(PosterFixture.create(content = "redis test"))
-        posterDao.savePoster(PosterFixture.create(content = "Nothing test"))
+        posterDao.save(PosterFixture.create(content = "redis test"))
+        posterDao.save(PosterFixture.create(content = "Nothing test"))
 
         // when
         val result = posterDao.searchTop21Posters("redis")
@@ -40,8 +40,8 @@ class PosterDaoTest : BaseServiceTest() {
     @Test
     fun `태그 검색한다`() {
         // given
-        val savedPoster = posterDao.savePoster(PosterFixture.create())
-        val savedPoster2 = posterDao.savePoster(PosterFixture.create())
+        val savedPoster = posterDao.save(PosterFixture.create())
+        val savedPoster2 = posterDao.save(PosterFixture.create())
         val savedTag = tagDao.save(TagFixture.create(name = "redis"))
         posterTagDao.save(PosterTag(poster = savedPoster, tag = savedTag))
 
@@ -56,9 +56,9 @@ class PosterDaoTest : BaseServiceTest() {
     fun `회사 이름으로 검색한다`() {
         // given
         // when
-        posterDao.savePoster(PosterFixture.create(blogType = BlogType.LINE))
-        posterDao.savePoster(PosterFixture.create(blogType = BlogType.WOOWABRO))
-        posterDao.savePoster(PosterFixture.create(blogType = BlogType.WOOWABRO))
+        posterDao.save(PosterFixture.create(blogType = BlogType.LINE))
+        posterDao.save(PosterFixture.create(blogType = BlogType.WOOWABRO))
+        posterDao.save(PosterFixture.create(blogType = BlogType.WOOWABRO))
 
         // then
         assertAll(
@@ -71,9 +71,9 @@ class PosterDaoTest : BaseServiceTest() {
     @Test
     fun `일치하는 키워드가 없으면 조회되지 않는다`() {
         // given
-        posterDao.savePoster(PosterFixture.create(title = "redis test"))
-        posterDao.savePoster(PosterFixture.create(content = "redis test"))
-        val savedPoster = posterDao.savePoster(PosterFixture.create())
+        posterDao.save(PosterFixture.create(title = "redis test"))
+        posterDao.save(PosterFixture.create(content = "redis test"))
+        val savedPoster = posterDao.save(PosterFixture.create())
         val savedTag = tagDao.save(TagFixture.create(name = "redis"))
         posterTagDao.save(PosterTag(poster = savedPoster, tag = savedTag))
 
@@ -88,7 +88,7 @@ class PosterDaoTest : BaseServiceTest() {
     fun `날짜 내림차순으로 상위 21개만 조회된다`() {
         // given
         for (idx in 0..50) {
-            posterDao.savePoster(
+            posterDao.save(
                 PosterFixture.create(
                     blogType = BlogType.WOOWABRO,
                     publishedAt = OffsetDateTime.now().minusDays(idx.toLong())

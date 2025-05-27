@@ -16,5 +16,6 @@ class PosterTag(
     @ManyToOne(fetch = FetchType.LAZY)
     val poster: Poster,
     @ManyToOne(fetch = FetchType.LAZY)
-    val tag: Tag
+    val tag: Tag,
+    var isDeleted: Boolean = false
 )

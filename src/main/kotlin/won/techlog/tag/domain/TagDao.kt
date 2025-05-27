@@ -8,7 +8,7 @@ class TagDao(
     private val tagRepository: TagRepository
 ) {
     @Transactional(readOnly = true)
-    fun findByName(name: String): Tag? = tagRepository.findByNameAndIsDeletedIsFalse(name)
+    fun findByName(name: String): Tag? = tagRepository.findByNameAndIsDeletedFalse(name)
 
     @Transactional
     fun save(name: String): Tag {

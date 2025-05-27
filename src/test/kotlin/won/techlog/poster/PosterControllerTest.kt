@@ -23,7 +23,7 @@ class PosterControllerTest : BaseControllerTest() {
     fun `특정 포스터를 조회한다`() {
         // given
         val poster = PosterFixture.create()
-        val savedPoster = posterDao.savePoster(poster)
+        val savedPoster = posterDao.save(poster)
 
         // when
         val posterResponse =
@@ -47,7 +47,7 @@ class PosterControllerTest : BaseControllerTest() {
     fun `포스터를 추천한다`() {
         // given
         val poster = PosterFixture.create()
-        val savePoster = posterDao.savePoster(poster)
+        val savePoster = posterDao.save(poster)
 
         // when
         RestAssured.given().log().all()
@@ -65,7 +65,7 @@ class PosterControllerTest : BaseControllerTest() {
     fun `포스터를 조회한다`() {
         // given
         val poster = PosterFixture.create()
-        val savePoster = posterDao.savePoster(poster)
+        val savePoster = posterDao.save(poster)
 
         // when
         RestAssured.given().log().all()

@@ -11,7 +11,7 @@ class PosterDao(
     private val posterRepository: PosterRepository
 ) {
     @Transactional
-    fun savePoster(poster: Poster): Poster {
+    fun save(poster: Poster): Poster {
         val alreadySavedBlog = posterRepository.findByBlogMetaData_Url(poster.blogMetaData.url)
         if (alreadySavedBlog != null) {
             alreadySavedBlog.isDeleted = false
@@ -21,7 +21,7 @@ class PosterDao(
     }
 
     @Transactional
-    fun savePosters(posters: List<Poster>): List<Poster> = posters.map { savePoster(it) }
+    fun savePosters(posters: List<Poster>): List<Poster> = posters.map { save(it) }
 
     @Transactional(readOnly = true)
     fun getPoster(id: Long): Poster =
