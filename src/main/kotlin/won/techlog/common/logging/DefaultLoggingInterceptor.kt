@@ -8,6 +8,7 @@ import org.slf4j.MDC
 import org.springframework.stereotype.Component
 import org.springframework.web.util.ContentCachingRequestWrapper
 import java.io.Serializable
+import java.util.UUID
 
 @Component
 class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
@@ -15,6 +16,32 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
 
     companion object {
         const val IGNORE_URI = "/health"
+        const val REQUEST_ID = "requestId"
+        const val REQUEST_TIME = "requestTime"
+    }
+
+    override fun preHandle(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        handler: Any
+    ): Boolean {
+        if (shouldIgnore(request)) return true
+        MDC.put(REQUEST_ID, UUID.randomUUID().toString().substring(0, 8))
+        MDC.put(REQUEST_TIME, System.currentTimeMillis().toString())
+
+        val requestId = MDC.get(REQUEST_ID) ?: "N/A"
+        val originalUri = request.requestURI
+        val headers = extractHeaders(request)
+        val body = extractRequestBody(request)
+
+        logger.info {
+            """{"type":"REQUEST ", "requestId":"$requestId", "method":"${request.method}", "uri":"$originalUri${
+                getRequestParameters(
+                    request
+                )
+            }", "body":$body}"""
+        }
+        return true
     }
 
     override fun afterCompletion(
@@ -31,19 +58,14 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
                 ?: request.requestURI
         val duration = calculateDuration()
         val statusText = getStatusText(response.status)
-        val headers = extractHeaders(request)
         val body = extractRequestBody(request)
 
         logger.info {
-            """
-            📦 RESPONSE $statusText [$requestId]
-            ▶ URI: ${request.method} ${originalUri}${getRequestParameters(request)}
-            ▶ Status: [${response.status}]
-            ▶ Duration: ${duration}ms
-            ▶ Headers: $headers
-            ▶ Body: $body
-            ▶ Exception: ${ex?.message}
-            """.trimIndent()
+            """{"type":"RESPONSE", "requestId":"$requestId", "method":"${request.method}", "uri":"$originalUri${
+                getRequestParameters(
+                    request
+                )
+            }", "status":"$statusText", "statusCode":${response.status}, "duration":$duration, "body":$body}"""
         }
     }
 
