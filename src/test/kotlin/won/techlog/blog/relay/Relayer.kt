@@ -10,7 +10,7 @@ class Relayer : BaseServiceTest() {
 
 //    @Test
     fun `모든 블로그를 릴레이한다`() {
-        relayService.relayAll("WOOWABRO")
+        relayService.relayAll("KAKAO_PAY")
     }
 
 //    @Test
