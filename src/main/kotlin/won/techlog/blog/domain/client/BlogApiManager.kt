@@ -1,5 +1,6 @@
 package won.techlog.blog.domain.client
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import won.techlog.blog.domain.BlogMetaData
@@ -13,6 +14,7 @@ class BlogApiManager(
     private val posterDao: PosterDao
 ) {
     private val clientMap: Map<BlogType, FetchClient> = clients.associateBy { it.supportType() }
+    private val logger = KotlinLogging.logger {}
 
     @Transactional
     suspend fun fetchBlogs(blogType: BlogType) {
@@ -21,6 +23,7 @@ class BlogApiManager(
             fetchClient.fetchBlogs()
                 .map { createPoster(blogType, it) }
         posterDao.savePosters(result)
+        logger.info { "⭐️블로그 ${result.size}개 저장" }
     }
 
     suspend fun fetchBlog(url: String) {

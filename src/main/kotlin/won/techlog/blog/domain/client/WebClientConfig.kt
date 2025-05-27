@@ -42,6 +42,15 @@ class WebClientConfig {
             .defaultHeader("Accept", MediaType.TEXT_HTML_VALUE)
             .build()
 
+    @Bean
+    fun tossBlogWebClient(builder: WebClient.Builder): WebClient =
+        builder.baseUrl(
+            "https://api-public.toss.im/api-public/v3/ipd-thor/api/v1/workspaces/15/posts?size=999&categoriesSlug=tech"
+        )
+            .codecs { it.defaultCodecs().maxInMemorySize(5 * 1024 * 1024) }
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .build()
+
     fun logRequest(): ExchangeFilterFunction =
         ExchangeFilterFunction.ofRequestProcessor { clientRequest ->
             println("▶ Request: ${clientRequest.method()} ${clientRequest.url()}")
