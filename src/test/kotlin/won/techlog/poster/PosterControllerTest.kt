@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import won.techlog.poster.api.response.PosterResponse
+import won.techlog.poster.api.response.PostersResponse
 import won.techlog.poster.domain.PosterTagDao
 import won.techlog.support.BaseControllerTest
 import won.techlog.support.fixture.PosterFixture
@@ -62,7 +63,7 @@ class PosterControllerTest : BaseControllerTest() {
     }
 
     @Test
-    fun `포스터를 조회한다`() {
+    fun `포스터의 조회수를 증가시킨다`() {
         // given
         val poster = PosterFixture.create()
         val savePoster = posterDao.save(poster)
@@ -77,5 +78,46 @@ class PosterControllerTest : BaseControllerTest() {
         // then
         val curPoster = posterDao.getPoster(savePoster.id)
         Assertions.assertThat(curPoster.views).isGreaterThan(0)
+    }
+
+    @Test
+    fun `포스터를 조회한다`() {
+        // given
+        repeat(50) {
+            posterDao.save(PosterFixture.create())
+        }
+
+        // when
+        val response =
+            RestAssured.given().log().all()
+                .`when`().get("${BASE_URL}")
+                .then().log().all()
+                .statusCode(200)
+                .extract().`as`(PostersResponse::class.java)
+
+        // then
+        Assertions.assertThat(response.posters).hasSize(20)
+    }
+
+    @Test
+    fun `키워드로 포스터를 조회한다`() {
+        // given
+        val keyword = "redis"
+        repeat(10) {
+            posterDao.save(PosterFixture.create())
+        }
+        posterDao.save(PosterFixture.create(title = keyword))
+
+        // when
+        val response =
+            RestAssured.given().log().all()
+                .param("keyword", keyword)
+                .`when`().get("${BASE_URL}")
+                .then().log().all()
+                .statusCode(200)
+                .extract().`as`(PostersResponse::class.java)
+
+        // then
+        Assertions.assertThat(response.posters).hasSize(1)
     }
 }

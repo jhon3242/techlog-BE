@@ -50,7 +50,7 @@ class PosterService(
                 .map { PosterResponse(it, posterTagDao.findTags(it)) }
         val nextCursor = searchResult.lastOrNull()?.blogMetaData?.publishedAt.toString()
         val hasNext = searchResult.size > maxCount
-        return PostersResponse(contents, nextCursor, hasNext)
+        return PostersResponse(contents, nextCursor, hasNext, contents.size)
     }
 
     fun updatePoster(

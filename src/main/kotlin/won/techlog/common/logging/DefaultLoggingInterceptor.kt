@@ -6,12 +6,14 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.MDC
 import org.springframework.stereotype.Component
+import org.springframework.web.servlet.HandlerInterceptor
 import org.springframework.web.util.ContentCachingRequestWrapper
+import org.springframework.web.util.ContentCachingResponseWrapper
 import java.io.Serializable
 import java.util.UUID
 
 @Component
-class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
+class DefaultLoggingInterceptor : HandlerInterceptor {
     private val logger = KotlinLogging.logger {}
 
     companion object {
@@ -58,7 +60,7 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
                 ?: request.requestURI
         val duration = calculateDuration()
         val statusText = getStatusText(response.status)
-        val body = extractRequestBody(request)
+        val body = extractResponseBody(response)
 
         logger.info {
             """{"type":"RESPONSE", "requestId":"$requestId", "method":"${request.method}", "uri":"$originalUri${
@@ -107,5 +109,17 @@ class DefaultLoggingInterceptor : BaseLoggingInterceptor() {
     private fun getRequestParameters(request: HttpServletRequest): String {
         val params = request.parameterNames.toList()
         return if (params.isEmpty()) "" else "?" + params.joinToString("&") { "$it=${request.getParameter(it)}" }
+    }
+
+    private fun extractResponseBody(response: HttpServletResponse): Serializable {
+        return if (response is ContentCachingResponseWrapper) {
+            try {
+                java.lang.String(response.contentAsByteArray, response.characterEncoding ?: "UTF-8")
+            } catch (e: Exception) {
+                "[Body 조회를 실패했습니다: ${e.message}]"
+            }
+        } else {
+            "[Response가 ContentCachingResponseWrapper로 변환되지 않았습니다]"
+        }
     }
 }
