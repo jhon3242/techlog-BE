@@ -13,9 +13,11 @@ import won.techlog.common.TimeProvider
 
 @Component
 class KakaoPayBlogCrawler : BlogCrawler {
-    private val BASE_URL = "https://tech.kakaopay.com/page/"
-    private val startIdx = 1
-    private val endIdx = 28
+    companion object {
+        private const val BASE_URL = "https://tech.kakaopay.com/page/"
+        private val startIdx = 1
+        private val endIdx = 28
+    }
 
     override fun crawlBlogs(url: String): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
