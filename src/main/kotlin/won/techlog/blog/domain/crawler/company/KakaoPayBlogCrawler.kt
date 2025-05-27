@@ -4,13 +4,19 @@ import com.microsoft.playwright.BrowserType
 import com.microsoft.playwright.Page
 import com.microsoft.playwright.Playwright
 import com.microsoft.playwright.options.LoadState
+import org.jsoup.Jsoup
 import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
 import won.techlog.blog.domain.crawler.BlogCrawler
+import won.techlog.common.TimeProvider
 
 @Component
 class KakaoPayBlogCrawler : BlogCrawler {
+    private val BASE_URL = "https://tech.kakaopay.com/page/"
+    private val startIdx = 1
+    private val endIdx = 28
+
     override fun crawlBlogs(url: String): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
         Playwright.create().use { playwright ->
@@ -31,6 +37,16 @@ class KakaoPayBlogCrawler : BlogCrawler {
                 urls.map { extractBlogMetaData(page, it) }
                     .toList()
             result.addAll(list)
+        }
+        return result
+    }
+
+    override fun crawlBlogs(blogType: BlogType): List<BlogMetaData> {
+        val result = mutableListOf<BlogMetaData>()
+        for (i in startIdx..endIdx) {
+            val url = "${BASE_URL}/$i"
+            val blogMetaDataList = crawlBlogs(url)
+            result.addAll(blogMetaDataList)
         }
         return result
     }
@@ -68,23 +84,33 @@ class KakaoPayBlogCrawler : BlogCrawler {
         // 페이지 로드 기다리기 (옵션)
         page.waitForLoadState(LoadState.NETWORKIDLE)
 
+        val html = page.content()
+        val doc = Jsoup.parse(html)
+
         val title =
-            page.locator("head meta[property='og:title']")
-                .getAttribute("content")
+            doc.selectFirst("meta[property='og:title']")
+                .attr("content")
                 .split("|")
                 .first()
         val content =
-            page.locator("head meta[property='og:description']")
-                .getAttribute("content")
+            doc.selectFirst("meta[property='og:description']")
+                .attr("content")
                 .take(300)
 
         val thumbnail =
-            page.locator("article img")
-                .first()
-                .getAttribute("src")
-                .ifBlank { null }
-                .let { "https://tech.kakaopay.com$it" }
-        TODO()
-//        return BlogMetaData(title = title, thumbnailUrl = thumbnail, content = content, url = url)
+            doc.selectFirst("meta[property='og:image']")
+                .attr("content")
+
+        val publishedAtStr =
+            doc.selectFirst("time") // 2025. 5. 23
+                .text()
+
+        return BlogMetaData(
+            title = title,
+            thumbnailUrl = thumbnail,
+            content = content,
+            url = url,
+            publishedAt = TimeProvider.parseByString(publishedAtStr, BlogType.KAKAO_PAY)
+        )
     }
 }

@@ -2,6 +2,7 @@ package won.techlog.common
 
 import won.techlog.blog.domain.BlogType
 import java.time.Instant
+import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -19,6 +20,11 @@ object TimeProvider {
                 java.time.LocalDateTime.parse(dateTimeStr, formatter),
                 ZoneOffset.UTC
             )
+        }
+        if (type == BlogType.KAKAO_PAY) {
+            val formatter = DateTimeFormatter.ofPattern("yyyy. M. d")
+            val localDate = LocalDate.parse(dateTimeStr, formatter)
+            return OffsetDateTime.of(localDate.atStartOfDay(), ZoneOffset.UTC)
         }
         return OffsetDateTime.parse(dateTimeStr)
     }

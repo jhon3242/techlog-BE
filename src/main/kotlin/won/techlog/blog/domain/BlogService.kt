@@ -28,10 +28,22 @@ class BlogService(
             blogApiManager.fetchBlogs(findBlogType)
             return
         }
+        if (blogCrawlerManager.canHandle(findBlogType)) {
+            blogCrawlerManager.fetchBlogs(findBlogType)
+            return
+        }
     }
 
     suspend fun fetchBlog(url: String) {
-        blogApiManager.fetchBlog(url)
+        val blogType = BlogType.getByUrl(url)
+        if (blogApiManager.canHandle(blogType)) {
+            blogApiManager.fetchBlog(url)
+            return
+        }
+        if (blogCrawlerManager.canHandle(blogType)) {
+            blogCrawlerManager.fetchBlog(url)
+            return
+        }
     }
 
     fun fetchBlogsByUrl(url: String) {

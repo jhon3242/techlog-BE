@@ -34,6 +34,10 @@ class LineBlogCrawler : BlogCrawler {
         return result
     }
 
+    override fun crawlBlogs(blogType: BlogType): List<BlogMetaData> {
+        TODO("Not yet implemented")
+    }
+
     override fun crawlBlog(url: String): BlogMetaData {
         val doc: Document =
             Jsoup.connect(url)

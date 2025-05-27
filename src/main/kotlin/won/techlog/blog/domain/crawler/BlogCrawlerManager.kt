@@ -14,6 +14,7 @@ class BlogCrawlerManager(
     private val crawlers: List<BlogCrawler>,
     private val posterDao: PosterDao
 ) {
+    private val crawlerMap: Map<BlogType, BlogCrawler> = initMap()
     private val log = KotlinLogging.logger { }
 
     fun crawlBlog(url: String): Blog {
@@ -39,11 +40,35 @@ class BlogCrawlerManager(
         log.info { "${posters.size}개 저장 완료, url=$url" }
     }
 
+    fun fetchBlogs(blogType: BlogType) {
+        val crawler = findCrawler(blogType)
+        val posters: List<BlogMetaData> = crawler.crawlBlogs(blogType)
+        posters.map { Poster(blogType = blogType, blogMetaData = it) }
+            .let { posterDao.savePosters(it) }
+        log.info { "${posters.size}개 저장 완료, blogType=$blogType" }
+    }
+
     fun fetchBlog(url: String) {
         val blogType = BlogType.getByUrl(url)
         val crawler = findCrawler(blogType)
         Poster(blogType = blogType, blogMetaData = crawler.crawlBlog(url))
             .let { posterDao.savePoster(it) }
+    }
+
+    fun canHandle(blogType: BlogType): Boolean {
+        return crawlerMap.containsKey(blogType)
+    }
+
+    private fun initMap(): Map<BlogType, BlogCrawler> {
+        val result = mutableMapOf<BlogType, BlogCrawler>()
+        crawlers.forEach { crawler ->
+            val blogType =
+                BlogType.entries
+                    .find { crawler.isSupportType(it) }
+                    ?: throw IllegalArgumentException("일치하는 블로그 타입이 없습니다.")
+            result[blogType] = crawler
+        }
+        return result.toMap()
     }
 
     private fun findCrawler(blogType: BlogType): BlogCrawler {

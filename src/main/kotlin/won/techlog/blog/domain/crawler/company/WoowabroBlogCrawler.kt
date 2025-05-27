@@ -35,6 +35,10 @@ class WoowabroBlogCrawler : BlogCrawler {
         return result
     }
 
+    override fun crawlBlogs(blogType: BlogType): List<BlogMetaData> {
+        TODO("Not yet implemented")
+    }
+
     override fun crawlBlog(url: String): BlogMetaData {
         var result: BlogMetaData? = null
         Playwright.create().use { playwright ->

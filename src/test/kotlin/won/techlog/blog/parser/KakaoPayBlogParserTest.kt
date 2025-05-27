@@ -2,9 +2,11 @@ package won.techlog.blog.parser
 
 import io.restassured.RestAssured
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import won.techlog.blog.api.request.BlogParseRequest
+import won.techlog.blog.api.request.BlogsFetchRequest
 import won.techlog.blog.api.response.BlogResponse
 import won.techlog.support.BaseControllerTest
 
@@ -43,5 +45,21 @@ class KakaoPayBlogParserTest : BaseControllerTest() {
         Assertions.assertThat(response.title).isNotEmpty()
         Assertions.assertThat(response.content).isNotEmpty()
         Assertions.assertThat(response.blogType).isNotEmpty()
+    }
+
+//    @Test
+    fun `전체 블로그를 파싱 및 저장한다`() {
+        // given
+        val request = BlogsFetchRequest(blogType = "KAKAO_PAY")
+
+        // when
+        // then
+        RestAssured.given().log().all()
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .header(ADMIN_HEADER, adminHeaderKey)
+            .body(request)
+            .`when`().post("/api/blogs/fetch")
+            .then().log().all()
+            .statusCode(201)
     }
 }
