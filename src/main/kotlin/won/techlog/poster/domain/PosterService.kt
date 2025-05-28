@@ -38,6 +38,7 @@ class PosterService(
     @Transactional(readOnly = true)
     fun searchPosters(request: PosterSearchRequest): PostersResponse {
         val maxCount = 20
+
         val searchResult =
             posterDao.searchTop21Posters(
                 keyword = request.keyword,
@@ -45,13 +46,54 @@ class PosterService(
                 blogType = BlogType.findByName(request.blogType),
                 cursor = request.cursor
             )
+
+        println("[DEBUG] searchResult.size = ${searchResult.size}")
+
+        val subListSize = min(maxCount, searchResult.size)
+        val beforeMapping = searchResult.subList(0, subListSize)
+
+        println("[DEBUG] subList size = $subListSize")
+
         val contents =
-            searchResult.subList(0, min(maxCount, searchResult.size))
-                .map { PosterResponse(it, posterTagDao.findTags(it)) }
+            beforeMapping.mapIndexed { index, poster ->
+                try {
+                    val tags = posterTagDao.findTags(poster)
+                    println("[DEBUG] Mapping index=$index, posterId=${poster.id}, tags.size=${tags.size}")
+                    PosterResponse(poster, tags)
+                } catch (e: Exception) {
+                    println(
+                        "[ERROR] Failed to map PosterResponse at index=$index, " +
+                            "posterId=${poster.id}, error=${e.message}"
+                    )
+                    throw e // 혹은 continue하려면 null 처리 후 filterNotNull 필요
+                }
+            }
+
         val nextCursor = searchResult.lastOrNull()?.blogMetaData?.publishedAt.toString()
         val hasNext = searchResult.size > maxCount
+
+        println("[DEBUG] Final contents.size = ${contents.size}, hasNext = $hasNext, nextCursor = $nextCursor")
+
         return PostersResponse(contents, nextCursor, hasNext, contents.size)
     }
+
+//    @Transactional(readOnly = true)
+//    fun searchPosters(request: PosterSearchRequest): PostersResponse {
+//        val maxCount = 20
+//        val searchResult =
+//            posterDao.searchTop21Posters(
+//                keyword = request.keyword,
+//                tagNames = request.tags,
+//                blogType = BlogType.findByName(request.blogType),
+//                cursor = request.cursor
+//            )
+//        val contents =
+//            searchResult.subList(0, min(maxCount, searchResult.size))
+//                .map { PosterResponse(it, posterTagDao.findTags(it)) }
+//        val nextCursor = searchResult.lastOrNull()?.blogMetaData?.publishedAt.toString()
+//        val hasNext = searchResult.size > maxCount
+//        return PostersResponse(contents, nextCursor, hasNext, contents.size)
+//    }
 
     fun updatePoster(
         id: Long,

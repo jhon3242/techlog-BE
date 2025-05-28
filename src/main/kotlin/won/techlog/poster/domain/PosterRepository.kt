@@ -46,6 +46,7 @@ interface PosterRepository : JpaRepository<Poster, Long> {
         )
     AND (:tagNames IS NULL OR t.name IN :tagNames)
     AND (:cursor IS NULL OR p.blogMetaData.publishedAt < :cursor)
+    AND (p.isDeleted = false)
     ORDER BY p.blogMetaData.publishedAt DESC
     LIMIT 21
     """
