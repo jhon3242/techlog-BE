@@ -12,7 +12,7 @@ object TimeProvider {
 
     fun parseByString(
         dateTimeStr: String,
-        type: BlogType = BlogType.WOOWABRO
+        type: BlogType = BlogType.NONE
     ): OffsetDateTime {
         if (type == BlogType.KAKAO) {
             val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss")

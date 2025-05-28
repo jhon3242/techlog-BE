@@ -12,7 +12,9 @@ enum class BlogType(
     KAKAO_PAY("https://tech.kakaopay.com/"),
     KAKAO("https://tech.kakao.com/"),
     COUPANG("https://medium.com/coupang-engineering/"),
-    TOSS("https://toss.tech/")
+    TOSS("https://toss.tech/"),
+    DAANGN("https://medium.com/daangn"),
+    NONE("None")
     ;
 
     companion object {
