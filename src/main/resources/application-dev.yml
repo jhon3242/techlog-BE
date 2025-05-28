@@ -35,3 +35,8 @@ management:
     health:
       enabled: true
       show-components: never
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
