@@ -51,6 +51,17 @@ class WebClientConfig {
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build()
 
+    @Bean
+    fun daangnBlogWebClient(builder: WebClient.Builder): WebClient =
+        builder.baseUrl("https://medium.com/_/api/collections/4505f82a2dbd/stream?to=1744697694782")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .build()
+
+    @Bean
+    fun rssWebClient(builder: WebClient.Builder): WebClient =
+        builder.baseUrl("https://medium.com/feed/daangn")
+            .build()
+
     fun logRequest(): ExchangeFilterFunction =
         ExchangeFilterFunction.ofRequestProcessor { clientRequest ->
             println("▶ Request: ${clientRequest.method()} ${clientRequest.url()}")
