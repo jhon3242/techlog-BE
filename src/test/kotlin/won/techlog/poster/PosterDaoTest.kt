@@ -118,4 +118,23 @@ class PosterDaoTest : BaseServiceTest() {
             }
         )
     }
+
+    @Test
+    fun `Tag가 많아도 상위 21개만 조회된다`() {
+        repeat(30) {
+            val poster = posterDao.save(PosterFixture.create(title = "redis test"))
+            if (it == 1) {
+                for (idx in 0..5) {
+                    val tag = tagDao.save(TagFixture.create(name = "redis $idx"))
+                    posterTagDao.save(poster, tag)
+                }
+            }
+        }
+
+        // when
+        val result = posterDao.searchTop21Posters()
+
+        // then
+        Assertions.assertThat(result).hasSize(21)
+    }
 }
