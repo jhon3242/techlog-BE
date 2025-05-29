@@ -6,14 +6,14 @@ import won.techlog.blog.domain.BlogType
 import won.techlog.blog.domain.crawler.MediumBlogCrawler
 
 @Component
-class DaangnRelay : Relayable {
+class CoupangRelay : Relayable {
     companion object {
-        private const val SLUG = "daangn"
+        private const val SLUG = "coupang-engineering"
     }
 
     override fun getBlogs(): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
-        (2015..2025).forEach { year ->
+        (2018..2025).forEach { year ->
             result.addAll(MediumBlogCrawler.fetchBlog(SLUG, year))
         }
         return result
@@ -24,6 +24,6 @@ class DaangnRelay : Relayable {
     }
 
     override fun isSupportType(blogType: BlogType): Boolean {
-        return blogType == BlogType.DAANGN
+        TODO("Not yet implemented")
     }
 }
