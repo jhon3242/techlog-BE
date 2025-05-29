@@ -1,8 +1,8 @@
 package won.techlog.poster.domain
 
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.CrudRepository
 
-interface PosterTagRepository : JpaRepository<PosterTag, Long> {
+interface PosterTagRepository : CrudRepository<PosterTag, Long> {
     fun findByPosterAndIsDeletedFalse(poster: Poster): Set<PosterTag>
 
     fun findByPoster_IdAndTag_IdAndIsDeletedFalse(
