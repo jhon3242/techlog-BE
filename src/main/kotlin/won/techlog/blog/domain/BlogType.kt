@@ -14,6 +14,14 @@ enum class BlogType(
     COUPANG("https://medium.com/coupang-engineering/"),
     TOSS("https://toss.tech/"),
     DAANGN("https://medium.com/daangn"),
+    WATCHA("https://medium.com/watcha/"),
+    MUSINSA("https://medium.com/musinsa/"),
+    ZIGBANG("https://medium.com/zigbang/"),
+    MEGAZONE_CLOUD("https://medium.com/cloudvillains/"),
+    YANOLJA_CLOUD("https://medium.com/yanoljacloud-tech/"),
+    WANTED("https://medium.com/wantedjobs/"),
+    NAVER_PLACE("https://medium.com/naver-place-dev/"),
+    STYLE_SHARE("https://medium.com/styleshare/"),
     NONE("None")
     ;
 
