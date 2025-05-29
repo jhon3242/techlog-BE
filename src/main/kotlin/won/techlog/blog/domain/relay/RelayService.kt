@@ -9,7 +9,7 @@ class RelayService(
     private val remoteServerManager: RemoteServerManager,
     private val relayList: List<Relayable>
 ) {
-    fun relayAll(name: String) {
+    fun relayByBlogName(name: String) {
         val findBlogType = BlogType.getByName(name)
         val relay = getRelay(findBlogType)
         val blogs = relay.getBlogs()
@@ -18,7 +18,7 @@ class RelayService(
         }
     }
 
-    fun relay(url: String) {
+    fun relayByUrl(url: String) {
         val findBlogType = BlogType.getByUrl(url)
         val relay = getRelay(findBlogType)
         relay.getBlog(url)

@@ -10,12 +10,12 @@ class Relayer : BaseServiceTest() {
 
 //    @Test
     fun `모든 블로그를 릴레이한다`() {
-        relayService.relayAll("DAANGN")
+        relayService.relayByBlogName("DAANGN")
     }
 
 //    @Test
     fun `단일 블로그만 릴레이한다`() {
         val url = "https://techblog.woowahan.com/22043/"
-        relayService.relay(url)
+        relayService.relayByUrl(url)
     }
 }
