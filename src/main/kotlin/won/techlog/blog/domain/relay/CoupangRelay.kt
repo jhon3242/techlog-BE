@@ -24,6 +24,6 @@ class CoupangRelay : Relayable {
     }
 
     override fun isSupportType(blogType: BlogType): Boolean {
-        TODO("Not yet implemented")
+        return blogType == BlogType.COUPANG
     }
 }
