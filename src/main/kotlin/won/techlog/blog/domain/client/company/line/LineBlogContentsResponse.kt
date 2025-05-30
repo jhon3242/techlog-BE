@@ -86,7 +86,7 @@ data class LineBlogContentResponse(
             thumbnailUrl = getThumbnailUrl(),
             content = Jsoup.parse(result.data.blog.content).text().take(300),
             url = "https://techblog.lycorp.co.jp/ko/${result.data.blog.slug}",
-            publishedAt = TimeProvider.parseByString(result.data.blog.createdAt, BlogType.LINE)
+            publishedAt = TimeProvider.parseByString(result.data.blog.createdAt)
         )
     }
 

@@ -112,7 +112,7 @@ class KakaoPayBlogCrawler : BlogCrawler {
             thumbnailUrl = thumbnail,
             content = content,
             url = url,
-            publishedAt = TimeProvider.parseByString(publishedAtStr, BlogType.KAKAO_PAY)
+            publishedAt = TimeProvider.parseByString(publishedAtStr)
         )
     }
 }

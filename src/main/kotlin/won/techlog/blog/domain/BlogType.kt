@@ -22,6 +22,7 @@ enum class BlogType(
     WANTED("https://medium.com/wantedjobs/"),
     NAVER_PLACE("https://medium.com/naver-place-dev/"),
     STYLE_SHARE("https://medium.com/styleshare/"),
+    NHN("https://meetup.nhncloud.com/"),
     NONE("None")
     ;
 

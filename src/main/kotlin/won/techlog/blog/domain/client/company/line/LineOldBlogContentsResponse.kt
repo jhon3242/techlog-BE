@@ -18,7 +18,7 @@ data class LineOldBlogContentsResponse(
                 thumbnailUrl = it.node.opengraphImage.get(0).fullUrl,
                 content = Jsoup.parse(it.node.content).text().take(300),
                 url = "https://engineering.linecorp.com/ko/blog/${it.node.slug}",
-                publishedAt = TimeProvider.parseByString(it.node.pubdate, BlogType.LINE_OLD)
+                publishedAt = TimeProvider.parseByString(it.node.pubdate)
             )
         }
     }

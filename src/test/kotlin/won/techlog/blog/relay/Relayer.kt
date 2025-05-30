@@ -1,6 +1,8 @@
 package won.techlog.blog.relay
 
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import won.techlog.blog.domain.BlogType
 import won.techlog.blog.domain.relay.RelayService
 import won.techlog.support.BaseServiceTest
 
@@ -8,9 +10,21 @@ class Relayer : BaseServiceTest() {
     @Autowired
     lateinit var relayService: RelayService
 
-//    @Test
+    @Test
     fun `모든 블로그를 릴레이한다`() {
-        relayService.relayByBlogName("DAANGN")
+        val blogs = listOf(
+            BlogType.MUSINSA,
+            BlogType.ZIGBANG,
+            BlogType.MEGAZONE_CLOUD,
+            BlogType.YANOLJA_CLOUD,
+            BlogType.WANTED,
+            BlogType.NAVER_PLACE,
+            BlogType.STYLE_SHARE
+        )
+
+        blogs.forEach { blog ->
+            relayService.relayByBlogName(blog.name)
+        }
     }
 
 //    @Test

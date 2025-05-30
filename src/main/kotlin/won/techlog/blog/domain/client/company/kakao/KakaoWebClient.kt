@@ -47,7 +47,7 @@ class KakaoWebClient(
                     thumbnailUrl = it.thumbnailUri,
                     content = Jsoup.parse(it.content).select("p").text().take(300),
                     url = "https://tech.kakao.com/posts/${it.id}",
-                    publishedAt = TimeProvider.parseByString(it.releaseDateTime, BlogType.KAKAO)
+                    publishedAt = TimeProvider.parseByString(it.releaseDateTime)
                 )
             }
             .awaitSingle()

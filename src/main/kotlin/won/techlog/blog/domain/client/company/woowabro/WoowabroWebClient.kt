@@ -45,7 +45,7 @@ class WoowabroWebClient(
             thumbnailUrl = thumbnail,
             content = content,
             url = url,
-            publishedAt = TimeProvider.parseByString(publishedAt, BlogType.WOOWABRO)
+            publishedAt = TimeProvider.parseByString(publishedAt)
         )
     }
 

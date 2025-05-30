@@ -21,7 +21,7 @@ data class TossBlogContentsResponse(
                 thumbnailUrl = post.thumbnailConfig?.imageUrl,
                 content = post.shortDescription ?: post.fullDescription ?: "",
                 url = "https://toss.tech/article/${post.key}",
-                publishedAt = TimeProvider.parseByString(post.publishedTime, BlogType.TOSS)
+                publishedAt = TimeProvider.parseByString(post.publishedTime)
             )
         }
     }
@@ -32,7 +32,7 @@ data class TossBlogContentsResponse(
             thumbnailUrl = post.thumbnailConfig?.imageUrl,
             content = post.subtitle,
             url = post.bottomButtonConfig?.landingUrl ?: "https://toss.tech/article/${post.key}",
-            publishedAt = TimeProvider.parseByString(post.publishedTime, BlogType.TOSS)
+            publishedAt = TimeProvider.parseByString(post.publishedTime)
         )
     }
 

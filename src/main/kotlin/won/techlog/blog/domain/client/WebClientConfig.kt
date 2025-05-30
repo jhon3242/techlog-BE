@@ -62,6 +62,11 @@ class WebClientConfig {
         builder.baseUrl("https://medium.com/feed/daangn")
             .build()
 
+    @Bean
+    fun nhnBlogWebClient(builder: WebClient.Builder): WebClient =
+        builder.baseUrl("https://meetup.nhncloud.com/tcblog/v1.0/posts")
+            .build()
+
     fun logRequest(): ExchangeFilterFunction =
         ExchangeFilterFunction.ofRequestProcessor { clientRequest ->
             println("▶ Request: ${clientRequest.method()} ${clientRequest.url()}")
