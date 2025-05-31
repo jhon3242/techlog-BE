@@ -2,7 +2,6 @@ package won.techlog.blog.domain.client.company.toss
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import won.techlog.blog.domain.BlogMetaData
-import won.techlog.blog.domain.BlogType
 import won.techlog.common.TimeProvider
 
 @JsonIgnoreProperties(ignoreUnknown = true)

@@ -12,15 +12,11 @@ class Relayer : BaseServiceTest() {
 
     @Test
     fun `모든 블로그를 릴레이한다`() {
-        val blogs = listOf(
-            BlogType.MUSINSA,
-            BlogType.ZIGBANG,
-            BlogType.MEGAZONE_CLOUD,
-            BlogType.YANOLJA_CLOUD,
-            BlogType.WANTED,
-            BlogType.NAVER_PLACE,
-            BlogType.STYLE_SHARE
-        )
+        val blogs =
+            listOf(
+                BlogType.NHN,
+                BlogType.KURLY
+            )
 
         blogs.forEach { blog ->
             relayService.relayByBlogName(blog.name)

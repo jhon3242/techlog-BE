@@ -6,7 +6,7 @@ import won.techlog.blog.domain.BlogType
 interface BlogCrawler {
     fun crawlBlogs(url: String): List<BlogMetaData>
 
-    fun crawlBlogs(blogType: BlogType): List<BlogMetaData>
+    fun crawlBlogs(): List<BlogMetaData>
 
     fun crawlBlog(url: String): BlogMetaData
 

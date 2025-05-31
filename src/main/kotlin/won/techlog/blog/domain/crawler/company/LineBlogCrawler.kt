@@ -34,7 +34,7 @@ class LineBlogCrawler : BlogCrawler {
         return result
     }
 
-    override fun crawlBlogs(blogType: BlogType): List<BlogMetaData> {
+    override fun crawlBlogs(): List<BlogMetaData> {
         TODO("Not yet implemented")
     }
 

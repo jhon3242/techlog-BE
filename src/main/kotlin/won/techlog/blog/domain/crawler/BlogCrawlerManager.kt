@@ -42,7 +42,7 @@ class BlogCrawlerManager(
 
     fun fetchBlogs(blogType: BlogType) {
         val crawler = findCrawler(blogType)
-        val posters: List<BlogMetaData> = crawler.crawlBlogs(blogType)
+        val posters: List<BlogMetaData> = crawler.crawlBlogs()
         posters.map { Poster(blogType = blogType, blogMetaData = it) }
             .let { posterDao.savePosters(it) }
         log.info { "${posters.size}개 저장 완료, blogType=$blogType" }

@@ -23,6 +23,7 @@ enum class BlogType(
     NAVER_PLACE("https://medium.com/naver-place-dev/"),
     STYLE_SHARE("https://medium.com/styleshare/"),
     NHN("https://meetup.nhncloud.com/"),
+    KURLY("https://helloworld.kurly.com/"),
     NONE("None")
     ;
 

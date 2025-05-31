@@ -73,6 +73,4 @@ data class NhnBlogContentsResponse(
         val attachments: List<Any>,
         val authors: List<Any>
     )
-
 }
-

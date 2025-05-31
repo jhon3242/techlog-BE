@@ -10,17 +10,18 @@ import won.techlog.blog.domain.client.FetchClient
 @Component
 class NhnWebClient(
     private val nhnBlogWebClient: WebClient
-): FetchClient {
+) : FetchClient {
     override suspend fun fetchBlog(uri: String): BlogMetaData {
         TODO("Not yet implemented")
     }
 
     override suspend fun fetchBlogs(): List<BlogMetaData> {
-        val response = nhnBlogWebClient.get()
-            .uri("?pageNo=1&rowsPerPage=100")
-            .retrieve()
-            .bodyToMono(NhnBlogContentsResponse::class.java)
-            .awaitSingle()
+        val response =
+            nhnBlogWebClient.get()
+                .uri("?pageNo=1&rowsPerPage=100")
+                .retrieve()
+                .bodyToMono(NhnBlogContentsResponse::class.java)
+                .awaitSingle()
         return response.getBlogMetaData()
     }
 

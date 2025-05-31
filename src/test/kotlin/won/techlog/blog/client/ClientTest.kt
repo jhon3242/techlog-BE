@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import won.techlog.blog.domain.client.company.nhn.NhnWebClient
 import won.techlog.support.BaseServiceTest
 
-class ClientTest: BaseServiceTest() {
+class ClientTest : BaseServiceTest() {
     @Autowired
     lateinit var client: NhnWebClient
 
@@ -20,7 +20,6 @@ class ClientTest: BaseServiceTest() {
             TODO()
 
             // then
-
         }
     }
 }

@@ -3,14 +3,14 @@ package won.techlog.blog.domain.relay
 import org.springframework.stereotype.Component
 import won.techlog.blog.domain.BlogMetaData
 import won.techlog.blog.domain.BlogType
-import won.techlog.blog.domain.crawler.company.KakaoPayBlogCrawler
+import won.techlog.blog.domain.crawler.company.KurlyBlogCrawler
 
 @Component
-class KakaoPayRelay(
-    private val kakaoPayBlogCrawler: KakaoPayBlogCrawler
+class KurlyBlogRelay(
+    private val kurlyBlogCrawler: KurlyBlogCrawler
 ) : Relayable {
     override fun getBlogs(): List<BlogMetaData> {
-        return kakaoPayBlogCrawler.crawlBlogs()
+        return kurlyBlogCrawler.crawlBlogs()
     }
 
     override fun getBlog(url: String): BlogMetaData {
@@ -18,6 +18,6 @@ class KakaoPayRelay(
     }
 
     override fun isSupportType(blogType: BlogType): Boolean {
-        return blogType == BlogType.KAKAO_PAY
+        return BlogType.KURLY == blogType
     }
 }

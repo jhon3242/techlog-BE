@@ -43,7 +43,7 @@ class KakaoPayBlogCrawler : BlogCrawler {
         return result
     }
 
-    override fun crawlBlogs(blogType: BlogType): List<BlogMetaData> {
+    override fun crawlBlogs(): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
         for (i in startIdx..endIdx) {
             val url = "${BASE_URL}/$i"
