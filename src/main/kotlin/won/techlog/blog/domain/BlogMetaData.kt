@@ -10,6 +10,7 @@ data class BlogMetaData(
     var thumbnailUrl: String?,
     @Column(columnDefinition = "TEXT")
     var content: String,
+    @Column(length = 1024)
     var url: String,
     val publishedAt: OffsetDateTime
 ) {
