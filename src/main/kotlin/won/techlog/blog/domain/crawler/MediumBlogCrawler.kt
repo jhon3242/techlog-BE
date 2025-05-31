@@ -12,8 +12,9 @@ import kotlin.use
 
 object MediumBlogCrawler {
     fun fetchBlog(
-        companySlug: String,
-        year: Int
+        companySlug: String?,
+        year: Int,
+        url: String? = null
     ): List<BlogMetaData> {
         val result = mutableListOf<BlogMetaData>()
         Playwright.create().use { playwright ->
@@ -22,7 +23,11 @@ object MediumBlogCrawler {
                     BrowserType.LaunchOptions().setHeadless(false).setTimeout(60000.0)
                 )
             val page = browser.newPage()
-            page.navigate("https://medium.com/$companySlug/archive/$year")
+            if (url != null) {
+                page.navigate("$url/archive/$year")
+            } else {
+                page.navigate("https://medium.com/$companySlug/archive/$year")
+            }
             page.waitForLoadState(LoadState.NETWORKIDLE)
             page.setDefaultTimeout(60000.0) // 60초
             Thread.sleep(Random.nextInt(1, 5).toLong() * 1000)

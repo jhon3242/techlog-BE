@@ -24,6 +24,7 @@ enum class BlogType(
     STYLE_SHARE("https://medium.com/styleshare/"),
     NHN("https://meetup.nhncloud.com/"),
     KURLY("https://helloworld.kurly.com/"),
+    YEOGI("https://techblog.gccompany.co.kr/archive"),
     NONE("None")
     ;
 
