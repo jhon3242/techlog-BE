@@ -53,6 +53,22 @@ class PosterServiceTest : BaseServiceTest() {
     }
 
     @Test
+    fun `키워드 검색 시, 일치하는 태그도 검색한다`() {
+        // given
+        posterDao.save(PosterFixture.create(title = "none 1"))
+        val tag = tagDao.save(TagFixture.create(name = "redis"))
+        val poster = posterDao.save(PosterFixture.create(title = "none 2"))
+        val posterTag = posterTagDao.save(PosterTag(poster = poster, tag = tag))
+
+        // when
+        val request = PosterSearchRequest(keyword = "redis")
+        val result = posterService.searchPosters(request)
+
+        // then
+        Assertions.assertThat(result.posters).hasSize(1)
+    }
+
+    @Test
     fun `회사 이름으로 검색한다`() {
         // given
         val request = PosterSearchRequest(blogType = BlogType.LINE.name)

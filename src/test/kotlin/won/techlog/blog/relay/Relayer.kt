@@ -14,8 +14,8 @@ class Relayer : BaseServiceTest() {
     fun `모든 블로그를 릴레이한다`() {
         val blogs =
             listOf(
-                BlogType.NHN,
-                BlogType.KURLY
+                BlogType.KURLY,
+                BlogType.YEOGI
             )
 
         blogs.forEach { blog ->

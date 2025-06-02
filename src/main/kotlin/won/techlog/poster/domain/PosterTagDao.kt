@@ -42,4 +42,8 @@ class PosterTagDao(
         posterTagRepository.findByPosterAndIsDeletedFalse(poster)
             .filter { !it.tag.isDeleted }
             .map { it.tag }
+
+    fun findPosters(tag: Tag): List<Poster> =
+        posterTagRepository.findAllByTag_IdAndIsDeletedFalse(tag.id)
+            .map { it.poster }
 }

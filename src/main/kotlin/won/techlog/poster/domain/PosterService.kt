@@ -35,55 +35,41 @@ class PosterService(
         val tags = posterTagDao.findTags(poster)
         return PosterResponse(poster, tags)
     }
-//
-//    @Transactional(readOnly = true)
-//    fun searchPosters(request: PosterSearchRequest): PostersResponse {
-//        val maxCount = 20
-//
-//        val searchResult =
-//            posterDao.searchTop21Posters(
-//                keyword = request.keyword,
-//                tagNames = request.tags,
-//                blogType = BlogType.findByName(request.blogType),
-//                cursor = request.cursor?.let { TimeProvider.parseByString(it) }
-//            )
-//
-//        val subListSize = min(maxCount, searchResult.size)
-//        val beforeMapping = searchResult.subList(0, subListSize)
-//
-//        val contents =
-//            beforeMapping.mapIndexed { index, poster ->
-//                try {
-//                    val tags = posterTagDao.findTags(poster)
-//                    PosterResponse(poster, tags)
-//                } catch (e: Exception) {
-//                    throw e
-//                }
-//            }
-//
-//        val nextCursor = searchResult.lastOrNull()?.blogMetaData?.publishedAt.toString()
-//        val hasNext = searchResult.size > maxCount
-//        println("[DEBUG] Final contents.size = ${contents.size}, hasNext = $hasNext, nextCursor = $nextCursor")
-//
-//        return PostersResponse(contents, nextCursor, hasNext, contents.size)
-//    }
 
     @Transactional(readOnly = true)
     fun searchPosters(request: PosterSearchRequest): PostersResponse {
         val maxCount = 20
-        val searchResult =
+        val searchResult = mutableListOf<Poster>()
+        val findBlogType = BlogType.findByName(request.blogType)
+        searchResult.addAll(
             posterDao.searchTop21Posters(
                 keyword = request.keyword,
                 tagNames = request.tags,
-                blogType = BlogType.findByName(request.blogType),
+                blogType = findBlogType,
                 cursor = request.cursor?.let { TimeProvider.parseByString(it) }
             )
+        )
+        searchResult.addAll(getTagSearchResult(request, findBlogType))
         val contents =
             searchResult.subList(0, min(maxCount, searchResult.size))
                 .map { PosterResponse(it, posterTagDao.findTags(it)) }
         val nextCursor = searchResult.lastOrNull()?.blogMetaData?.publishedAt.toString()
         val hasNext = searchResult.size > maxCount
         return PostersResponse(contents, nextCursor, hasNext, contents.size)
+    }
+
+    private fun getTagSearchResult(
+        request: PosterSearchRequest,
+        findBlogType: BlogType?
+    ): List<Poster> {
+        if (request.keyword != null) {
+            val findTag = tagDao.findByName(request.keyword)
+            if (findTag != null) {
+                return posterTagDao.findPosters(findTag)
+                    .filter { findBlogType == null || it.blogType == findBlogType }
+            }
+        }
+        return emptyList()
     }
 
     fun updatePoster(

@@ -9,4 +9,6 @@ interface PosterTagRepository : CrudRepository<PosterTag, Long> {
         posterId: Long,
         tagId: Long
     ): PosterTag?
+
+    fun findAllByTag_IdAndIsDeletedFalse(tagId: Long): Set<PosterTag>
 }
