@@ -76,7 +76,6 @@ services:
     volumes:
       - ./logs:/var/log/techlog
       - ./promtail/promtail-config.yaml:/etc/promtail/config.yaml
-      - ./promtail/promtail-pos:/positions
     command: -config.file=/etc/promtail/config.yaml -log.level=debug
     restart: unless-stopped
     networks:
