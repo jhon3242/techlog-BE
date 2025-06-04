@@ -77,7 +77,7 @@ services:
       - ./logs:/var/log/techlog
       - ./promtail/promtail-config.yaml:/etc/promtail/config.yaml
       - /tmp:/tmp
-    command: -config.file=/etc/promtail/config.yaml
+    command: -config.file=/etc/promtail/config.yaml -log.level=debug
     restart: unless-stopped
     networks:
       - app-tier
