@@ -59,7 +59,7 @@ class PosterControllerTest : BaseControllerTest() {
 
         // then
         val curPoster = posterDao.getPoster(savePoster.id)
-        Assertions.assertThat(curPoster.recommendations).isGreaterThan(0)
+        Assertions.assertThat(curPoster.likeCount).isGreaterThan(0)
     }
 
     @Test

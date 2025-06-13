@@ -21,7 +21,7 @@ class Poster(
     @Enumerated(EnumType.STRING)
     @Column(name = "blog_type", length = 20)
     var blogType: BlogType,
-    var recommendations: Long = 0L,
+    var likeCount: Long = 0L,
     var views: Long = 0L,
     var isDeleted: Boolean = false
 ) : BaseTimeEntity() {

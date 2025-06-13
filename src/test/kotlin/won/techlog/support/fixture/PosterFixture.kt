@@ -19,6 +19,6 @@ object PosterFixture {
         blogMetaData = BlogMetaDataFixture.create(title, thumbnail, content, url, publishedAt = publishedAt.toString()),
         blogType = blogType,
         views = views,
-        recommendations = recommendations
+        likeCount = recommendations
     )
 }

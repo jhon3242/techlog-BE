@@ -29,18 +29,18 @@ class PosterController(
         return posterService.searchPosters(request)
     }
 
-    @PutMapping("/posters/{id}/recommend")
-    fun recommend(
+    @PutMapping("/posters/{id}/like")
+    fun like(
         @PathVariable id: Long
     ) {
-        posterService.recommend(id)
+        posterService.like(id)
     }
 
-    @DeleteMapping("/posters/{id}/recommend")
-    fun cancelRecommend(
+    @DeleteMapping("/posters/{id}/like")
+    fun cancelLike(
         @PathVariable id: Long
     ) {
-        posterService.cancelRecommend(id)
+        posterService.cancelLike(id)
     }
 
     @PutMapping("/posters/{id}/view")

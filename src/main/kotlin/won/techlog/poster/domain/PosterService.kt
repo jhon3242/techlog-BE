@@ -94,12 +94,12 @@ class PosterService(
 
     fun deletePoster(id: Long) = posterDao.deletePoster(id)
 
-    fun recommend(id: Long) {
-        posterDao.recommend(id)
+    fun like(id: Long) {
+        posterDao.like(id)
     }
 
-    fun cancelRecommend(id: Long) {
-        posterDao.cancelRecommend(id)
+    fun cancelLike(id: Long) {
+        posterDao.cancelLike(id)
     }
 
     fun increaseView(id: Long) {

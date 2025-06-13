@@ -45,15 +45,15 @@ class PosterDao(
     fun deletePoster(id: Long) = posterRepository.deleteById(id)
 
     @Transactional
-    fun recommend(id: Long) {
+    fun like(id: Long) {
         val poster = getPoster(id)
-        poster.recommendations++
+        poster.likeCount++
     }
 
     @Transactional
-    fun cancelRecommend(id: Long) {
+    fun cancelLike(id: Long) {
         val poster = getPoster(id)
-        poster.recommendations--
+        poster.likeCount--
     }
 
     @Transactional

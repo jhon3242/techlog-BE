@@ -10,7 +10,7 @@ class PosterResponse(
     val content: String,
     val url: String,
     val blogType: String,
-    val recommendations: Long,
+    val likeCount: Long,
     val views: Long,
     val tags: List<String>,
     val publishedAt: String
@@ -22,7 +22,7 @@ class PosterResponse(
         content = poster.blogMetaData.content,
         url = poster.blogMetaData.url,
         blogType = poster.blogType.name,
-        recommendations = poster.recommendations,
+        likeCount = poster.likeCount,
         views = poster.views,
         tags = tags.map { it.name },
         publishedAt = poster.blogMetaData.publishedAt.toString()
